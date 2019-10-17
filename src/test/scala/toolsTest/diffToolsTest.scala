@@ -1,6 +1,6 @@
 package toolsTest
 
-import java.io.{File, PrintWriter}
+import java.io.{File, FileWriter, PrintWriter}
 
 import actions.{add, init}
 import objects.LineDiff
@@ -63,6 +63,12 @@ class diffToolsTest extends FunSpec with Matchers with GivenWhenThen with Before
       pw.close
       add.addAFile(file.getName)
 
+      val fileB = new File(repoTools.currentPath + "sgitRepo/TestGenDiffB.txt")
+      val pwB = new PrintWriter(fileB) // create the file containing the blob's content
+      pwB.write("test")
+      pwB.close
+      add.addAFile(fileB.getName)
+
       val pw2 = new PrintWriter(file)
       pw2.write("new content")
       pw2.close
@@ -73,8 +79,8 @@ class diffToolsTest extends FunSpec with Matchers with GivenWhenThen with Before
       pw3.close
       add.addAFile(file2.getName)
 
-      val pw4 = new PrintWriter(file2)
-      pw4.write("line 2 ")
+      val pw4 = new FileWriter(file2,true)
+      pw4.write("\nline 2 \n     \n line 3\n     \n")
       pw4.close
 
       diffTools.showGeneralDiff()

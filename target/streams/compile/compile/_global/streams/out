@@ -1,4 +1,6 @@
-[0m[[0m[33mwarn[0m] [0m[0m/Users/audreysamson/Workspace/sgit/src/main/scala/tools/commitTools.scala:44:108: Option[String] and String are unrelated: they will most likely never compare equal[0m
-[0m[[0m[33mwarn[0m] [0m[0m    if (commit.isFirst() || fileTools.firstLine(new File(pathParentCommit + commitTools.lastCommitHash())) == "") ""[0m
-[0m[[0m[33mwarn[0m] [0m[0m                                                                                                           ^[0m
-[0m[[0m[33mwarn[0m] [0m[0mone warning found[0m
+[0m[[0m[31merror[0m] [0m[0m/Users/audreysamson/Workspace/cloneSGIT/sgit/src/main/scala/tools/branchTools.scala:11:34: type mismatch;[0m
+[0m[[0m[31merror[0m] [0m[0m found   : Unit[0m
+[0m[[0m[31merror[0m] [0m[0m required: String[0m
+[0m[[0m[31merror[0m] [0m[0m  def currentCommit() : String = {[0m
+[0m[[0m[31merror[0m] [0m[0m                                 ^[0m
+[0m[[0m[31merror[0m] [0m[0mone error found[0m

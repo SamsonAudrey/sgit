@@ -1,7 +1,10 @@
 package tools
 
 import java.io.File
+
 import objects.{LineDiff, operation}
+import tools.diffTools.diff
+
 import scala.io.Source
 
 object diffTools {
@@ -17,12 +20,12 @@ object diffTools {
     val nC = newContent.split("\n")
       .toSeq
       .map(_.trim)
-      .filter(_ != "")
+      //.filter(_ != "")
     val oldContent = Source.fromFile(stagedFile.getAbsolutePath).mkString
     val oC = oldContent.split("\n")
       .toSeq
       .map(_.trim)
-      .filter(x=> x != "" && x != freeFile.getAbsolutePath)
+      .filter(x=>x != freeFile.getAbsolutePath)
 
     diffTools.diffBetweenTexts(oC,nC)
   }
@@ -83,9 +86,10 @@ object diffTools {
         val stageFile = fileTools.getLinkedStagedFile(f)
         println(s"diff --git a/$name b/$name \n"+
           "--- a/$name\n" +
-          "+++ b/$name\n" +
-          "@@ -1 +1 @@" )
-        println(diff(f,stageFile.get).foreach(d => println(formatDiffLine(d)))) } )
+          "+++ b/$name")
+        val allDiff = diff(f,stageFile.get)
+        println("@@ " + (allDiff(0).index + 1) + "," + allDiff.length + " @@")
+        println(allDiff.foreach(d => println(formatDiffLine(d)))) } )
     }
     /*if (list(2).nonEmpty) {
       println("Changes not staged for commit:\n  (use \"git add <file>...\" " +
@@ -111,8 +115,8 @@ object diffTools {
   def formatDiffLine(lineDiff: LineDiff): String = {
     var res = ""
     lineDiff.ope match {
-      case "ADD" => res += "+" + lineDiff.content
-      case "REMOVE" => res += "-" + lineDiff.content
+      case "ADD" => res += "Line " + (lineDiff.index +1) + ": + " + lineDiff.content
+      case "REMOVE" => res += "Line " + (lineDiff.index +1) +  ": - " + lineDiff.content
     }
     res
   }
