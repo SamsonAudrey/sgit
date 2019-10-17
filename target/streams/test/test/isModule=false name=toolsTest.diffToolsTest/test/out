@@ -1,0 +1,12 @@
+[0m[[0m[0minfo[0m] [0m[0m[32mdiffToolsTest:[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32mIf you compare two files[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32m  and they have the same content[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32m  - it should return an empty list of differences[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32m  and they are empty[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32m  - it should return an empty list[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32m  and they have different contents - case 1[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32m  - it should return the list of differences[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32m  and they have different contents  - case 2[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32m  - it should return the list of differences[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32mIf you ask for general diff[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32m- it should show you the list of differences[0m[0m

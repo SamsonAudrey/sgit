@@ -1,17 +1,10 @@
 package objects
 
-object blob extends App{
+case class Blob(var filePath: String, var hash: String, var content: String) {
 
-  private var fileNameHash = "" // = ID
-  private var content = ""
-  private var fileName = ""
-
-  def addFileRef(refFileName: String, hash: String, fileContent: String): Unit ={
-    fileName = refFileName
-    fileNameHash = hash
-    content = fileContent
+  object Blob_Class {
+    def create(filePath: String, hash: String, content: String) = Blob(filePath, hash, content)
   }
-
 
 
 }

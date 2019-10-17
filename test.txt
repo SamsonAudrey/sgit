@@ -1,0 +1,2 @@
+/Users/audreysamson/Desktop/SGITREPO/sgitRepo/updateStagedFile.txt
+new content

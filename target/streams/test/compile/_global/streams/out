@@ -1,0 +1,4 @@
+[0m[[0m[33mwarn[0m] [0m[0m/Users/audreysamson/Workspace/sgit/src/test/scala/actionsTest/commitTest.scala:82:15: Option[String] and String are unrelated: they will most likely never compare equal[0m
+[0m[[0m[33mwarn[0m] [0m[0m        assert(firstLineContent == lastCommitHash) // && content == supposedContent )[0m
+[0m[[0m[33mwarn[0m] [0m[0m              ^[0m
+[0m[[0m[33mwarn[0m] [0m[0mone warning found[0m

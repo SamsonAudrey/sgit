@@ -1,0 +1,24 @@
+[0m[[0m[0minfo[0m] [0m[0m[32mcommitTest:[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32mIf you never had commit already[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32m  and you commit[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32m  - it should be your first commit[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32mIf you add one file and then commit[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32m- commit file should contains the file's path[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32mIf it is not your first commit[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32m  and you commit[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32m  - commit file should contains the parent's hash[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32mIf you add one file and then commit[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32m- the file's status should be 'commited'[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32mIf you commit[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32m- the stage file should be empty[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32mIf you add one file and then commit[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32m- the commit should contain past commited files + the new one[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32mYou add one file and then commit[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32m  If your delete it from your working directory[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32m  - it should not appear in the commit content[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32mYou commit a file[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32m  then you update it and recommit[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32m  - the old one should not appear in the commit content[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32mIf the STAGE is empty[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32m  and you commit[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32m  - the commit should not be done[0m[0m

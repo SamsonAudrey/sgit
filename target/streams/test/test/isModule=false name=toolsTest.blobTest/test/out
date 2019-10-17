@@ -1,0 +1,6 @@
+[0m[[0m[0minfo[0m] [0m[0m[32mblobTest:[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32mIf you create a blob[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32m  with empty String params[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32m  - it should create it [0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32m  with all arguments[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32m  - it should create it [0m[0m

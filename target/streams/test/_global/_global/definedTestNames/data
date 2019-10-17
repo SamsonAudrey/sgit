@@ -1,1 +1,1 @@
-["init.initTest"]
+["toolsTest.blobTest","toolsTest.statusTools","actionsTest.branchTest","toolsTest.diffToolsTest","toolsTest.repositoryTest","actionsTest.addTest","actionsTest.commitTest","toolsTest.fileToolsTest","actionsTest.initTest"]

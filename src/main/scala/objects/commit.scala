@@ -1,12 +1,9 @@
 package objects
 
-object commit {
+case class Commit(var hash: String, var tree: String, var parent: String, var message: String) {
 
-  private var tree = List[Map[String,AnyRef]]()
-  private var parent = List[Map[String,AnyRef]]()
-  private var commiter = ""
-  private var author = ""
-  private var message = ""
-
+  object commit {
+    def create(hash: String, tree: String, parent: String, message: String) = Commit(hash, tree, parent, message)
+  }
 
 }

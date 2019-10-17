@@ -1,8 +1,24 @@
-[0m[[0m[0mdebug[0m] [0m[0mRunning TaskDef(init.initTest, org.scalatest.tools.Framework$$anon$1@7ea3b777, false, [SuiteSelector])[0m
-[0m[[0m[0minfo[0m] [0m[0m[36mRun completed in 143 milliseconds.[0m[0m
-[0m[[0m[0minfo[0m] [0m[0m[36mTotal number of tests run: 2[0m[0m
-[0m[[0m[0minfo[0m] [0m[0m[36mSuites: completed 1, aborted 0[0m[0m
-[0m[[0m[0minfo[0m] [0m[0m[36mTests: succeeded 2, failed 0, canceled 0, ignored 0, pending 0[0m[0m
+[0m[[0m[0mdebug[0m] [0m[0mRunning TaskDef(toolsTest.blobTest, org.scalatest.tools.Framework$$anon$1@4cad1e10, false, [SuiteSelector])[0m
+[0m[[0m[0mdebug[0m] [0m[0mRunning TaskDef(toolsTest.statusTools, org.scalatest.tools.Framework$$anon$1@4cad1e10, false, [SuiteSelector])[0m
+[0m[[0m[0mdebug[0m] [0m[0mRunning TaskDef(actionsTest.branchTest, org.scalatest.tools.Framework$$anon$1@4cad1e10, false, [SuiteSelector])[0m
+[0m[[0m[0mdebug[0m] [0m[0mRunning TaskDef(toolsTest.diffToolsTest, org.scalatest.tools.Framework$$anon$1@4cad1e10, false, [SuiteSelector])[0m
+[0m[[0m[0mdebug[0m] [0m[0mRunning TaskDef(toolsTest.repositoryTest, org.scalatest.tools.Framework$$anon$1@4cad1e10, false, [SuiteSelector])[0m
+[0m[[0m[0mdebug[0m] [0m[0mRunning TaskDef(actionsTest.addTest, org.scalatest.tools.Framework$$anon$1@4cad1e10, false, [SuiteSelector])[0m
+[0m[[0m[0mdebug[0m] [0m[0mRunning TaskDef(actionsTest.commitTest, org.scalatest.tools.Framework$$anon$1@4cad1e10, false, [SuiteSelector])[0m
+[0m[[0m[0mdebug[0m] [0m[0mRunning TaskDef(toolsTest.fileToolsTest, org.scalatest.tools.Framework$$anon$1@4cad1e10, false, [SuiteSelector])[0m
+[0m[[0m[0mdebug[0m] [0m[0mRunning TaskDef(actionsTest.initTest, org.scalatest.tools.Framework$$anon$1@4cad1e10, false, [SuiteSelector])[0m
+[0m[[0m[0minfo[0m] [0m[0m[36mRun completed in 449 milliseconds.[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[36mTotal number of tests run: 43[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[36mSuites: completed 9, aborted 0[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[36mTests: succeeded 43, failed 0, canceled 0, ignored 0, pending 0[0m[0m
 [0m[[0m[0minfo[0m] [0m[0m[32mAll tests passed.[0m[0m
 [0m[[0m[0mdebug[0m] [0m[0mPassed tests:[0m
-[0m[[0m[0mdebug[0m] [0m[0m	init.initTest[0m
+[0m[[0m[0mdebug[0m] [0m[0m	toolsTest.blobTest[0m
+[0m[[0m[0mdebug[0m] [0m[0m	toolsTest.statusTools[0m
+[0m[[0m[0mdebug[0m] [0m[0m	actionsTest.branchTest[0m
+[0m[[0m[0mdebug[0m] [0m[0m	toolsTest.diffToolsTest[0m
+[0m[[0m[0mdebug[0m] [0m[0m	toolsTest.repositoryTest[0m
+[0m[[0m[0mdebug[0m] [0m[0m	actionsTest.addTest[0m
+[0m[[0m[0mdebug[0m] [0m[0m	actionsTest.commitTest[0m
+[0m[[0m[0mdebug[0m] [0m[0m	toolsTest.fileToolsTest[0m
+[0m[[0m[0mdebug[0m] [0m[0m	actionsTest.initTest[0m
