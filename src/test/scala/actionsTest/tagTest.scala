@@ -19,7 +19,7 @@ class tagTest extends FunSpec with Matchers with GivenWhenThen with BeforeAndAft
     it("it should create a file and point to the last commit of the current branch") {
       new PrintWriter(new File(repoTools.currentPath + "sgitRepo/testFreeFile1.txt"))
       add.addAll()
-      commit.commit()
+      commit.commit("message")
       val tagName = "newTag"
       tag.newTag(tagName)
       println("////////////:"+tag.newTag("master"))
@@ -34,7 +34,7 @@ class tagTest extends FunSpec with Matchers with GivenWhenThen with BeforeAndAft
     it("it should not do anything ") {
       new PrintWriter(new File(repoTools.currentPath + "sgitRepo/file.txt"))
       add.addAll()
-      commit.commit()
+      commit.commit("message")
 
       branch.newBranch("sameName")
       val res = tag.newTag("sameName") // should be false

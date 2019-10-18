@@ -40,18 +40,18 @@ class addTest extends FunSpec with Matchers with GivenWhenThen with BeforeAndAft
         val hash = add.hash(file.getAbsolutePath + Source.fromFile(file.getAbsolutePath).mkString)
 
         assert(new File(repoTools.currentPath + "sgitRepo/.git/STAGE/" + hash).exists()
-        && new File(repoTools.currentPath + "sgitRepo/.git/objects/" + hash.slice(0,2)).exists() )
+          && new File(repoTools.currentPath + "sgitRepo/.git/objects/" + hash.slice(0,2)).exists() )
       }
     }
   }
 
   describe("If you add the two files ") {
-      it("it should add all the two files") {
-        new PrintWriter(new File(repoTools.currentPath + "sgitRepo/testFreeFile1.txt"))
-        new PrintWriter(new File(repoTools.currentPath + "sgitRepo/testFreeFile2.txt"))
-        add.addMultipleFiles(List("testFreeFile1.txt","testFreeFile2.txt"))
-        assert(statusTools.isStaged(new File(repoTools.currentPath + "sgitRepo/testFreeFile1.txt"))  === true)
-      }
+    it("it should add all the two files") {
+      new PrintWriter(new File(repoTools.currentPath + "sgitRepo/testFreeFile1.txt"))
+      new PrintWriter(new File(repoTools.currentPath + "sgitRepo/testFreeFile2.txt"))
+      add.addMultipleFiles(List("testFreeFile1.txt","testFreeFile2.txt"))
+      assert(statusTools.isStaged(new File(repoTools.currentPath + "sgitRepo/testFreeFile1.txt"))  === true)
+    }
   }
 
   describe("If you create different files ") {

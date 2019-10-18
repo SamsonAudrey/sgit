@@ -16,12 +16,12 @@ class branchTest extends FunSpec with Matchers with GivenWhenThen with BeforeAnd
   }
 
   describe("If you create a new branch") {
-      it("it should be create in the .git/refs/heads directory") {
-        val branchName = "newBranch"
-        branch.newBranch(branchName)
-        val exists = new File(repoTools.currentPath + "sgitRepo/.git/refs/heads/" + branchName).exists()
-        assert(exists)
-      }
+    it("it should be create in the .git/refs/heads directory") {
+      val branchName = "newBranch"
+      branch.newBranch(branchName)
+      val exists = new File(repoTools.currentPath + "sgitRepo/.git/refs/heads/" + branchName).exists()
+      assert(exists)
+    }
   }
 
   describe("If you create multiple branches") {

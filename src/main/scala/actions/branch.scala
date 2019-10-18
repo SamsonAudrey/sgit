@@ -28,17 +28,17 @@ object branch {
     new File(path + currentB).renameTo(new File(path + newName)) && checkoutBranch(newName)
   }
 
-  def checkoutBranch(branch: String): Boolean = {
+  def checkoutBranch(branchName: String): Boolean = {
     val allB = allBranches().map(b => b.getName()) //VERIFY if  ID is a  BRANCH
-    if (allB.contains(branch)) {
+    if (allB.contains(branchName)) {
       val path = repoTools.currentPath + "sgitRepo/.git/HEAD/branch"
       val pw = new PrintWriter(new File(path))
-      pw.write(branch)
+      pw.write(branchName)
       pw.close
-      fileTools.firstLine(new File(path)).get == branch
+      fileTools.firstLine(new File(path)).get == branchName
 
       // change the working directory
-      
+
     } else false // verif TAGS and commit hash
   }
 

@@ -2,10 +2,11 @@ package toolsTest
 
 import java.io.{File, FileWriter, PrintWriter}
 
-import actions.{add, init}
+import actions.{add, init, status}
 import org.scalatest.{BeforeAndAfter, FunSpec, GivenWhenThen, Matchers}
 import tools.{fileTools, repoTools, statusTools}
 import org.apache.commons.io.FileUtils
+
 import scala.io.Source
 
 
@@ -99,13 +100,13 @@ class statusTools extends FunSpec with Matchers with GivenWhenThen with BeforeAn
       val pathFree = repoTools.currentPath + "sgitRepo/testStatus_free.txt"
       new PrintWriter(new File(pathFree))
 
-      val genStatus = statusTools.generalStatus()
+      val genStatus = status.generalStatus()
       val listFree = genStatus(0)
       val listUpdatedStaged= genStatus(1)
       val listUpdatedCommit = genStatus(2)
       val listUnCommited = genStatus(3)
 
-      statusTools.showGeneralStatus()
+      status.showGeneralStatus()
 
       assert(listFree.length == 1 && listFree(0) == new File(pathFree)
         && listUpdatedStaged.length == 1 && listUpdatedStaged(0) == new File(path)

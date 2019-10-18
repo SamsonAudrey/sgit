@@ -9,7 +9,7 @@ import scala.io.Source
 
 object commit {
 
-  def commit(): Unit = {
+  def commit(message: String): Unit = {
     var parent = ""
     if (!isFirst()) {
       parent = commitTools.lastCommitHash()
@@ -21,11 +21,12 @@ object commit {
       val newCommitHash = add.hash(content + parent.slice(0,4))
 
       //create object
-      repoTools.createFile(path, newCommitHash, parent, content)
+      repoTools.createFile(path, newCommitHash, parent, message + "\n" + content)
       //update ref
       updateRefCommit(newCommitHash)
       //clean STAGE
       FileUtils.cleanDirectory(new File(repoTools.currentPath + "sgitRepo/.git/STAGE"))
+      println(">> Commit done <<")
     } else {
       println(">> Nothing to commit <<")
     }
@@ -50,7 +51,7 @@ object commit {
     val lastCommit = commitTools.lastCommitHash()
     if (!isFirst()) {
       var files = Source.fromFile(repoTools.currentPath + "sgitRepo/.git/objects/" + lastCommit)
-        .mkString.split("\n").map(_.trim).filter(f => f != "").toList
+        .mkString.split("\n").map(_.trim).toList.drop(2) // remove parent commit and message (2 first lines)
       if (changes(0).nonEmpty ) {
         // UPDATED
         //remove old

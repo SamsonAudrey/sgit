@@ -1,16 +1,10 @@
 package tools
 
 import java.io.File
-
 import actions.{add, commit}
-
 import scala.io.Source
 
 object statusTools {
-
-  val staged = "STAGED"
-  val commited = "COMMITED"
-  val free = "FREE"
 
   /**
     * Check if the file has been added and is now on the .git/STAGE folder
@@ -40,6 +34,19 @@ object statusTools {
     } else false
   }
 
+  def isCommitedAndUpdatedContent(file : File): Boolean = {
+    val commitedFile = commitTools.getLastCommitFiles()
+    val commitedHash = commitTools.getLastCommitHash()
+    val stagedHash = repoTools.getAllStagedFiles()
+    val hash = add.hash(file.getAbsolutePath + Source.fromFile(file).mkString)
+    val linkedStagedFile = fileTools.getLinkedStagedFile(file)
+    if (commitedFile.nonEmpty) {
+      println(commitedHash + " -- " + linkedStagedFile)
+      println(commitedFile.map(f => f.getAbsolutePath).contains(fileTools.firstLine(linkedStagedFile.get).get) + " " + !commitedHash.contains(linkedStagedFile.get.getName))
+      commitedFile.contains(file) && !commitedHash.contains(hash) && !stagedHash.map(f => f.getName).contains(hash) || commitedFile.contains(Source.fromFile(linkedStagedFile.get).mkString) && !commitedHash.contains(linkedStagedFile.get.getName)
+    } else false
+  }
+
   /**
     * Check if the file is in the last commit
     * @param file
@@ -59,8 +66,6 @@ object statusTools {
         .map(f => f.split(" ").map(_.trim).toList(1)) // get the file's path
       file.exists() && allCommitedHash.contains(path)
     }
-
-
   }
 
   /**
@@ -89,7 +94,7 @@ object statusTools {
     * @return
     */
   def isFree(file: File): Boolean = {
-    !isStaged(file) //&& !isCommited(file)
+    !isStaged(file) && !isCommited(file)
   }
 
   /**
@@ -121,8 +126,8 @@ object statusTools {
         false
       } else {
         var allFiles = List[File]()
-          allFiles = repoTools.getAllStagedFiles()
-            .filter(f => f.getName == add.hash(file.getAbsolutePath + Source.fromFile(file.getAbsolutePath).mkString))
+        allFiles = repoTools.getAllStagedFiles()
+          .filter(f => f.getName == add.hash(file.getAbsolutePath + Source.fromFile(file.getAbsolutePath).mkString))
         if (allFiles.isEmpty) true
         else {
           /*val newContent = Source.fromFile(file.getAbsolutePath).mkString
@@ -143,6 +148,7 @@ object statusTools {
     }
   }
 
+
   /**
     * Print all the files status
     */
@@ -150,27 +156,28 @@ object statusTools {
     val list = generalStatus()
 
     if (list(0).nonEmpty){
-      println("Untracked files:\n  (use \"git add <file>...\" to include in what will be committed)")
-      list(0).foreach(f => println(f.getName))
+      println(">> Untracked files:\n  (use \"git add <file>...\" to include in what will be committed)")
+      list(0).map(f => println(f.getName))
     }
     if (list(1).nonEmpty) {
-      println("Changes not staged for commit:\n  (use \"git add <file>...\" " +
+      println(">> Changes not staged for commit:\n  (use \"git add <file>...\" " +
         "to update what will be committed)")
-      list(1).foreach(f => println(f.getName))
+      list(1).filter(f => !list(0).contains(f)).map(f => println(f.getName))
     }
-    if (list(2).nonEmpty) {
-      println("Changes not staged for commit:\n  (use \"git add <file>...\" " +
+    val list2 = list(2).filter(f => !list(0).contains(f) && !list(1).contains(f))
+    if (list2.nonEmpty) {
+      println(">> Changes not staged for commit:\n  (use \"git add <file>...\" " +
         "to update what will be committed)")
-      list(2).foreach(f => println(f.getName))
+      list2.map(f => println(f.getName))
     }
-
+    val list3 = list(3).filter(f => !list(1).contains(f) && !list(2).contains(f))
     if (list(3).nonEmpty) {
-      println("Changes to be committed:")
-      list(3).foreach(f => println(f.getName))
+      println(">> Changes to be committed:")
+      list3.map(f => println(f.getName))
     }
 
-    if(list(0).isEmpty && list(1).isEmpty && list(2).isEmpty) {
-      println("nothing to commit or add")
+    if(list(0).isEmpty && list(1).isEmpty && list(2).isEmpty && list(3).isEmpty) {
+      println(">> Nothing to commit or add")
     }
   }
 
@@ -183,8 +190,10 @@ object statusTools {
     val allFiles = repoTools.getAllUserFiles()
     val allFreeFiles = allFiles.filter(f => isFree(f))
     val allUpdatedStagedFiles = allFiles.filter(f => isStagedAndUpdatedContent(f))
-    val allUpdatedCommitedFiles = List() //allFiles.filter(f => isCommited(f) ) // don't care if stage but HAS TO BE UPDATEED
-    val allStagedUnCommitedFiles = List() //allFiles.filter(f => !isCommited(f) && isStaged(f) && !isStagedAndUpdatedContent(f))
+    val allUpdatedCommitedFiles = allFiles.filter(f => statusTools.isCommited(f) && statusTools.isCommitedAndUpdatedContent(f) ) // don't care if stage but HAS TO BE UPDATEED
+    val allStagedUnCommitedFiles = allFiles.filter(f => !statusTools.isCommited(f) && statusTools.isStaged(f) && !isStagedAndUpdatedContent(f))
     List(allFreeFiles, allUpdatedStagedFiles, allUpdatedCommitedFiles, allStagedUnCommitedFiles)
   }
+
+
 }

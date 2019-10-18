@@ -4,7 +4,7 @@ import tools.repoTools
 import java.io.{File, PrintWriter}
 
 
-object init extends App{
+object init {
 
   /**
     * Create the SGIT repository with all sub-folders
@@ -32,7 +32,9 @@ object init extends App{
 
       println(">> Initialized empty Git repository in" + repoTools.currentPath + "<<")
       true
-    } else false
+    } else {
+      false
+    }
   }
 
 }

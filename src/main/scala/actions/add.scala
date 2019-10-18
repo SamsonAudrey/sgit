@@ -26,21 +26,24 @@ object add {
     if (filesNameList.isEmpty) {
       println("Empty")
     } else {
-        val file = fileTools.findFile(filesNameList(0))
-        if (file.nonEmpty && statusTools.isStaged(file.get)){
-          if (statusTools.isStagedAndUpdatedContent(file.get)){
-            updateStagedFile(file.get.getName)
-          } else {
-              println(">>staged and no updated :" + filesNameList(0) +"<<") // do nothing
-            }
-        } else if (file.nonEmpty) {
-          addAFile(filesNameList(0))
+      val file: Option[File] = fileTools.findFile(filesNameList(0))
+      if(file.isEmpty) {
+        println(">>" + filesNameList(0) +" not found. <<")
+      }
+      if (file.nonEmpty && statusTools.isStaged(file.get)){
+        if (statusTools.isStagedAndUpdatedContent(file.get)){
+          updateStagedFile(file.get.getName)
         } else {
-          //do nothing
+          println(">>staged and no updated :" + filesNameList(0) +"<<") // do nothing
         }
-        if (filesNameList.length > 1) {
-          addMultipleFiles(filesNameList.tail)
-        }
+      } else if (file.nonEmpty) {
+        addAFile(filesNameList(0))
+      } else {
+        //do nothing
+      }
+      if (filesNameList.length > 1) {
+        addMultipleFiles(filesNameList.tail)
+      }
     }
   }
 
@@ -61,6 +64,7 @@ object add {
       val fileHash = hash(path + contentFile)
       val newBlob = createBlob(path,fileHash,contentFile) //create new blob
       if (stageABlob(newBlob)) {
+        println(">> File " + fileName + " added")
       } else println(">> Not possible <<")// TODO : error
     }
   }

@@ -1,4 +1,4 @@
-[0m[[0m[33mwarn[0m] [0m[0m/Users/audreysamson/Workspace/cloneSGIT/sgit/src/test/scala/actionsTest/tagTest.scala:28:13: Option[String] and String are unrelated: they will most likely never compare equal[0m
-[0m[[0m[33mwarn[0m] [0m[0m      assert(exist && ff == "m")[0m
-[0m[[0m[33mwarn[0m] [0m[0m            ^[0m
+[0m[[0m[33mwarn[0m] [0m[0m/Users/audreysamson/Workspace/CLONE/sgit/src/test/scala/toolsTest/statusTools.scala:7:37: imported `statusTools` is permanently hidden by definition of class statusTools in package toolsTest[0m
+[0m[[0m[33mwarn[0m] [0m[0mimport tools.{fileTools, repoTools, statusTools}[0m
+[0m[[0m[33mwarn[0m] [0m[0m                                    ^[0m
 [0m[[0m[33mwarn[0m] [0m[0mone warning found[0m

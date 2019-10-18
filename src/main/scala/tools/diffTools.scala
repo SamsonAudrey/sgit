@@ -2,8 +2,8 @@ package tools
 
 import java.io.File
 
+import actions.status
 import objects.{LineDiff, operation}
-import tools.diffTools.diff
 
 import scala.io.Source
 
@@ -20,7 +20,7 @@ object diffTools {
     val nC = newContent.split("\n")
       .toSeq
       .map(_.trim)
-      //.filter(_ != "")
+    //.filter(_ != "")
     val oldContent = Source.fromFile(stagedFile.getAbsolutePath).mkString
     val oC = oldContent.split("\n")
       .toSeq
@@ -76,7 +76,7 @@ object diffTools {
     * Print all the differences of all Files
     */
   def showGeneralDiff(): Unit= {
-    val list = statusTools.generalStatus()
+    val list = status.generalStatus()
 
     // no diff for free files in list(0)
 
@@ -91,6 +91,7 @@ object diffTools {
         println("@@ " + (allDiff(0).index + 1) + "," + allDiff.length + " @@")
         println(allDiff.foreach(d => println(formatDiffLine(d)))) } )
     }
+
     /*if (list(2).nonEmpty) {
       println("Changes not staged for commit:\n  (use \"git add <file>...\" " +
         "to update what will be committed)")

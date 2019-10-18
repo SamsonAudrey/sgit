@@ -1,10 +1,6 @@
 package tools
 
 import java.io.{File, PrintWriter}
-
-import actions.commit
-import objects.Blob
-
 import scala.io.Source
 import scala.reflect.io.{File => ScalaFile}
 
@@ -65,7 +61,7 @@ object repoTools {
     if (!f.isDirectory || f.getName == ".git" || f.getName == ".DS_Store") Array()
     else {
       val these = f.listFiles
-      these ++ these.filter(_.isDirectory && !(f.getName.charAt(0) == ".")).flatMap(recursiveListUserFolders(_))
+      these ++ these.filter(_.isDirectory && !(f.getName.charAt(0).toString == ".")).flatMap(recursiveListUserFolders(_))
     }
   }
 
@@ -110,6 +106,8 @@ object repoTools {
     if (!fileTools.firstLine(new File(repoTools.currentPath + "sgitRepo/.git/objects/" + commitHash )).contains("")) {
       filesHash = filesHash.drop(1) // first line = commit parent
     }
+    filesHash = filesHash.drop(1) // second line = commit message
+
     filesHash
   }
 

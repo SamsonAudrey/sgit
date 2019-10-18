@@ -64,9 +64,9 @@ class repositoryTest extends FunSpec with Matchers with GivenWhenThen with Befor
         val listFolders3 = repoTools.getListOfFiles(new File(path + "sgitRepo/testRepo3"))
         assert(
           listFolders3 ===
-          List(new File(path+ "sgitRepo/testRepo3/folder2" ),
-          new File(path+ "sgitRepo/testRepo3/folder3" ),
-          new File(path+ "sgitRepo/testRepo3/folder1" )))
+            List(new File(path+ "sgitRepo/testRepo3/folder2" ),
+              new File(path+ "sgitRepo/testRepo3/folder3" ),
+              new File(path+ "sgitRepo/testRepo3/folder1" )))
       }
     }
   }
