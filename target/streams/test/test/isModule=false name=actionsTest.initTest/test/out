@@ -2,5 +2,3 @@
 [0m[[0m[0minfo[0m] [0m[0m[32mIf you run init[0m[0m
 [0m[[0m[0minfo[0m] [0m[0m[32m  and there is not yet a sgit repository [0m[0m
 [0m[[0m[0minfo[0m] [0m[0m[32m  - it should return true and create a directory sgitRepo.[0m[0m
-[0m[[0m[0minfo[0m] [0m[0m[32m  and there is already a sgit repository [0m[0m
-[0m[[0m[0minfo[0m] [0m[0m[32m  - it should return false and not create a directory sgitRepo.[0m[0m

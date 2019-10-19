@@ -41,7 +41,7 @@ object commitTools {
     val branch = branchTools.currentBranch()
     val pathLastCommit = repoTools.rootFile + "/.git/refs/heads/" + branch
     val pathParentCommit = repoTools.rootFile + "/.git/objects/"
-    if (commit.isFirst() || fileTools.firstLine(new File(pathParentCommit + commitTools.lastCommitHash())).getOrElse("") == "") ""
+    if (commit.isFirstCommit() || fileTools.firstLine(new File(pathParentCommit + commitTools.lastCommitHash())).getOrElse("") == "") ""
     else {
       val lastCommitHash = Source.fromFile(new File(pathLastCommit)).mkString
       val seqHash = Source.fromFile(pathParentCommit + lastCommitHash).mkString

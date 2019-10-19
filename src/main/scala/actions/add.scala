@@ -91,7 +91,10 @@ object add {
     */
   def hash(str: String): String ={
     fileTools.encryptThisString(str)
+  }
 
+  def getFileHash(file: File): String = {
+    hash(file.getAbsolutePath + Source.fromFile(file).mkString)
   }
 
   /**

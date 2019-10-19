@@ -12,9 +12,9 @@ object init {
     * Create the SGIT repository with all sub-folders
     * @return
     */
-  def initDirectory(path: String) : Boolean = {
+  def initDirectory(path: String) : Unit = {
     //create new repo sgit
-    if (!recursiveListFolders(new File(path)).toList.contains(new File(path + "/sgit/.git")) && repoTools.getRoot(new File(path)).isEmpty || path == repoTools.currentPath + "RepoTest") { // Some(root)
+    //if (!recursiveListFolders(new File(path)).toList.contains(new File(path + "/sgit/.git")) && repoTools.getRoot(new File(path)).isEmpty || path == repoTools.currentPath + "RepoTest") { // Some(root)
 
       // create sgit repo
       val sgitPath = path + "/sgit"
@@ -35,10 +35,6 @@ object init {
       pw.close()
 
       println(">> Initialized empty Git repository in" + repoTools.currentPath + "<<")
-      true
-    } else {
-      false
-    }
   }
 
 }

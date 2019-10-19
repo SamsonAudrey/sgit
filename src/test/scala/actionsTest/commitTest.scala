@@ -12,15 +12,15 @@ import scala.io.Source
 class commitTest extends FunSpec with Matchers with GivenWhenThen with BeforeAndAfter{
 
   before{
-    new File(repoTools.currentPath + "RepoTest").mkdir()
-    FileUtils.cleanDirectory(new File(repoTools.currentPath + "RepoTest"))
-    init.initDirectory(repoTools.currentPath + "RepoTest")
+    new File(repoTools.currentPath + "/sgit").mkdir()
+    FileUtils.cleanDirectory(new File(repoTools.currentPath + "sgit"))
+    init.initDirectory(repoTools.currentPath)
   }
 
   describe("If you never had commit already") {
     describe("and you commit") {
       it("it should be your first commit") {
-        assert(commit.isFirst() === true)
+        assert(commit.isFirstCommit() === true)
       }
     }
   }
@@ -98,7 +98,7 @@ class commitTest extends FunSpec with Matchers with GivenWhenThen with BeforeAnd
   }
 
   describe("If you add one file and then commit") {
-    it("the commit should contain past commited files + the new one") {
+    it("The commit should contain past commited files + the new one") {
       // FIRST COMMIT
       val file = new File(repoTools.rootFile + "/testCommit4.txt")
       new PrintWriter(file)

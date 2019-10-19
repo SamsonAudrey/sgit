@@ -1,1 +1,1 @@
-["toolsTest.blobTest","toolsTest.statusTools","actionsTest.branchTest","toolsTest.diffToolsTest","toolsTest.repositoryTest","actionsTest.addTest","actionsTest.commitTest","actionsTest.tagTest","toolsTest.fileToolsTest","actionsTest.initTest"]
+["toolsTest.blobTest","actionsTest.branchTest","toolsTest.diffToolsTest","toolsTest.repositoryTest","actionsTest.addTest","toolsTest.statusTest","actionsTest.commitTest","actionsTest.tagTest","toolsTest.fileToolsTest","actionsTest.initTest"]

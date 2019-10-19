@@ -12,7 +12,7 @@
 [0m[[0m[0minfo[0m] [0m[0m[32mIf you commit[0m[0m
 [0m[[0m[0minfo[0m] [0m[0m[32m- the stage file should be empty[0m[0m
 [0m[[0m[0minfo[0m] [0m[0m[32mIf you add one file and then commit[0m[0m
-[0m[[0m[0minfo[0m] [0m[0m[32m- the commit should contain past commited files + the new one[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32m- The commit should contain past commited files + the new one[0m[0m
 [0m[[0m[0minfo[0m] [0m[0m[32mYou add one file and then commit[0m[0m
 [0m[[0m[0minfo[0m] [0m[0m[32m  If your delete it from your working directory[0m[0m
 [0m[[0m[0minfo[0m] [0m[0m[32m  - it should not appear in the commit content[0m[0m

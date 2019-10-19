@@ -11,7 +11,7 @@ object commit {
 
   def commit(message: String): Unit = {
     var parent = ""
-    if (!isFirst()) {
+    if (!isFirstCommit()) {
       parent = commitTools.lastCommitHash()
     }
     val path = repoTools.rootFile + "/.git/objects"
@@ -33,7 +33,7 @@ object commit {
 
   }
 
-  def isFirst(): Boolean = {
+  def isFirstCommit(): Boolean = {
     val lastCommit = Source.fromFile(repoTools.rootFile + "/.git/refs/heads/master").mkString
     lastCommit == ""
   }
@@ -49,7 +49,7 @@ object commit {
   def createContentCommitFile(changes : List[List[File]]): String = {
     var content = ""
     val lastCommit = commitTools.lastCommitHash()
-    if (!isFirst()) {
+    if (!isFirstCommit()) {
       var files = Source.fromFile(repoTools.rootFile + "/.git/objects/" + lastCommit)
         .mkString.split("\n").map(_.trim).toList.drop(2) // remove parent commit and message (2 first lines)
       if (changes(0).nonEmpty ) {

@@ -10,3 +10,7 @@
 [0m[[0m[0minfo[0m] [0m[0m[32m  - it should be an updated file[0m[0m
 [0m[[0m[0minfo[0m] [0m[0m[32mIf you ask for general status [0m[0m
 [0m[[0m[0minfo[0m] [0m[0m[32m- it should return a list of files [0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32mIf you commit a file[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32m  and then you modify his content and add it[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m  - it should be an staged file not yes commited *** FAILED ***[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m    tt was false (statusTools.scala:139)[0m[0m

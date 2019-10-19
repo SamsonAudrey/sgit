@@ -10,9 +10,9 @@ import tools.{branchTools, commitTools, repoTools}
 class branchTest extends FunSpec with Matchers with GivenWhenThen with BeforeAndAfter{
 
   before{
-    new File(repoTools.currentPath + "RepoTest").mkdir()
-    FileUtils.cleanDirectory(new File(repoTools.currentPath + "RepoTest"))
-    init.initDirectory(repoTools.currentPath + "RepoTest")
+    new File(repoTools.currentPath + "/sgit").mkdir()
+    FileUtils.cleanDirectory(new File(repoTools.currentPath + "sgit"))
+    init.initDirectory(repoTools.currentPath)
   }
 
   describe("If you create a new branch") {

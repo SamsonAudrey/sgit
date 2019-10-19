@@ -14,17 +14,17 @@ object status {
     val list = generalStatus()
 
     if (list(0).nonEmpty){
-      println(">> Untracked files:\n  (use \"git add <file>...\" to include in what will be committed)")
+      println(">> Untracked files:\n  (use \"sgit add <file>...\" to include in what will be committed)")
       list(0).map(f => println(f.getName))
     }
     if (list(1).nonEmpty) {
-      println(">> Changes not staged for commit:\n  (use \"git add <file>...\" " +
+      println(">> Changes not staged for commit:\n  (use \"sgit add <file>...\" " +
         "to update what will be committed)")
       list(1).filter(f => !list(0).contains(f)).map(f => println(f.getName))
     }
     val list2 = list(2).filter(f => !list(0).contains(f) && !list(1).contains(f))
     if (list2.nonEmpty) {
-      println(">> Changes not staged for commit:\n  (use \"git add <file>...\" " +
+      println(">> Changes not staged for commit:\n  (use \"sgit add <file>...\" " +
         "to update what will be committed)")
       list2.map(f => println(f.getName))
     }
@@ -46,10 +46,16 @@ object status {
     */
   def generalStatus(): List[List[File]] = {
     val allFiles = repoTools.getAllUserFiles()
+
+    // FREE FILES
     val allFreeFiles = allFiles.filter(f => isFree(f))
+    // DIFF BETWEEN WORKING DIRECTORY AND STAGE
     val allUpdatedStagedFiles = allFiles.filter(f => isStagedAndUpdatedContent(f))
-    val allUpdatedCommitedFiles = allFiles.filter(f => statusTools.isCommited(f) && statusTools.isCommitedAndUpdatedContent(f) ) // don't care if stage but HAS TO BE UPDATEED
-    val allStagedUnCommitedFiles = allFiles.filter(f => !statusTools.isCommited(f) && statusTools.isStaged(f) && !isStagedAndUpdatedContent(f))
+    // DIFF BETWEEN COMMIT AND WORKING AREA
+    val allUpdatedCommitedFiles = allFiles.filter(f => statusTools.isCommited(f) && !statusTools.isStaged(f) && statusTools.isCommitedButUpdated(f) )
+    // STAGE BUT NOT COMMIT
+    val allStagedUnCommitedFiles = allFiles.filter(f => statusTools.isCommitedButUpdated(f) && statusTools.isStaged(f) && !isStagedAndUpdatedContent(f))
+
     List(allFreeFiles, allUpdatedStagedFiles, allUpdatedCommitedFiles, allStagedUnCommitedFiles)
   }
 }

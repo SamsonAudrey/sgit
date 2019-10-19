@@ -15,13 +15,18 @@ object repoTools {
     current
   }
 
-  val rootFile: String = "/Users/audreysamson/Workspace/cloneSamedi/sgit/RepoTest/sgit"//getRoot(new File(currentPath + "sgit")).getOrElse(new File(currentPath + "sgit")).getAbsolutePath
-
+  val rootFile: String = getRoot(new File(currentPath)).getOrElse(new File("")).getAbsolutePath //"/Users/audreysamson/Workspace/cloneSamedi/sgit/RepoTest/sgit"//getRoot(new File(currentPath + "sgit")).getOrElse(new File(currentPath + "sgit")).getAbsolutePath
 
   def getRoot(directory: File): Option[File] = {
+
     if (directory.isDirectory) {
-      if (directory.listFiles().toList.contains(".git") && directory.getName == "sgit") {
-        Some(directory)
+      if (directory.listFiles().toList.contains(new File(directory.getAbsolutePath + "/.git")) ||
+        directory.listFiles().toList.contains(new File(directory.getAbsolutePath + "/sgit")) &&
+        directory.getName == "sgit") {
+
+        if (!new File(directory.getAbsolutePath + "/.git/HEAD/branch").exists()) {
+          Some(new File(directory.getAbsolutePath + "/sgit"))
+        } else Some(directory)
       } else {
         if (directory.getParentFile == null) {
           None
@@ -109,7 +114,7 @@ object repoTools {
   def getAllUserFiles(): List[File] = {
     val allFolders = recursiveListUserFolders(new File(repoTools.rootFile))
     allFolders.map(f => repoTools.getListOfFiles(f))
-    allFolders.toList.filter(_.isFile)
+    allFolders.toList.filter(f => f.isFile && f.getName != ".DS_Store")
   }
 
   /**
