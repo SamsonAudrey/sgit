@@ -10,16 +10,16 @@ import tools.{branchTools, commitTools, repoTools}
 class branchTest extends FunSpec with Matchers with GivenWhenThen with BeforeAndAfter{
 
   before{
-    FileUtils.cleanDirectory(new File(repoTools.currentPath + "sgitRepo"))
-    new File(repoTools.currentPath + "sgitRepo").delete()
-    init.initDirectory()
+    new File(repoTools.currentPath + "RepoTest").mkdir()
+    FileUtils.cleanDirectory(new File(repoTools.currentPath + "RepoTest"))
+    init.initDirectory(repoTools.currentPath + "RepoTest")
   }
 
   describe("If you create a new branch") {
     it("it should be create in the .git/refs/heads directory") {
       val branchName = "newBranch"
       branch.newBranch(branchName)
-      val exists = new File(repoTools.currentPath + "sgitRepo/.git/refs/heads/" + branchName).exists()
+      val exists = new File(repoTools.rootFile + "/.git/refs/heads/" + branchName).exists()
       assert(exists)
     }
   }

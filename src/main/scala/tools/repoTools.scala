@@ -10,8 +10,31 @@ object repoTools {
     * GET Current Path
     * @return
     */
-  val currentPath: String= "/Users/audreysamson/Desktop/SGITREPO/"//Paths.get(".").toAbsolutePath.toString.dropRight(1) //Get current path were the app is called }
+  def currentPath: String = {//"/Users/audreysamson/Workspace/cloneSamedi/sgit/"
+    val current = new File(".").getCanonicalPath() + "/"
+    current
+  }
 
+  val rootFile: String = "/Users/audreysamson/Workspace/cloneSamedi/sgit/RepoTest/sgit"//getRoot(new File(currentPath + "sgit")).getOrElse(new File(currentPath + "sgit")).getAbsolutePath
+
+
+  def getRoot(directory: File): Option[File] = {
+    if (directory.isDirectory) {
+      if (directory.listFiles().toList.contains(".git") && directory.getName == "sgit") {
+        Some(directory)
+      } else {
+        if (directory.getParentFile == null) {
+          None
+        } else {
+          getRoot(directory.getParentFile)
+        }
+      }
+    } else None
+
+    /*if (new File("/Users/audreysamson/Workspace/cloneSamedi/sgit/sgit/.git").exists()) {
+      Some(new File("/Users/audreysamson/Workspace/cloneSamedi/sgit/sgit"))
+    } else None*/
+  }
 
   /**
     * Create a file
@@ -84,7 +107,7 @@ object repoTools {
     * @return
     */
   def getAllUserFiles(): List[File] = {
-    val allFolders = recursiveListUserFolders(new File(repoTools.currentPath + "sgitRepo"))
+    val allFolders = recursiveListUserFolders(new File(repoTools.rootFile))
     allFolders.map(f => repoTools.getListOfFiles(f))
     allFolders.toList.filter(_.isFile)
   }
@@ -94,16 +117,16 @@ object repoTools {
     * @return
     */
   def getAllStagedFiles(): List[File] = {
-    repoTools.getListOfFiles(new File(repoTools.currentPath + "sgitRepo/.git/STAGE"))
+    repoTools.getListOfFiles(new File(repoTools.rootFile + "/.git/STAGE"))
   }
 
   def getAllCommitedFileHash(commitHash: String) : List[String] = {
-    val commitContent = Source.fromFile(new File(repoTools.currentPath + "sgitRepo/.git/objects/" + commitHash)).mkString
+    val commitContent = Source.fromFile(new File(repoTools.rootFile + "/.git/objects/" + commitHash)).mkString
     var filesHash = commitContent.split("\n")
       .map(_.trim)
       .filter(x => x != "")
       .toList
-    if (!fileTools.firstLine(new File(repoTools.currentPath + "sgitRepo/.git/objects/" + commitHash )).contains("")) {
+    if (!fileTools.firstLine(new File(repoTools.rootFile + "/.git/objects/" + commitHash )).contains("")) {
       filesHash = filesHash.drop(1) // first line = commit parent
     }
     filesHash = filesHash.drop(1) // second line = commit message

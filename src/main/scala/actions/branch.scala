@@ -7,7 +7,7 @@ import tools.{branchTools, commitTools, fileTools, repoTools}
 object branch {
 
   def newBranch(branchName : String): Unit= {
-    val pw = new PrintWriter(new File(repoTools.currentPath + "sgitRepo/.git/refs/heads/" + branchName))
+    val pw = new PrintWriter(new File(repoTools.rootFile + "/.git/refs/heads/" + branchName))
     val currentCommit = commitTools.lastCommitHash()
     pw.write(currentCommit)
     pw.close
@@ -15,7 +15,7 @@ object branch {
 
   //sgit branch -av
   def allBranches(): List[File] = {
-    repoTools.getListOfFiles(new File(repoTools.currentPath + "sgitRepo/.git/refs/heads/"))
+    repoTools.getListOfFiles(new File(repoTools.rootFile + "/.git/refs/heads/"))
   }
 
   def showAllBranches(): Unit = {
@@ -24,14 +24,14 @@ object branch {
 
   def renameCurrantBranch(newName: String): Boolean = {
     val currentB = branchTools.currentBranch()
-    val path = repoTools.currentPath + "sgitRepo/.git/refs/heads/"
+    val path = repoTools.rootFile + "/.git/refs/heads/"
     new File(path + currentB).renameTo(new File(path + newName)) && checkoutBranch(newName)
   }
 
   def checkoutBranch(branchName: String): Boolean = {
     val allB = allBranches().map(b => b.getName()) //VERIFY if  ID is a  BRANCH
     if (allB.contains(branchName)) {
-      val path = repoTools.currentPath + "sgitRepo/.git/HEAD/branch"
+      val path = repoTools.rootFile + "/.git/HEAD/branch"
       val pw = new PrintWriter(new File(path))
       pw.write(branchName)
       pw.close

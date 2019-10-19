@@ -12,9 +12,9 @@ import scala.io.Source
 class commitTest extends FunSpec with Matchers with GivenWhenThen with BeforeAndAfter{
 
   before{
-    FileUtils.cleanDirectory(new File(repoTools.currentPath + "sgitRepo"))
-    new File(repoTools.currentPath + "sgitRepo").delete()
-    init.initDirectory()
+    new File(repoTools.currentPath + "RepoTest").mkdir()
+    FileUtils.cleanDirectory(new File(repoTools.currentPath + "RepoTest"))
+    init.initDirectory(repoTools.currentPath + "RepoTest")
   }
 
   describe("If you never had commit already") {
@@ -27,7 +27,7 @@ class commitTest extends FunSpec with Matchers with GivenWhenThen with BeforeAnd
 
   describe("If you add one file and then commit") {
     it("commit file should contains the file's path") {
-      val file = new File(repoTools.currentPath + "sgitRepo/testCommit.txt")
+      val file = new File(repoTools.rootFile + "/testCommit.txt")
       new PrintWriter(file)
       add.addAFile("testCommit.txt")
 
@@ -37,8 +37,8 @@ class commitTest extends FunSpec with Matchers with GivenWhenThen with BeforeAnd
 
       val commitHash = commitTools.lastCommitHash()
 
-      val createdCommitObject = new File(repoTools.currentPath + "sgitRepo/.git/objects/" + commitHash).exists()
-      val content = Source.fromFile(repoTools.currentPath + "sgitRepo/.git/objects/" + commitHash).mkString
+      val createdCommitObject = new File(repoTools.rootFile + "/.git/objects/" + commitHash).exists()
+      val content = Source.fromFile(repoTools.rootFile + "/.git/objects/" + commitHash).mkString
       val supposedContent = "\n" +  "message\n" + hash + " " + file.getAbsolutePath+"\n"
 
       assert(createdCommitObject && content == supposedContent )
@@ -49,7 +49,7 @@ class commitTest extends FunSpec with Matchers with GivenWhenThen with BeforeAnd
     describe("and you commit") {
       it("commit file should contains the parent's hash") {
         // FIRST COMMIT
-        val file = new File(repoTools.currentPath + "sgitRepo/testCommit2.txt")
+        val file = new File(repoTools.rootFile + "/testCommit2.txt")
         new PrintWriter(file)
         add.addAFile("testCommit2.txt")
         val hash = add.hash(file.getAbsolutePath + Source.fromFile(file.getAbsolutePath).mkString)
@@ -58,14 +58,14 @@ class commitTest extends FunSpec with Matchers with GivenWhenThen with BeforeAnd
         val lastCommitHash = commitTools.lastCommitHash()
 
         // SECOND COMMIT
-        val file2 = new File(repoTools.currentPath + "sgitRepo/testCommit3.txt")
+        val file2 = new File(repoTools.rootFile + "/testCommit3.txt")
         new PrintWriter(file2)
         add.addAFile("testCommit3.txt")
         val hash2 = add.hash(file2.getAbsolutePath + Source.fromFile(file2.getAbsolutePath).mkString)
         commit.commit("message")
 
         val commitHash =  commitTools.lastCommitHash()
-        val firstLineContent = fileTools.firstLine(new File(repoTools.currentPath + "sgitRepo/.git/objects/" + commitHash)).get
+        val firstLineContent = fileTools.firstLine(new File(repoTools.rootFile + "/.git/objects/" + commitHash)).get
 
         assert(firstLineContent == lastCommitHash)
       }
@@ -74,7 +74,7 @@ class commitTest extends FunSpec with Matchers with GivenWhenThen with BeforeAnd
 
   describe("If you add one file and then commit") {
     it("the file's status should be 'commited'") {
-      val file = new File(repoTools.currentPath + "sgitRepo/testCommit3.txt")
+      val file = new File(repoTools.rootFile + "/testCommit3.txt")
       new PrintWriter(file)
       add.addAFile("testCommit3.txt")
       commit.commit("message")
@@ -85,12 +85,12 @@ class commitTest extends FunSpec with Matchers with GivenWhenThen with BeforeAnd
 
   describe("If you commit") {
     it("the stage file should be empty") {
-      val file = new File(repoTools.currentPath + "sgitRepo/testCommit3.txt")
+      val file = new File(repoTools.rootFile + "/testCommit3.txt")
       new PrintWriter(file)
       add.addAFile("testCommit3.txt")
       commit.commit("message")
 
-      val stagePath = repoTools.currentPath + "sgitRepo/.git/STAGE"
+      val stagePath = repoTools.rootFile + "/.git/STAGE"
       val stageContent = repoTools.getListOfFiles(new File(stagePath))
 
       assert(stageContent.isEmpty)
@@ -100,14 +100,14 @@ class commitTest extends FunSpec with Matchers with GivenWhenThen with BeforeAnd
   describe("If you add one file and then commit") {
     it("the commit should contain past commited files + the new one") {
       // FIRST COMMIT
-      val file = new File(repoTools.currentPath + "sgitRepo/testCommit4.txt")
+      val file = new File(repoTools.rootFile + "/testCommit4.txt")
       new PrintWriter(file)
       add.addAFile("testCommit4.txt")
       val hash = add.hash(file.getAbsolutePath + Source.fromFile(file.getAbsolutePath).mkString)
       commit.commit("message")
 
       // SECOND COMMIT
-      val file2 = new File(repoTools.currentPath + "sgitRepo/testCommit5.txt")
+      val file2 = new File(repoTools.rootFile + "/testCommit5.txt")
       new PrintWriter(file2)
       add.addAFile("testCommit5.txt")
       commit.commit("message")
@@ -120,13 +120,13 @@ class commitTest extends FunSpec with Matchers with GivenWhenThen with BeforeAnd
   describe("You add one file and then commit") {
     describe("If your delete it from your working directory") {
       it("it should not appear in the commit content") {
-        val file = new File(repoTools.currentPath + "sgitRepo/testCommit6.txt")
+        val file = new File(repoTools.rootFile + "/testCommit6.txt")
         new PrintWriter(file)
         add.addAFile("testCommit6.txt")
         commit.commit("message")
 
-        new File(repoTools.currentPath + "sgitRepo/testCommit6.txt").delete()
-        val file2 = new File(repoTools.currentPath + "sgitRepo/testCommit6B.txt")
+        new File(repoTools.rootFile + "/testCommit6.txt").delete()
+        val file2 = new File(repoTools.rootFile + "/testCommit6B.txt")
         new PrintWriter(file2)
         add.addAFile("testCommit6B.txt")
         commit.commit("message")
@@ -135,7 +135,7 @@ class commitTest extends FunSpec with Matchers with GivenWhenThen with BeforeAnd
           && !statusTools.isCommited(file)
           && commitTools.isRemoved(file)
           && !commitTools.isRemoved(file2)
-          && !new File(repoTools.currentPath + "sgitRepo/testCommit6.txt").exists())
+          && !new File(repoTools.rootFile + "/testCommit6.txt").exists())
       }
     }
   }
@@ -143,7 +143,7 @@ class commitTest extends FunSpec with Matchers with GivenWhenThen with BeforeAnd
   describe("You commit a file") {
     describe("then you update it and recommit") {
       it("the old one should not appear in the commit content") {
-        val file = new File(repoTools.currentPath + "sgitRepo/testCommit7.txt")
+        val file = new File(repoTools.rootFile + "/testCommit7.txt")
         new PrintWriter(file)
         add.addAFile("testCommit7.txt")
         commit.commit("message")
@@ -167,7 +167,7 @@ class commitTest extends FunSpec with Matchers with GivenWhenThen with BeforeAnd
   describe("If the STAGE is empty") {
     describe("and you commit") {
       it("the commit should not be done") {
-        val file = new File(repoTools.currentPath + "sgitRepo/testCommit8.txt")
+        val file = new File(repoTools.rootFile + "/testCommit8.txt")
         new PrintWriter(file)
         add.addAFile("testCommit8.txt")
         commit.commit("message")
@@ -176,7 +176,7 @@ class commitTest extends FunSpec with Matchers with GivenWhenThen with BeforeAnd
         val secondCommitHash = commitTools.lastCommitHash()
 
         //GET CONTENT COMMIT
-        //println(Source.fromFile(repoTools.currentPath + "sgitRepo/.git/objects/"+secondCommitHash).mkString)
+        //println(Source.fromFile(repoTools.currentPath + "sgit/.git/objects/"+secondCommitHash).mkString)
 
         assert(secondCommitHash == fistCommitHash)
       }

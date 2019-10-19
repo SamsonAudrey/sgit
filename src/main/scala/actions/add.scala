@@ -78,7 +78,7 @@ object add {
       val linkedStageFile = fileTools.getLinkedStagedFile(file)
       addAFile(fileName) // create a new blob
       if (linkedStageFile.nonEmpty) {
-        val stagePath = repoTools.currentPath + "sgitRepo/.git/STAGE/" + linkedStageFile.get.getName // remove hold blob from STAGE
+        val stagePath = repoTools.rootFile + "/.git/STAGE/" + linkedStageFile.get.getName // remove hold blob from STAGE
         new File(stagePath).delete()
       }
     }
@@ -112,13 +112,13 @@ object add {
     * @return
     */
   def stageABlob(blob: Blob): Boolean = {
-    val path = repoTools.currentPath+ "sgitRepo/.git/objects/"+ blob.hash.slice(0,2)
+    val path = repoTools.rootFile+ "/.git/objects/"+ blob.hash.slice(0,2)
 
     repoTools.createDirectory(path) // create the directory
     repoTools.createFile(path, blob.hash.drop(2), blob.filePath, blob.content) //create blob file
 
     //add to .git/STAGE folder
-    val stagePath = repoTools.currentPath + "sgitRepo/.git/STAGE"
+    val stagePath = repoTools.rootFile + "/.git/STAGE"
     repoTools.createFile(stagePath, blob.hash, blob.filePath, blob.content) //create blob file
   }
 

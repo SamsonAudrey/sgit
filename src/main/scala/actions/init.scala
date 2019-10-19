@@ -3,6 +3,8 @@ package actions
 import tools.repoTools
 import java.io.{File, PrintWriter}
 
+import tools.repoTools.recursiveListFolders
+
 
 object init {
 
@@ -10,23 +12,25 @@ object init {
     * Create the SGIT repository with all sub-folders
     * @return
     */
-  def initDirectory() : Boolean = {
-
-    val currentPath = repoTools.currentPath //"/Users/audreysamson/Desktop/SGITREPO/"
-
+  def initDirectory(path: String) : Boolean = {
     //create new repo sgit
-    if (new File(currentPath + "sgitRepo").mkdir()) {
-      val sgitPath = currentPath+"sgitRepo"
+    if (!recursiveListFolders(new File(path)).toList.contains(new File(path + "/sgit/.git")) && repoTools.getRoot(new File(path)).isEmpty || path == repoTools.currentPath + "RepoTest") { // Some(root)
+
+      // create sgit repo
+      val sgitPath = path + "/sgit"
+      new File(sgitPath).mkdir()
 
       //create .git folder and sub-folders
-      new File(sgitPath+"/.git").mkdir()
-      val gitPath = sgitPath+"/.git"
+      val gitPath = sgitPath+ "/.git"
+      new File(gitPath).mkdir()
+
+
       List("HEAD", "STAGE", "refs", "objects") //, "config", "description")
         .map(folder => new File(gitPath + "/" + folder).mkdir())
-      new File(gitPath+"/refs/tags").mkdir()
-      new File(gitPath+"/refs/heads").mkdir()
-      new PrintWriter(new File(gitPath+"/refs/heads/master"))
-      val pw = new PrintWriter(new File(gitPath+"/HEAD/branch"))
+      new File(gitPath + "/refs/tags").mkdir()
+      new File(gitPath + "/refs/heads").mkdir()
+      new PrintWriter(new File(gitPath + "/refs/heads/master"))
+      val pw = new PrintWriter(new File(gitPath + "/HEAD/branch"))
       pw.write("master") // DEFAULT
       pw.close()
 

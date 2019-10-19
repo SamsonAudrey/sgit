@@ -14,7 +14,7 @@ object commit {
     if (!isFirst()) {
       parent = commitTools.lastCommitHash()
     }
-    val path = repoTools.currentPath + "sgitRepo/.git/objects"
+    val path = repoTools.rootFile + "/.git/objects"
     val changes = commitTools.getFilesChanges() //changes = List(updatedFiles, removedFiles, addedFiles)
     if (changes(0).nonEmpty || changes(1).nonEmpty || changes(2).nonEmpty) {
       val content = createContentCommitFile(changes)
@@ -25,7 +25,7 @@ object commit {
       //update ref
       updateRefCommit(newCommitHash)
       //clean STAGE
-      FileUtils.cleanDirectory(new File(repoTools.currentPath + "sgitRepo/.git/STAGE"))
+      FileUtils.cleanDirectory(new File(repoTools.rootFile + "/.git/STAGE"))
       println(">> Commit done <<")
     } else {
       println(">> Nothing to commit <<")
@@ -34,13 +34,13 @@ object commit {
   }
 
   def isFirst(): Boolean = {
-    val lastCommit = Source.fromFile(repoTools.currentPath + "sgitRepo/.git/refs/heads/master").mkString
+    val lastCommit = Source.fromFile(repoTools.rootFile + "/.git/refs/heads/master").mkString
     lastCommit == ""
   }
 
   def updateRefCommit(lastCommitHash: String): Unit = {
-    val branch = fileTools.firstLine(new File(repoTools.currentPath + "sgitRepo/.git/HEAD/branch"))
-    val path = repoTools.currentPath + "sgitRepo/.git/refs/heads/" + branch.get
+    val branch = fileTools.firstLine(new File(repoTools.rootFile + "/.git/HEAD/branch"))
+    val path = repoTools.rootFile + "/.git/refs/heads/" + branch.get
     val pw = new PrintWriter(new File(path))
     pw.write(lastCommitHash)
     pw.close
@@ -50,7 +50,7 @@ object commit {
     var content = ""
     val lastCommit = commitTools.lastCommitHash()
     if (!isFirst()) {
-      var files = Source.fromFile(repoTools.currentPath + "sgitRepo/.git/objects/" + lastCommit)
+      var files = Source.fromFile(repoTools.rootFile + "/.git/objects/" + lastCommit)
         .mkString.split("\n").map(_.trim).toList.drop(2) // remove parent commit and message (2 first lines)
       if (changes(0).nonEmpty ) {
         // UPDATED

@@ -11,9 +11,9 @@ import tools.{diffTools, fileTools, repoTools}
 class diffToolsTest extends FunSpec with Matchers with GivenWhenThen with BeforeAndAfter{
 
   before{
-    FileUtils.cleanDirectory(new File(repoTools.currentPath + "sgitRepo"))
-    new File(repoTools.currentPath + "sgitRepo").delete()
-    init.initDirectory()
+    new File(repoTools.currentPath + "RepoTest").mkdir()
+    FileUtils.cleanDirectory(new File(repoTools.currentPath + "RepoTest"))
+    init.initDirectory(repoTools.currentPath + "RepoTest")
   }
 
 
@@ -57,13 +57,13 @@ class diffToolsTest extends FunSpec with Matchers with GivenWhenThen with Before
 
   describe("If you ask for general diff") {
     it("it should show you the list of differences") {
-      val file = new File(repoTools.currentPath + "sgitRepo/TestGenDiff.txt")
+      val file = new File(repoTools.rootFile + "/TestGenDiff.txt")
       val pw = new PrintWriter(file) // create the file containing the blob's content
       pw.write("blablabla")
       pw.close
       add.addAFile(file.getName)
 
-      val fileB = new File(repoTools.currentPath + "sgitRepo/TestGenDiffB.txt")
+      val fileB = new File(repoTools.rootFile + "/TestGenDiffB.txt")
       val pwB = new PrintWriter(fileB) // create the file containing the blob's content
       pwB.write("test")
       pwB.close
@@ -73,7 +73,7 @@ class diffToolsTest extends FunSpec with Matchers with GivenWhenThen with Before
       pw2.write("new content")
       pw2.close
 
-      val file2 = new File(repoTools.currentPath + "sgitRepo/TestGenDiff2.txt")
+      val file2 = new File(repoTools.rootFile + "/TestGenDiff2.txt")
       val pw3 = new PrintWriter(file2) // create the file containing the blob's content
       pw3.write("line 1")
       pw3.close

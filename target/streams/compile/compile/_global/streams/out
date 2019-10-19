@@ -1,2 +1,6 @@
-[0m[[0m[33mwarn[0m] [0m[0mthere were two deprecation warnings (since 2.13.0); re-run with -deprecation for details[0m
-[0m[[0m[33mwarn[0m] [0m[0mone warning found[0m
+[0m[[0m[31merror[0m] [0m[0m/Users/audreysamson/Workspace/cloneSamedi/sgit/src/main/scala/actions/init.scala:20:100: type mismatch;[0m
+[0m[[0m[31merror[0m] [0m[0m found   : String(".git")[0m
+[0m[[0m[31merror[0m] [0m[0m required: java.io.File[0m
+[0m[[0m[31merror[0m] [0m[0m    if (repoTools.getRoot(new File(path)).isEmpty || recursiveListFolders(new File(path)).contains(".git") || path == repoTools.currentPath + "RepoTest") { // Some(root)[0m
+[0m[[0m[31merror[0m] [0m[0m                                                                                                   ^[0m
+[0m[[0m[31merror[0m] [0m[0mone error found[0m

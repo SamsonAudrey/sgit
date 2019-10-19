@@ -14,14 +14,14 @@ class statusTools extends FunSpec with Matchers with GivenWhenThen with BeforeAn
 
 
   before{
-    FileUtils.cleanDirectory(new File(repoTools.currentPath + "sgitRepo"))
-    new File(repoTools.currentPath + "sgitRepo").delete()
-    init.initDirectory()
+    new File(repoTools.currentPath + "RepoTest").mkdir()
+    FileUtils.cleanDirectory(new File(repoTools.currentPath + "RepoTest"))
+    init.initDirectory(repoTools.currentPath + "RepoTest")
   }
 
   describe("If you add a file") {
     it("it should be a staged file") {
-      val path = repoTools.currentPath + "sgitRepo/testStatusFile.txt"
+      val path = repoTools.rootFile + "/testStatusFile.txt"
       val content = "Test status function"
 
       val pw = new PrintWriter(new File(path))
@@ -36,7 +36,7 @@ class statusTools extends FunSpec with Matchers with GivenWhenThen with BeforeAn
   describe("If you stage a file") {
     describe("and then you modify his content") {
       it("it should be an updated file") {
-        val path = repoTools.currentPath + "sgitRepo/testModifiedFile.txt"
+        val path = repoTools.rootFile + "/testModifiedFile.txt"
         val file = new File(path)
         val pw = new PrintWriter(file)
         pw.write("Line 1")
@@ -55,7 +55,7 @@ class statusTools extends FunSpec with Matchers with GivenWhenThen with BeforeAn
 
     describe("and you don't modify his content") {
       it("it should be an non updated file") {
-        val file = new File(repoTools.currentPath + "sgitRepo/testUnmodifiedFile.txt")
+        val file = new File(repoTools.rootFile + "/testUnmodifiedFile.txt")
         val pw = new PrintWriter(file)
         pw.write("Hello Test")
         pw.close
@@ -68,7 +68,7 @@ class statusTools extends FunSpec with Matchers with GivenWhenThen with BeforeAn
 
     describe("and then you modify his content v2") {
       it("it should be an updated file") {
-        val path = repoTools.currentPath + "sgitRepo/testModifiedFile2.txt"
+        val path = repoTools.rootFile + "/testModifiedFile2.txt"
         val pw = new PrintWriter(new File(path))
         pw.write("Line test")
         pw.close
@@ -79,14 +79,14 @@ class statusTools extends FunSpec with Matchers with GivenWhenThen with BeforeAn
         pwu.write("\n line 2 - added")
         pwu.close
 
-        assert(statusTools.isStagedAndUpdatedContent(new File(repoTools.currentPath + "sgitRepo/testModifiedFile2.txt")))
+        assert(statusTools.isStagedAndUpdatedContent(new File(repoTools.rootFile + "/testModifiedFile2.txt")))
       }
     }
   }
 
   describe("If you ask for general status ") {
     it("it should return a list of files ") {
-      val path = repoTools.currentPath + "sgitRepo/testStatus_updatedStage.txt"
+      val path = repoTools.rootFile + "/testStatus_updatedStage.txt"
       val pw = new PrintWriter(new File(path))
       pw.write("Line test")
       pw.close
@@ -97,7 +97,7 @@ class statusTools extends FunSpec with Matchers with GivenWhenThen with BeforeAn
       pwu.write("\n line 2 - added")
       pwu.close
 
-      val pathFree = repoTools.currentPath + "sgitRepo/testStatus_free.txt"
+      val pathFree = repoTools.rootFile + "/testStatus_free.txt"
       new PrintWriter(new File(pathFree))
 
       val genStatus = status.generalStatus()

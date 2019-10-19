@@ -11,18 +11,19 @@ import org.apache.commons.io.FileUtils
 class initTest  extends FunSpec with Matchers with GivenWhenThen with BeforeAndAfter {
 
   before{
-    FileUtils.cleanDirectory(new File(repoTools.currentPath + "sgitRepo"))
-    new File(repoTools.currentPath + "sgitRepo").delete()
+    new File(repoTools.currentPath + "RepoTest").mkdir()
+    FileUtils.cleanDirectory(new File(repoTools.currentPath + "RepoTest"))
+    init.initDirectory(repoTools.currentPath + "RepoTest")
   }
 
   describe("If you run init") {
     describe("and there is not yet a sgit repository ") {
       it("it should return true and create a directory sgitRepo.") {
-        init.initDirectory()
-        val existHEAD = new File(repoTools.currentPath + "sgitREPO/.git/HEAD").exists()
-        val existSTAGE = new File(repoTools.currentPath + "sgitREPO/.git/STAGE").exists()
-        val existObjects = new File(repoTools.currentPath + "sgitREPO/.git/objects").exists()
-        val existRef = new File(repoTools.currentPath + "sgitREPO/.git/refs").exists()
+        init.initDirectory(repoTools.currentPath + "RepoTest/sgit")
+        val existHEAD = new File(repoTools.currentPath + "RepoTest/sgit/.git/HEAD").exists()
+        val existSTAGE = new File(repoTools.currentPath + "RepoTest/sgit/.git/STAGE").exists()
+        val existObjects = new File(repoTools.currentPath + "RepoTest/sgit/.git/objects").exists()
+        val existRef = new File(repoTools.currentPath + "RepoTest/sgit/.git/refs").exists()
         //val existDescription= new File(repoTools.currentPath + "sgitREPO/.git/description").exists()
         //val existConfig = new File(repoTools.currentPath + "sgitREPO/.git/config").exists()
         val allExist = existHEAD && existSTAGE && existObjects && existRef // && existDescription && existConfig
@@ -32,8 +33,15 @@ class initTest  extends FunSpec with Matchers with GivenWhenThen with BeforeAndA
 
     describe("and there is already a sgit repository ") {
       it("it should return false and not create a directory sgitRepo.") {
-        init.initDirectory() // first init
-        var sndInit = init.initDirectory() //second init
+        val path = "/Users/audreysamson/Workspace/RepoTest2"
+        new File(path).mkdir()
+
+        init.initDirectory(path) // first init
+        var sndInit = init.initDirectory(path) //second init
+
+        FileUtils.cleanDirectory(new File(path))
+        new File(path).delete()
+
         assert(sndInit === false)
       }
     }
