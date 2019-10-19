@@ -19,13 +19,11 @@ class initTest  extends FunSpec with Matchers with GivenWhenThen with BeforeAndA
     describe("and there is not yet a sgit repository ") {
       it("it should return true and create a directory sgitRepo.") {
         init.initDirectory(repoTools.currentPath)
-        val existHEAD = new File(repoTools.currentPath + "/sgit/.git/HEAD").exists()
+        val existHEAD = new File(repoTools.currentPath + "/sgit/.git/HEAD/branch").exists()
         val existSTAGE = new File(repoTools.currentPath + "/sgit/.git/STAGE").exists()
         val existObjects = new File(repoTools.currentPath + "/sgit/.git/objects").exists()
         val existRef = new File(repoTools.currentPath + "/sgit/.git/refs").exists()
-        //val existDescription= new File(repoTools.currentPath + "sgitREPO/.git/description").exists()
-        //val existConfig = new File(repoTools.currentPath + "sgitREPO/.git/config").exists()
-        val allExist = existHEAD && existSTAGE && existObjects && existRef // && existDescription && existConfig
+        val allExist = existHEAD && existSTAGE && existObjects && existRef
         assert( allExist === true)
       }
     }

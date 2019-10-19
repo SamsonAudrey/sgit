@@ -20,7 +20,7 @@ class repositoryTest extends FunSpec with Matchers with GivenWhenThen with Befor
   describe("If you want to get folders in a directory") {
     describe("and there is no folders ") {
       it("it should return an empty list") {
-        val path = repoTools.rootFile
+        val path = repoTools.rootPath
         new File(path+"/sgitRepo/testRepo1").mkdir()
         val listFolders1 = repoTools.recursiveListFolders(new File(path+"/testRepo1"))
         assert(listFolders1.isEmpty)
@@ -29,7 +29,7 @@ class repositoryTest extends FunSpec with Matchers with GivenWhenThen with Befor
 
     describe("and there is 3 direct sub-folders and one sub-sub-folder") {
       it("it should return a list with this four folders ") {
-        val path = repoTools.rootFile
+        val path = repoTools.rootPath
         new File(path + "/testRepo2").mkdir()
         new File(path + "/testRepo2/folder1").mkdir() //1
         new File(path + "/testRepo2/folder2").mkdir() //2
@@ -45,7 +45,7 @@ class repositoryTest extends FunSpec with Matchers with GivenWhenThen with Befor
   describe("If you want to get files in a directory") {
     describe("and there is no files ") {
       it("it should return an empty list") {
-        val path = repoTools.rootFile
+        val path = repoTools.rootPath
         new File(path+"/sgitRepo/testRepoEmpty").mkdir()
         val listFoldersEmpty = repoTools.getListOfFiles(new File(path + "/testRepoEmpty"))
         assert(listFoldersEmpty === List())
@@ -54,7 +54,7 @@ class repositoryTest extends FunSpec with Matchers with GivenWhenThen with Befor
 
     describe("and there is three direct files ") {
       it("it should return a list with these three files ") {
-        val path = repoTools.rootFile
+        val path = repoTools.rootPath
         new File(path + "/testRepo3").mkdir()
         new File(path + "/testRepo3/testRepo4").mkdir()
         new PrintWriter(new File(path + "/testRepo3/testRepo4/folder1" ))
@@ -74,7 +74,7 @@ class repositoryTest extends FunSpec with Matchers with GivenWhenThen with Befor
   describe("If you want to delete a directory") {
     describe("and it exist and contains a sub-folder ") {
       it("it should delete the sub-folder") {
-        val path = repoTools.rootFile
+        val path = repoTools.rootPath
         new File(path + "/testRepo4").mkdir()
         new File(path + "/testRepo4/testRepoToDelete").mkdir()
         new PrintWriter(new File(path + "/testRepo4/testRepoToDelete/subFolder1"))

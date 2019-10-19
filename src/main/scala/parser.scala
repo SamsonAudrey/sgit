@@ -129,7 +129,7 @@ object parser {
                   }
                   case _ => {
                     println(
-                      tools.printerTools.printMessage(
+                      tools.printerTools.printColorMessage(
                         Console.RED,
                         "No repository found. Please, initialize one."
                       )
@@ -138,7 +138,7 @@ object parser {
                 }
               }
               case _ => {
-
+                // arguments are bad, error message is displayed
               }
             }
           }

@@ -11,17 +11,16 @@ object diffTools {
 
   /**
     * Return List of differences between two files
-    * @param freeFile
-    * @param stagedFile
+    * @param freeFile : File
+    * @param stagedFile : File
     * @return
     */
   def diff(freeFile: File, stagedFile: File): List[LineDiff] = {
-    val newContent = Source.fromFile(freeFile.getAbsolutePath).mkString
+    val newContent = fileTools.getContentFile(freeFile.getAbsolutePath)
     val nC = newContent.split("\n")
       .toSeq
       .map(_.trim)
-    //.filter(_ != "")
-    val oldContent = Source.fromFile(stagedFile.getAbsolutePath).mkString
+    val oldContent = fileTools.getContentFile(stagedFile.getAbsolutePath)
     val oC = oldContent.split("\n")
       .toSeq
       .map(_.trim)
@@ -75,50 +74,52 @@ object diffTools {
   /**
     * Print all the differences of all Files
     */
-  def showGeneralDiff(): Unit= {
+  def showGeneralDiff(): String = {
+    var content = ""
+
+    // var list : List(allFreeFiles, allUpdatedStagedFiles, allUpdatedCommitedFiles, allStagedUnCommitedFiles)
     val list = status.generalStatus()
 
     // no diff for free files in list(0)
+    // no diff for uncommited files in list(3)
 
+    // diff between stage area and working directory
     if (list(1).nonEmpty) {
-      list(1).foreach(f => {
+      list(1).map(f => {
         val name = f.getName
         val stageFile = fileTools.getLinkedStagedFile(f)
-        println(s"diff --git a/$name b/$name \n"+
+        content += s"diff --git a/$name b/$name \n"+
           "--- a/$name\n" +
-          "+++ b/$name")
+          "+++ b/$name\n"
         val allDiff = diff(f,stageFile.get)
-        println("@@ " + (allDiff(0).index + 1) + "," + allDiff.length + " @@")
-        println(allDiff.foreach(d => println(formatDiffLine(d)))) } )
+        content += "@@ " + (allDiff(0).index + 1) + "," + allDiff.length + " @@ \n"
+        allDiff.foreach(d => content += formatDiffLine(d) + "\n") } )
     }
 
-    /*if (list(2).nonEmpty) {
-      println("Changes not staged for commit:\n  (use \"git add <file>...\" " +
-        "to update what will be committed)")
-      list(2).foreach(f => println(f.getName))
+    // diff between last commit and working directory
+    if (list(2).nonEmpty) {
+      list(2).map(f => {
+        val name = f.getName
+        val commitedFile = fileTools.getLinkedCommitFile(f)
+        content += s"diff --git a/$name b/$name \n"+
+          "--- a/$name\n" +
+          "+++ b/$name\n"
+        val allDiff = diff(f,commitedFile.get)
+        content += "@@ " + (allDiff(0).index + 1) + "," + allDiff.length + " @@ \n"
+        allDiff.foreach(d => content += formatDiffLine(d) + "\n") } )
     }
-
-    if (list(3).nonEmpty) {
-      println("Changes to be committed:")
-      list(3).foreach(f => println(f.getName))
-    }
-
-    if(list(0).isEmpty && list(1).isEmpty && list(2).isEmpty) {
-      println("nothing to commit or add")
-    }*/
+    content
   }
 
   /**
     * Return Line of differences with the good format for then print it
-    * @param lineDiff
+    * @param lineDiff : LineDiff
     * @return
     */
   def formatDiffLine(lineDiff: LineDiff): String = {
-    var res = ""
     lineDiff.ope match {
-      case "ADD" => res += "Line " + (lineDiff.index +1) + ": + " + lineDiff.content
-      case "REMOVE" => res += "Line " + (lineDiff.index +1) +  ": - " + lineDiff.content
+      case "ADD" => "Line " + (lineDiff.index +1) + ": + " + lineDiff.content
+      case "REMOVE" => "Line " + (lineDiff.index +1) +  ": - " + lineDiff.content
     }
-    res
   }
 }

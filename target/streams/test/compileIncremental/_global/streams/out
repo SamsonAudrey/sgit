@@ -1,1 +1,35 @@
+[0m[[0m[0mdebug[0m] [0m[0mThe actions.status$ has the following regular definitions changed:[0m
+[0m[[0m[0mdebug[0m] [0m[0m	UsedName(finalize,[Default]).[0m
+[0m[[0m[0mdebug[0m] [0m[0mAll member reference dependencies will be considered within this context.[0m
+[0m[[0m[0mdebug[0m] [0m[0mFiles invalidated by inheriting from (external) actions.status$: Set(); now invalidating by inheritance (internally).[0m
+[0m[[0m[0mdebug[0m] [0m[0mGetting direct dependencies of all classes transitively invalidated by inheritance.[0m
+[0m[[0m[0mdebug[0m] [0m[0mGetting classes that directly depend on (external) actions.status$.[0m
+[0m[[0m[0mdebug[0m] [0m[0mNone of the modified names appears in source file of toolsTest.statusTest. This dependency is not being considered for invalidation.[0m
+[0m[[0m[0mdebug[0m] [0m[0mThe tools.statusTools$ has the following regular definitions changed:[0m
+[0m[[0m[0mdebug[0m] [0m[0m	UsedName(finalize,[Default]), UsedName(hasBeenUpdated,[Default]).[0m
+[0m[[0m[0mdebug[0m] [0m[0mAll member reference dependencies will be considered within this context.[0m
+[0m[[0m[0mdebug[0m] [0m[0mFiles invalidated by inheriting from (external) tools.statusTools$: Set(); now invalidating by inheritance (internally).[0m
+[0m[[0m[0mdebug[0m] [0m[0mGetting direct dependencies of all classes transitively invalidated by inheritance.[0m
+[0m[[0m[0mdebug[0m] [0m[0mGetting classes that directly depend on (external) tools.statusTools$.[0m
+[0m[[0m[0mdebug[0m] [0m[0mNone of the modified names appears in source file of toolsTest.statusTest. This dependency is not being considered for invalidation.[0m
+[0m[[0m[0mdebug[0m] [0m[0mNone of the modified names appears in source file of actionsTest.addTest. This dependency is not being considered for invalidation.[0m
+[0m[[0m[0mdebug[0m] [0m[0mNone of the modified names appears in source file of actionsTest.commitTest. This dependency is not being considered for invalidation.[0m
+[0m[[0m[0mdebug[0m] [0m[0mNone of the modified names appears in source file of toolsTest.fileToolsTest. This dependency is not being considered for invalidation.[0m
+[0m[[0m[0mdebug[0m] [0m[0mThe actions.status has the following regular definitions changed:[0m
+[0m[[0m[0mdebug[0m] [0m[0m	UsedName(finalize,[Default]).[0m
+[0m[[0m[0mdebug[0m] [0m[0mAll member reference dependencies will be considered within this context.[0m
+[0m[[0m[0mdebug[0m] [0m[0mFiles invalidated by inheriting from (external) actions.status: Set(); now invalidating by inheritance (internally).[0m
+[0m[[0m[0mdebug[0m] [0m[0mGetting direct dependencies of all classes transitively invalidated by inheritance.[0m
+[0m[[0m[0mdebug[0m] [0m[0mGetting classes that directly depend on (external) actions.status.[0m
+[0m[[0m[0mdebug[0m] [0m[0mNone of the modified names appears in source file of toolsTest.statusTest. This dependency is not being considered for invalidation.[0m
+[0m[[0m[0mdebug[0m] [0m[0mThe tools.statusTools has the following regular definitions changed:[0m
+[0m[[0m[0mdebug[0m] [0m[0m	UsedName(finalize,[Default]), UsedName(hasBeenUpdated,[Default]).[0m
+[0m[[0m[0mdebug[0m] [0m[0mAll member reference dependencies will be considered within this context.[0m
+[0m[[0m[0mdebug[0m] [0m[0mFiles invalidated by inheriting from (external) tools.statusTools: Set(); now invalidating by inheritance (internally).[0m
+[0m[[0m[0mdebug[0m] [0m[0mGetting direct dependencies of all classes transitively invalidated by inheritance.[0m
+[0m[[0m[0mdebug[0m] [0m[0mGetting classes that directly depend on (external) tools.statusTools.[0m
+[0m[[0m[0mdebug[0m] [0m[0mNone of the modified names appears in source file of toolsTest.statusTest. This dependency is not being considered for invalidation.[0m
+[0m[[0m[0mdebug[0m] [0m[0mNone of the modified names appears in source file of actionsTest.addTest. This dependency is not being considered for invalidation.[0m
+[0m[[0m[0mdebug[0m] [0m[0mNone of the modified names appears in source file of actionsTest.commitTest. This dependency is not being considered for invalidation.[0m
+[0m[[0m[0mdebug[0m] [0m[0mNone of the modified names appears in source file of toolsTest.fileToolsTest. This dependency is not being considered for invalidation.[0m
 [0m[[0m[0mdebug[0m] [0m[0mNo changes[0m

@@ -1,10 +1,14 @@
 package actions
 
-import tools.diffTools
+import tools.{diffTools, printerTools}
 
 object diff {
 
+  /**
+    * Display diff
+    */
   def diff(): Unit = {
-    diffTools.showGeneralDiff()
+    printerTools.printMessage(diffTools.showGeneralDiff())
   }
+
 }

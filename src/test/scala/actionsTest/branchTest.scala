@@ -5,7 +5,7 @@ import java.io.{File, PrintWriter}
 import actions.{add, branch, commit, init}
 import org.apache.commons.io.FileUtils
 import org.scalatest.{BeforeAndAfter, FunSpec, GivenWhenThen, Matchers}
-import tools.{branchTools, commitTools, repoTools}
+import tools.{commitTools, repoTools}
 
 class branchTest extends FunSpec with Matchers with GivenWhenThen with BeforeAndAfter{
 
@@ -19,7 +19,7 @@ class branchTest extends FunSpec with Matchers with GivenWhenThen with BeforeAnd
     it("it should be create in the .git/refs/heads directory") {
       val branchName = "newBranch"
       branch.newBranch(branchName)
-      val exists = new File(repoTools.rootFile + "/.git/refs/heads/" + branchName).exists()
+      val exists = new File(repoTools.rootPath + "/.git/refs/heads/" + branchName).exists()
       assert(exists)
     }
   }
@@ -33,6 +33,7 @@ class branchTest extends FunSpec with Matchers with GivenWhenThen with BeforeAnd
       branch.newBranch(branchName2)
       branch.newBranch(branchName3)
       val allBranches = branch.allBranches()
+      println("----------------------------------")
       branch.showAllBranches()
       assert(allBranches.length == 4) // 3 new branches and the master
     }
@@ -43,7 +44,7 @@ class branchTest extends FunSpec with Matchers with GivenWhenThen with BeforeAnd
       val branchName = "branch"
       branch.newBranch(branchName)
       branch.checkoutBranch(branchName)
-      val currentBranch = branchTools.currentBranch()
+      val currentBranch = branch.currentBranch()
       assert(currentBranch == "branch")
     }
   }
@@ -53,8 +54,8 @@ class branchTest extends FunSpec with Matchers with GivenWhenThen with BeforeAnd
       val branchName1 = "branch1"
       branch.newBranch(branchName1)
       branch.checkoutBranch(branchName1)
-      branch.renameCurrantBranch("renamedBranch")
-      val currentBranch = branchTools.currentBranch()
+      branch.renameCurrentBranch("renamedBranch")
+      val currentBranch = branch.currentBranch()
       branch.showAllBranches()
       assert(currentBranch == "renamedBranch")
     }

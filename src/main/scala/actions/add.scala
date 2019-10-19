@@ -3,6 +3,8 @@ package actions
 import tools.{fileTools, repoTools, statusTools}
 import objects.Blob
 import java.io._
+
+import scala.annotation.tailrec
 import scala.io.Source
 
 object add {
@@ -10,119 +12,109 @@ object add {
   private val md = java.security.MessageDigest.getInstance("SHA-1")
 
   /**
-    * Add all files which need it to STAGE
+    * Add all files in the stage area
     */
   def addAll(): Unit = {
-    val list = repoTools.getAllUserFiles()
-    val allUserFiles = list.map(f => f.getName).filter(f => f != ".DS_Store")
-    addMultipleFiles(allUserFiles)
+    addMultipleFiles(repoTools.getAllUserFileNames)
   }
 
   /**
-    * add all files of the list to STAGE
-    * @param filesNameList
+    * Add all files of the list names to the stage area
+    * @param fileNamesList : List[String]
     */
-  def addMultipleFiles(filesNameList: List[String]): Unit = {
-    if (filesNameList.isEmpty) {
-      println("Empty")
-    } else {
-      val file: Option[File] = fileTools.findFile(filesNameList(0))
-      if(file.isEmpty) {
-        println(">>" + filesNameList(0) +" not found. <<")
+  @tailrec
+  def addMultipleFiles(fileNamesList: List[String]): Unit = {
+    fileNamesList match {
+      case List() => {
+        // no files to add
       }
-      if (file.nonEmpty && statusTools.isStaged(file.get)){
-        if (statusTools.isStagedAndUpdatedContent(file.get)){
-          updateStagedFile(file.get.getName)
-        } else {
-          println(">>staged and no updated :" + filesNameList(0) +"<<") // do nothing
+      case _ => {
+        val file: Option[File] = fileTools.findFile(fileNamesList(0))
+        if (file.nonEmpty && statusTools.isStaged(file.get)){
+          if (statusTools.isStagedAndUpdatedContent(file.get)){
+            updateStagedFile(file.get.getName)
+          }
+        } else if (file.nonEmpty) {
+          addAFile(fileNamesList(0))
         }
-      } else if (file.nonEmpty) {
-        addAFile(filesNameList(0))
-      } else {
-        //do nothing
-      }
-      if (filesNameList.length > 1) {
-        addMultipleFiles(filesNameList.tail)
+        if (fileNamesList.length > 1) {
+          addMultipleFiles(fileNamesList.tail)
+        }
       }
     }
   }
 
   /**
-    * Add one file to STAGE
+    * Add a file to the stage area
     * Check if the file exists
-    * @param fileName
+    * @param fileName : String
     */
   def addAFile(fileName: String): Unit= {
     //find the file with fileName
-    val optionFile:Option[File] = fileTools.findFile(fileName)
-    if(optionFile.isEmpty) {
-      println(">>" + fileName +" not found. <<")
-    } else {
-      val file = optionFile.get
-      val path = file.getAbsolutePath
-      val contentFile = Source.fromFile(path).mkString
-      val fileHash = hash(path + contentFile)
-      val newBlob = createBlob(path,fileHash,contentFile) //create new blob
-      if (stageABlob(newBlob)) {
-        println(">> File " + fileName + " added")
-      } else println(">> Not possible <<")// TODO : error
-    }
-  }
-
-  def updateStagedFile(fileName: String): Unit = {
     val optionFile: Option[File] = fileTools.findFile(fileName)
-    if(optionFile.isEmpty) {
-      println(">>" + fileName +" not found. <<")
-    } else {
-      val file = optionFile.get
-      val linkedStageFile = fileTools.getLinkedStagedFile(file)
-      addAFile(fileName) // create a new blob
-      if (linkedStageFile.nonEmpty) {
-        val stagePath = repoTools.rootFile + "/.git/STAGE/" + linkedStageFile.get.getName // remove hold blob from STAGE
-        new File(stagePath).delete()
+    optionFile match {
+      case None => {
+        // no files to add
+      }
+      case Some(file) => {
+        val path = file.getAbsolutePath
+        val contentFile = fileTools.getContentFile(path)
+        val fileHash = fileTools.hash(path + contentFile)
+        val newBlob = createBlob(path,fileHash,contentFile)
+        stageABlob(newBlob)
       }
     }
   }
 
   /**
-    * Hash a String (file's name)
-    * @param str
-    * @return
+    * Update file already staged.
+    * Remove the old version from the stage area, and add the new one
+    * @param fileName : String
     */
-  def hash(str: String): String ={
-    fileTools.encryptThisString(str)
+  def updateStagedFile(fileName: String): Unit = {
+    val optionFile: Option[File] = fileTools.findFile(fileName)
+    optionFile match {
+      case Some(file) => {
+        val linkedStageFile = fileTools.getLinkedStagedFile(file)
+        addAFile(fileName)
+        if (linkedStageFile.nonEmpty) {
+          val stagePath = repoTools.rootPath + "/.git/STAGE/" + linkedStageFile.get.getName // remove hold blob from STAGE
+          new File(stagePath).delete()
+        }
+      }
+      case None => {
+        // no files to add
+      }
+    }
   }
 
-  def getFileHash(file: File): String = {
-    hash(file.getAbsolutePath + Source.fromFile(file).mkString)
-  }
+
 
   /**
-    * Create a blob Object
-    * @param fileName
-    * @param hash
-    * @param content
+    * Create a blob
+    * @param filePath : String
+    * @param hash : String
+    * @param content : String
     * @return
     */
   def createBlob(filePath: String, hash: String, content: String): Blob = {
-    val blob = Blob(filePath,hash,content)//create new blob
-    blob
+    Blob(filePath,hash,content)//create new blob
   }
 
   /**
-    * Stage a Blob
-    * @param blob
+    * Add the blob to the stage area
+    * @param blob : Blob
     * @return
     */
   def stageABlob(blob: Blob): Boolean = {
-    val path = repoTools.rootFile+ "/.git/objects/"+ blob.hash.slice(0,2)
-
-    repoTools.createDirectory(path) // create the directory
-    repoTools.createFile(path, blob.hash.drop(2), blob.filePath, blob.content) //create blob file
-
-    //add to .git/STAGE folder
-    val stagePath = repoTools.rootFile + "/.git/STAGE"
-    repoTools.createFile(stagePath, blob.hash, blob.filePath, blob.content) //create blob file
+    val path = repoTools.rootPath+ "/.git/objects/"+ blob.hash.slice(0,2)
+    // create the directory
+    repoTools.createDirectory(path)
+    //create blob file
+    repoTools.createFile(path, blob.hash.drop(2), blob.filePath, blob.content)
+    //add to the stage area
+    val stagePath = repoTools.rootPath + "/.git/STAGE"
+    repoTools.createFile(stagePath, blob.hash, blob.filePath, blob.content)
   }
 
 }

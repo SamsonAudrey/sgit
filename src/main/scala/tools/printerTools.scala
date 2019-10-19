@@ -1,9 +1,22 @@
 package tools
+import Console.{RESET}
 
 object printerTools {
 
-  def printMessage(message: String, color: String): Unit = {
-    println(color + message)
+  /**
+    * Print simple message
+    * @param message : String
+    */
+  def printMessage(message: String): Unit = {
+    println(message)
   }
 
+  /**
+    * Print colored message
+    * @param color : String
+    * @param message : String
+    */
+  def printColorMessage(color: String,message: String): Unit = {
+    Console.println(s"${RESET}$color$message${RESET}")
+  }
 }

@@ -13,7 +13,7 @@
 [0m[[0m[0mdebug[0m] [0m[0mMerging 'META-INF/maven/org.apache.commons/commons-lang3/pom.properties' with strategy 'discard'[0m
 [0m[[0m[0mdebug[0m] [0m[0mMerging 'META-INF/maven/org.apache.commons/commons-lang3/pom.xml' with strategy 'discard'[0m
 [0m[[0m[0minfo[0m] [0m[0mStrategy 'discard' was applied to 5 files (Run the task at debug level to see details)[0m
-[0m[[0m[0mdebug[0m] [0m[0mSHA-1: 2431e0997d0f337facd452042f7c4d49093e99e9[0m
+[0m[[0m[0mdebug[0m] [0m[0mSHA-1: 1eaa2a10f61c54b83f0ef7cbcf15825a51b4462f[0m
 [0m[[0m[0mdebug[0m] [0m[0mPackaging /Users/audreysamson/Workspace/cloneSamedi/sgit/target/scala-2.13/sgit ...[0m
 [0m[[0m[0mdebug[0m] [0m[0mInput file mappings:[0m
 [0m[[0m[0mdebug[0m] [0m[0m	LICENSE_scala-library-2.13.1[0m
@@ -68,12 +68,6 @@
 [0m[[0m[0mdebug[0m] [0m[0m	  /Users/audreysamson/Workspace/cloneSamedi/sgit/target/streams/_global/assemblyOption/_global/streams/assembly/8b447351a8cc6d1d2b575f78eda3c9d10e8e67e3_dir/objects/Blob$Blob_Class$.class[0m
 [0m[[0m[0mdebug[0m] [0m[0m	objects/Blob.class[0m
 [0m[[0m[0mdebug[0m] [0m[0m	  /Users/audreysamson/Workspace/cloneSamedi/sgit/target/streams/_global/assemblyOption/_global/streams/assembly/8b447351a8cc6d1d2b575f78eda3c9d10e8e67e3_dir/objects/Blob.class[0m
-[0m[[0m[0mdebug[0m] [0m[0m	objects/Commit$.class[0m
-[0m[[0m[0mdebug[0m] [0m[0m	  /Users/audreysamson/Workspace/cloneSamedi/sgit/target/streams/_global/assemblyOption/_global/streams/assembly/8b447351a8cc6d1d2b575f78eda3c9d10e8e67e3_dir/objects/Commit$.class[0m
-[0m[[0m[0mdebug[0m] [0m[0m	objects/Commit$commit$.class[0m
-[0m[[0m[0mdebug[0m] [0m[0m	  /Users/audreysamson/Workspace/cloneSamedi/sgit/target/streams/_global/assemblyOption/_global/streams/assembly/8b447351a8cc6d1d2b575f78eda3c9d10e8e67e3_dir/objects/Commit$commit$.class[0m
-[0m[[0m[0mdebug[0m] [0m[0m	objects/Commit.class[0m
-[0m[[0m[0mdebug[0m] [0m[0m	  /Users/audreysamson/Workspace/cloneSamedi/sgit/target/streams/_global/assemblyOption/_global/streams/assembly/8b447351a8cc6d1d2b575f78eda3c9d10e8e67e3_dir/objects/Commit.class[0m
 [0m[[0m[0mdebug[0m] [0m[0m	objects/LineDiff$.class[0m
 [0m[[0m[0mdebug[0m] [0m[0m	  /Users/audreysamson/Workspace/cloneSamedi/sgit/target/streams/_global/assemblyOption/_global/streams/assembly/8b447351a8cc6d1d2b575f78eda3c9d10e8e67e3_dir/objects/LineDiff$.class[0m
 [0m[[0m[0mdebug[0m] [0m[0m	objects/LineDiff$diff$.class[0m
@@ -10138,10 +10132,6 @@
 [0m[[0m[0mdebug[0m] [0m[0m	  /Users/audreysamson/Workspace/cloneSamedi/sgit/target/streams/_global/assemblyOption/_global/streams/assembly/5d55f77e0068215365fbe9372a8fffe732cc46a2_1248081c45afa2b6a7f3cca73c0a384fee98140f_da39a3ee5e6b4b0d3255bfef95601890afd80709/scopt/platform$PlatformReadInstances.class[0m
 [0m[[0m[0mdebug[0m] [0m[0m	scopt/platform.class[0m
 [0m[[0m[0mdebug[0m] [0m[0m	  /Users/audreysamson/Workspace/cloneSamedi/sgit/target/streams/_global/assemblyOption/_global/streams/assembly/5d55f77e0068215365fbe9372a8fffe732cc46a2_1248081c45afa2b6a7f3cca73c0a384fee98140f_da39a3ee5e6b4b0d3255bfef95601890afd80709/scopt/platform.class[0m
-[0m[[0m[0mdebug[0m] [0m[0m	tools/branchTools$.class[0m
-[0m[[0m[0mdebug[0m] [0m[0m	  /Users/audreysamson/Workspace/cloneSamedi/sgit/target/streams/_global/assemblyOption/_global/streams/assembly/8b447351a8cc6d1d2b575f78eda3c9d10e8e67e3_dir/tools/branchTools$.class[0m
-[0m[[0m[0mdebug[0m] [0m[0m	tools/branchTools.class[0m
-[0m[[0m[0mdebug[0m] [0m[0m	  /Users/audreysamson/Workspace/cloneSamedi/sgit/target/streams/_global/assemblyOption/_global/streams/assembly/8b447351a8cc6d1d2b575f78eda3c9d10e8e67e3_dir/tools/branchTools.class[0m
 [0m[[0m[0mdebug[0m] [0m[0m	tools/commitTools$.class[0m
 [0m[[0m[0mdebug[0m] [0m[0m	  /Users/audreysamson/Workspace/cloneSamedi/sgit/target/streams/_global/assemblyOption/_global/streams/assembly/8b447351a8cc6d1d2b575f78eda3c9d10e8e67e3_dir/tools/commitTools$.class[0m
 [0m[[0m[0mdebug[0m] [0m[0m	tools/commitTools.class[0m

@@ -2,14 +2,13 @@ package actionsTest
 
 import java.io.{File, FileWriter, PrintWriter}
 
-import tools.statusTools
+import tools.{statusTools,fileTools}
 
 import scala.io.Source
 import org.scalatest._
 import _root_.tools.repoTools
 import actions.{add, init}
 import org.apache.commons.io.FileUtils
-
 
 class addTest extends FunSpec with Matchers with GivenWhenThen with BeforeAndAfter{
 
@@ -22,42 +21,42 @@ class addTest extends FunSpec with Matchers with GivenWhenThen with BeforeAndAft
   describe("If you add a file") {
     describe("but the file doesn't exist ") {
       it("it should not do anything") {
-        add.addAFile(repoTools.rootFile + "/testFakeFile.txt")
-        val hash = add.hash("testFakeFile.txt")
+        add.addAFile(repoTools.rootPath + "/testFakeFile.txt")
+        val hash = fileTools.hash("testFakeFile.txt")
 
-        assert(new File(repoTools.rootFile + "/.git/STAGE" + hash).exists()  === false)
+        assert(new File(repoTools.rootPath + "/.git/STAGE" + hash).exists()  === false)
       }
     }
 
     describe("and the file exists ") {
       it("it should add it on .git/STAGE directory") {
-        val file = new File(repoTools.rootFile + "/testAddFile.txt")
+        val file = new File(repoTools.rootPath + "/testAddFile.txt")
         val pw = new PrintWriter(file)
         pw.write("Test add function")
         pw.close
 
         add.addAFile("testAddFile.txt")
-        val hash = add.hash(file.getAbsolutePath + Source.fromFile(file.getAbsolutePath).mkString)
+        val hash = fileTools.hash(file.getAbsolutePath + Source.fromFile(file.getAbsolutePath).mkString)
 
-        assert(new File(repoTools.rootFile + "/.git/STAGE/" + hash).exists()
-          && new File(repoTools.rootFile + "/.git/objects/" + hash.slice(0,2)).exists() )
+        assert(new File(repoTools.rootPath + "/.git/STAGE/" + hash).exists()
+          && new File(repoTools.rootPath + "/.git/objects/" + hash.slice(0,2)).exists() )
       }
     }
   }
 
   describe("If you add the two files ") {
     it("it should add all the two files") {
-      new PrintWriter(new File(repoTools.rootFile + "/testFreeFile1.txt"))
-      new PrintWriter(new File(repoTools.rootFile + "/testFreeFile2.txt"))
+      new PrintWriter(new File(repoTools.rootPath + "/testFreeFile1.txt"))
+      new PrintWriter(new File(repoTools.rootPath + "/testFreeFile2.txt"))
       add.addMultipleFiles(List("testFreeFile1.txt","testFreeFile2.txt"))
-      assert(statusTools.isStaged(new File(repoTools.rootFile + "/testFreeFile1.txt"))  === true)
+      assert(statusTools.isStaged(new File(repoTools.rootPath + "/testFreeFile1.txt"))  === true)
     }
   }
 
   describe("If you create different files ") {
     it("it should add all the files") {
-      val file1 = new File(repoTools.rootFile + "/testAddAll1.txt")
-      val file2 = new File(repoTools.rootFile + "/testAddAll2.txt")
+      val file1 = new File(repoTools.rootPath + "/testAddAll1.txt")
+      val file2 = new File(repoTools.rootPath + "/testAddAll2.txt")
       new PrintWriter(file1)
       new PrintWriter(file2)
       add.addAll()
@@ -68,23 +67,23 @@ class addTest extends FunSpec with Matchers with GivenWhenThen with BeforeAndAft
   describe("If you add a file (STAGE)") {
     describe("and then you modify his content and add it") {
       it("it should delete the hold Staged File and add the new one") {
-        val file = new File(repoTools.rootFile + "/testUpdate.txt")
+        val file = new File(repoTools.rootPath + "/testUpdate.txt")
         val pw = new PrintWriter(file)
         pw.write("Test update function")
         pw.close
 
         add.addAFile("testUpdate.txt")
-        val hash1 = add.hash(file.getAbsolutePath + Source.fromFile(file.getAbsolutePath).mkString)
+        val hash1 = fileTools.hash(file.getAbsolutePath + Source.fromFile(file.getAbsolutePath).mkString)
 
         val pwUpdate = new FileWriter(file, true)
         pwUpdate.write("\n Update")
         pwUpdate.close
         add.addAll() //add.updateStagedFile("testUpdate.txt")
 
-        val hash2 = add.hash(file.getAbsolutePath + Source.fromFile(file.getAbsolutePath).mkString)
-        val existsInObject = new File(repoTools.rootFile + "/.git/objects/" + hash2.slice(0,2)).exists()
-        val existsInStage = new File(repoTools.rootFile + "/.git/STAGE/" + hash2).exists()
-        val existsHoldFileInStage = new File(repoTools.rootFile + "/.git/STAGE/" + hash1).exists()
+        val hash2 = fileTools.hash(file.getAbsolutePath + Source.fromFile(file.getAbsolutePath).mkString)
+        val existsInObject = new File(repoTools.rootPath + "/.git/objects/" + hash2.slice(0,2)).exists()
+        val existsInStage = new File(repoTools.rootPath + "/.git/STAGE/" + hash2).exists()
+        val existsHoldFileInStage = new File(repoTools.rootPath + "/.git/STAGE/" + hash1).exists()
 
         assert(statusTools.isStaged(file) && existsInStage && existsInObject && !existsHoldFileInStage)
       }

@@ -2,7 +2,7 @@ package actions
 
 import java.io.File
 
-import tools.{repoTools, statusTools}
+import tools.{printerTools, repoTools, statusTools}
 import tools.statusTools.{isFree, isStagedAndUpdatedContent}
 
 object status {
@@ -14,28 +14,26 @@ object status {
     val list = generalStatus()
 
     if (list(0).nonEmpty){
-      println(">> Untracked files:\n  (use \"sgit add <file>...\" to include in what will be committed)")
-      list(0).map(f => println(f.getName))
+      printerTools.printMessage(">> Untracked files:\n  (use \"sgit add <file>...\" to include in what will be committed)")
+      list(0).map(f => printerTools.printColorMessage(Console.RED, f.getName))
     }
-    if (list(1).nonEmpty) {
-      println(">> Changes not staged for commit:\n  (use \"sgit add <file>...\" " +
+    if (list(1).nonEmpty || list(2).nonEmpty) {
+      printerTools.printMessage(">> Changes not staged for commit:\n  (use \"sgit add <file>...\" " +
         "to update what will be committed)")
-      list(1).filter(f => !list(0).contains(f)).map(f => println(f.getName))
-    }
-    val list2 = list(2).filter(f => !list(0).contains(f) && !list(1).contains(f))
-    if (list2.nonEmpty) {
-      println(">> Changes not staged for commit:\n  (use \"sgit add <file>...\" " +
-        "to update what will be committed)")
-      list2.map(f => println(f.getName))
+      list(1).filter(f => !list(0).contains(f)).map(f => printerTools.printColorMessage(Console.RED, f.getName))
+      if (list(2).nonEmpty) {
+        val list2 = list(2).filter(f => !list(0).contains(f) && !list(1).contains(f))
+        list2.map(f => printerTools.printColorMessage(Console.RED, f.getName))
+      }
     }
     val list3 = list(3).filter(f => !list(1).contains(f) && !list(2).contains(f))
     if (list(3).nonEmpty) {
-      println(">> Changes to be committed:")
-      list3.map(f => println(f.getName))
+      printerTools.printMessage(">> Changes to be committed:")
+      list3.map(f => printerTools.printColorMessage(Console.GREEN, f.getName))
     }
 
     if(list(0).isEmpty && list(1).isEmpty && list(2).isEmpty && list(3).isEmpty) {
-      println(">> Nothing to commit or add")
+      printerTools.printMessage(">> Nothing to commit or add")
     }
   }
 
@@ -45,8 +43,7 @@ object status {
     * @return
     */
   def generalStatus(): List[List[File]] = {
-    val allFiles = repoTools.getAllUserFiles()
-
+    val allFiles = repoTools.getAllWorkingDirectFiles
     // FREE FILES
     val allFreeFiles = allFiles.filter(f => isFree(f))
     // DIFF BETWEEN WORKING DIRECTORY AND STAGE

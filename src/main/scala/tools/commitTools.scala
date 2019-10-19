@@ -1,76 +1,99 @@
 package tools
 
 import java.io.File
-
-import actions.commit
+import actions.{branch, commit}
 import tools.statusTools.isCommited
-
 import scala.io.Source
 
 object commitTools {
 
-  def getFilesChanges(): List[List[File]] = {
-    val allFiles = repoTools.getAllStagedFiles()
-    val allUpdatedFiles = allFiles.filter(f => isUpdatedFromStageToCommit(f)) // Updated don't care if stage but HAS TO BE UPDATEED
-    val allAddedFiles = allFiles.filter(f => !isCommited(f))
-
-    var allFilesLastCommit = getLastCommitFiles()
-    val allRemovedFiles = allFilesLastCommit.filter(f => !f.exists())
+  /**
+    * Get all files which has been updated, removed or added to the working directory
+    * @return
+    */
+  def getFilesChanges: List[List[File]] = {
+    val allUpdatedFiles = repoTools.getAllStagedFiles.filter(f => isUpdatedFromStageToCommit(f)) // Updated don't care if stage but HAS TO BE UPDATEED
+    val allAddedFiles = repoTools.getAllStagedFiles.filter(f => !isCommited(f))
+    val allRemovedFiles = getLastCommitFiles.filter(f => !f.exists())
 
     List(allUpdatedFiles, allRemovedFiles, allAddedFiles)
   }
 
 
-  //file de STAGE donc name = hash
+  /**
+    * Return true if the file there are differences between staged file and commited file
+    * @param file : File [file from stage area]
+    * @return
+    */
   def isUpdatedFromStageToCommit(file: File): Boolean = {
     val path = fileTools.firstLine(file).getOrElse("")
     if (!statusTools.isCommited(file)) false
     else {
-      val allCommitedHash = getLastCommitHash()
+      val allCommitedHash = getLastCommitFileHashs
       !allCommitedHash.contains(file.getName)
     }
   }
 
+  /**
+    * Get last commit hash of the current branch
+    * @return
+    */
   def lastCommitHash(): String = {
-    val branch = fileTools.firstLine(new File(repoTools.rootFile + "/.git/HEAD/branch"))
-    val path = repoTools.rootFile + "/.git/refs/heads/" + branch.get
-    Source.fromFile(new File(path)).mkString
+    val branch = fileTools.firstLine(new File(repoTools.rootPath + "/.git/HEAD/branch"))
+    val path = repoTools.rootPath + "/.git/refs/heads/" + branch.get
+    fileTools.getContentFile(path)
   }
 
+  /**
+    * Get parent hash of last commit of the current branch
+    * @return
+    */
   def lastCommitParentHash() : String = {
-    val branch = branchTools.currentBranch()
-    val pathLastCommit = repoTools.rootFile + "/.git/refs/heads/" + branch
-    val pathParentCommit = repoTools.rootFile + "/.git/objects/"
-    if (commit.isFirstCommit() || fileTools.firstLine(new File(pathParentCommit + commitTools.lastCommitHash())).getOrElse("") == "") ""
+    val currentBranch = branch.currentBranch()
+    val pathLastCommit = repoTools.rootPath + "/.git/refs/heads/" + currentBranch
+    val pathParentCommit = repoTools.rootPath + "/.git/objects/"
+    if (commit.isFirstCommit || fileTools.firstLine(new File(pathParentCommit + commitTools.lastCommitHash())).getOrElse("") == "") ""
     else {
-      val lastCommitHash = Source.fromFile(new File(pathLastCommit)).mkString
-      val seqHash = Source.fromFile(pathParentCommit + lastCommitHash).mkString
+      val lastCommitHash = fileTools.getContentFile(pathLastCommit)
+      val seqHash = fileTools.getContentFile(pathParentCommit + lastCommitHash)
         .split("\n")
         .toSeq
         .map(_.trim)
       seqHash(0) // first line = parent hash
-
     }
-
   }
 
 
+  /**
+    * Return true if the file has been deleted from working directory
+    * @param file : File
+    * @return
+    */
   def isRemoved(file: File): Boolean = {
     !fileTools.exist(file.getName) && statusTools.wasCommited(file)
   }
 
 
-  def getLastCommitFiles(): List[File] = {
+  /**
+    * Get all the working directory files of the last commit
+    * @return
+    */
+  def getLastCommitFiles: List[File] = {
     if (lastCommitHash() == "") List()
     else {
-      repoTools.getAllCommitedFileHash(lastCommitHash()).map(f => new File(f.split(" ").map(_.trim).toList(1)))
+      repoTools.getAllFilesFromCommit(lastCommitHash()).map(f => new File(f.split(" ").map(_.trim).toList(1)))
     }
   }
 
-  def getLastCommitHash(): List[File] = {
+  /**
+    * Get all the hash of the last commit
+    * @return
+    */
+  def getLastCommitFileHashs: List[File] = {
     if (lastCommitHash() == "") List()
     else {
-      repoTools.getAllCommitedFileHash(lastCommitHash()).map(f => new File(f.split(" ").map(_.trim).toList(0)))
+      repoTools.getAllFilesFromCommit(lastCommitHash()).map(f => new File(f.split(" ").map(_.trim).toList(0)))
     }
   }
+
 }

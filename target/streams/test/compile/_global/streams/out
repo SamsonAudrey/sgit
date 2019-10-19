@@ -1,4 +1,4 @@
-[0m[[0m[33mwarn[0m] [0m[0m/Users/audreysamson/Workspace/cloneSamedi/sgit/src/test/scala/toolsTest/statusTools.scala:7:37: imported `statusTools` is permanently hidden by definition of class statusTools in package toolsTest[0m
-[0m[[0m[33mwarn[0m] [0m[0mimport tools.{fileTools, repoTools, statusTools}[0m
-[0m[[0m[33mwarn[0m] [0m[0m                                    ^[0m
-[0m[[0m[33mwarn[0m] [0m[0mone warning found[0m
+[0m[[0m[31merror[0m] [0m[0m/Users/audreysamson/Workspace/cloneSamedi/sgit/src/test/scala/actionsTest/commitTest.scala:23:36: Boolean does not take parameters[0m
+[0m[[0m[31merror[0m] [0m[0m        assert(commit.isFirstCommit() === true)[0m
+[0m[[0m[31merror[0m] [0m[0m                                   ^[0m
+[0m[[0m[31merror[0m] [0m[0mone error found[0m

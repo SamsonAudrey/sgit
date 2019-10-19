@@ -29,7 +29,7 @@ class fileToolsTest extends FunSpec with Matchers with GivenWhenThen with Before
 
   describe("If you create a file") {
     it("it should exist") {
-      new PrintWriter(new File(repoTools.rootFile + "/realFile.txt"))
+      new PrintWriter(new File(repoTools.rootPath + "/realFile.txt"))
       val res1 = fileTools.exist("realFile.txt")
       val res2 = fileTools.exist("noExistFile.txt")
       assert(res1 && !res2)
@@ -40,7 +40,7 @@ class fileToolsTest extends FunSpec with Matchers with GivenWhenThen with Before
   describe("If you stage a file") {
     describe("and you want to get if from the basic file ") {
       it("it should be found") {
-        val file = new File(repoTools.rootFile + "/testLinkedStage.txt")
+        val file = new File(repoTools.rootPath + "/testLinkedStage.txt")
         val pw = new PrintWriter(file) // create the file containing the blob's content
         pw.write("blablabla")
         pw.close
@@ -55,7 +55,7 @@ class fileToolsTest extends FunSpec with Matchers with GivenWhenThen with Before
   describe("If you want to re-add a file") {
     describe("with a new content") {
       it("it should updated the staged file ") {
-        val file = new File(repoTools.rootFile + "/updateStagedFile.txt")
+        val file = new File(repoTools.rootPath + "/updateStagedFile.txt")
         val pw = new PrintWriter(file) // create the file containing the blob's content
         pw.write("blablabla")
         pw.close

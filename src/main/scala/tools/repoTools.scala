@@ -10,20 +10,24 @@ object repoTools {
     * GET Current Path
     * @return
     */
-  def currentPath: String = {//"/Users/audreysamson/Workspace/cloneSamedi/sgit/"
-    val current = new File(".").getCanonicalPath() + "/"
-    current
-  }
+  def currentPath: String = new File(".").getCanonicalPath + "/"
 
-  val rootFile: String = getRoot(new File(currentPath)).getOrElse(new File("")).getAbsolutePath //"/Users/audreysamson/Workspace/cloneSamedi/sgit/RepoTest/sgit"//getRoot(new File(currentPath + "sgit")).getOrElse(new File(currentPath + "sgit")).getAbsolutePath
+  /**
+    * Get root path
+    * @return
+    */
+  def rootPath: String = getRoot(new File(currentPath)).getOrElse(new File("")).getAbsolutePath //"/Users/audreysamson/Workspace/cloneSamedi/sgit/RepoTest/sgit"//getRoot(new File(currentPath + "sgit")).getOrElse(new File(currentPath + "sgit")).getAbsolutePath
 
+  /**
+    * Get root file
+    * @param directory : File
+    * @return
+    */
   def getRoot(directory: File): Option[File] = {
-
     if (directory.isDirectory) {
       if (directory.listFiles().toList.contains(new File(directory.getAbsolutePath + "/.git")) ||
         directory.listFiles().toList.contains(new File(directory.getAbsolutePath + "/sgit")) &&
         directory.getName == "sgit") {
-
         if (!new File(directory.getAbsolutePath + "/.git/HEAD/branch").exists()) {
           Some(new File(directory.getAbsolutePath + "/sgit"))
         } else Some(directory)
@@ -35,23 +39,20 @@ object repoTools {
         }
       }
     } else None
-
-    /*if (new File("/Users/audreysamson/Workspace/cloneSamedi/sgit/sgit/.git").exists()) {
-      Some(new File("/Users/audreysamson/Workspace/cloneSamedi/sgit/sgit"))
-    } else None*/
   }
 
   /**
     * Create a file
-    * @param path
-    * @param name
-    * @param content
+    * @param path : String
+    * @param hash : String
+    * @param firstLine : String
+    * @param content : String
     */
   def createFile(path: String, hash: String, firstLine: String, content: String): Boolean = {
     try {
-      val pw = new PrintWriter(new File(path + "/" + hash)) // create the file containing the blob's content
+      val pw = new PrintWriter(new File(path + "/" + hash))
       pw.write(firstLine + "\n" + content)
-      pw.close
+      pw.close()
       true
     } catch {
       case _: Throwable => false
@@ -60,7 +61,7 @@ object repoTools {
 
   /**
     * Create a folder
-    * @param path
+    * @param path : String
     * @return
     */
   def createDirectory(path: String): Boolean = {
@@ -82,7 +83,7 @@ object repoTools {
 
   /**
     * Get all folders and sub-folders of f (except .git folder and .DS_STORE folder)
-    * @param f
+    * @param f : File
     * @return
     */
   def recursiveListUserFolders(f: File): Array[File] = {
@@ -94,7 +95,7 @@ object repoTools {
   }
 
   /**
-    * get list of files into directory dir
+    * Get list of files into directory dir
     * @param dir : directory
     * @return
     */
@@ -108,34 +109,44 @@ object repoTools {
   }
 
   /**
-    * Return all the user files (all the files in the working directory)
+    * Return all the working directory files
     * @return
     */
-  def getAllUserFiles(): List[File] = {
-    val allFolders = recursiveListUserFolders(new File(repoTools.rootFile))
+  def getAllWorkingDirectFiles: List[File] = {
+    val allFolders = recursiveListUserFolders(new File(repoTools.rootPath))
     allFolders.map(f => repoTools.getListOfFiles(f))
     allFolders.toList.filter(f => f.isFile && f.getName != ".DS_Store")
   }
 
   /**
-    * Return all the staged files (all the files in the /.git/STAGE folder)
+    * Return all the working directory file names
+    */
+  def getAllUserFileNames: List[String] = getAllWorkingDirectFiles.map(f => f.getName).filter(f => f != ".DS_Store")
+
+
+  /**
+    * Return all the staged files
     * @return
     */
-  def getAllStagedFiles(): List[File] = {
-    repoTools.getListOfFiles(new File(repoTools.rootFile + "/.git/STAGE"))
+  def getAllStagedFiles: List[File] = {
+    repoTools.getListOfFiles(new File(repoTools.rootPath + "/.git/STAGE"))
   }
 
-  def getAllCommitedFileHash(commitHash: String) : List[String] = {
-    val commitContent = Source.fromFile(new File(repoTools.rootFile + "/.git/objects/" + commitHash)).mkString
-    var filesHash = commitContent.split("\n")
+  /**
+    * Get the files in the commit
+    * @param commitHash : String
+    * @return
+    */
+  def getAllFilesFromCommit(commitHash: String) : List[String] = {
+    var filesHash = fileTools.getContentFile(repoTools.rootPath + "/.git/objects/" + commitHash)
+      .split("\n")
       .map(_.trim)
       .filter(x => x != "")
       .toList
-    if (!fileTools.firstLine(new File(repoTools.rootFile + "/.git/objects/" + commitHash )).contains("")) {
+    if (!fileTools.firstLine(new File(repoTools.rootPath + "/.git/objects/" + commitHash )).contains("")) {
       filesHash = filesHash.drop(1) // first line = commit parent
     }
     filesHash = filesHash.drop(1) // second line = commit message
-
     filesHash
   }
 
