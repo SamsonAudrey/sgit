@@ -64,3 +64,8 @@ assembly
 test
 assembly
 test
+assembly
+sbt --version
+run
+compile
+assembly

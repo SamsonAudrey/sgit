@@ -1,5 +1,6 @@
 package toolsTest
 
+import objects.Blob
 import java.io.File
 import actions.init
 import org.apache.commons.io.FileUtils
@@ -17,14 +18,14 @@ class blobTest extends FunSpec with Matchers with GivenWhenThen with BeforeAndAf
   describe("If you create a blob") {
     describe("with empty String params") {
       it("it should create it ") {
-        val blob = objects.Blob("","","")
+        val blob = Blob("","","")
         assert(blob.hash === "" && blob.filePath === "")
       }
     }
 
     describe("with all arguments") {
       it("it should create it ") {
-        val blob2 = objects.Blob("a","b","c")
+        val blob2 = Blob("a","b","c")
         assert(blob2.hash === "b" && blob2.filePath === "a")
       }
     }

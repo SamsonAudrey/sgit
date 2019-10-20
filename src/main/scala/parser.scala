@@ -51,21 +51,21 @@ object parser {
           ),
 
         cmd("commit")
-          .text("Commit changes to the repository.")
+          .text("Save changes to the repository.")
           .action((_, c) => c.copy(command = "commit"))
           .children(
             opt[String]("m")
               .required
               .action((x, c) => c.copy(commitMessage = c.commitMessage :+ x)),
             arg[String]("<message>")
+              .optional()
               .unbounded
-              .required
               .action((x, c) => c.copy(commitMessage = c.commitMessage :+ x))
               .text("Message to commit.")
           ),
 
         cmd("branch")
-          .text("Create or list branches.")
+          .text("Create branch or list branches and tags.")
           .action((_, c) => c.copy(command = "branch"))
           .children(
             arg[String]("name")
@@ -74,11 +74,11 @@ object parser {
               .text("Name of the branch."),
             opt[Unit]("av")
               .action((_, c) => c.copy(av = true))
-              .text("Display all the branches.")
+              .text("Display all the branches and tags.")
           ),
 
         cmd("checkout")
-          .text("Change working directory to the branch.")
+          .text("Branch switching.")
           .action((_, c) => c.copy(command = "checkout"))
           .children(
             arg[String]("name")
@@ -143,7 +143,6 @@ object parser {
                     actions.branch.checkoutBranch(config.branch_tag)
                   }
                   case "commit" => {
-                    println(config.commitMessage)
                     actions.commit.commit(config.commitMessage.mkString(" "))
                   }
                   case "diff" => {
