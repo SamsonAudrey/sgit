@@ -36,7 +36,6 @@ class repositoryTest extends FunSpec with Matchers with GivenWhenThen with Befor
         new File(path + "/testRepo2/testRepo2BIS").mkdir() //3
         new File(path + "/testRepo2/testRepo2BIS/folder3").mkdir() //4
         val listFolders2 = repoTools.recursiveListFolders(new File(path+"/testRepo2"))
-        //println(listFolders2.toList)
         assert(listFolders2.length === 4)
       }
     }

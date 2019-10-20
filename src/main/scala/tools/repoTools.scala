@@ -121,7 +121,7 @@ object repoTools {
   /**
     * Return all the working directory file names
     */
-  def getAllUserFileNames: List[String] = getAllWorkingDirectFiles.map(f => f.getName).filter(f => f != ".DS_Store")
+  def getAllWorkingDirectFileNames: List[String] = getAllWorkingDirectFiles.map(f => f.getName).filter(f => f != ".DS_Store")
 
 
   /**
@@ -138,16 +138,18 @@ object repoTools {
     * @return
     */
   def getAllFilesFromCommit(commitHash: String) : List[String] = {
-    var filesHash = fileTools.getContentFile(repoTools.rootPath + "/.git/objects/" + commitHash)
-      .split("\n")
-      .map(_.trim)
-      .filter(x => x != "")
-      .toList
-    if (!fileTools.firstLine(new File(repoTools.rootPath + "/.git/objects/" + commitHash )).contains("")) {
-      filesHash = filesHash.drop(1) // first line = commit parent
-    }
-    filesHash = filesHash.drop(1) // second line = commit message
-    filesHash
+    if (commitHash != "") {
+      var filesHash = fileTools.getContentFile(repoTools.rootPath + "/.git/objects/" + commitHash)
+        .split("\n")
+        .map(_.trim)
+        .filter(x => x != "")
+        .toList
+      if (!fileTools.firstLine(new File(repoTools.rootPath + "/.git/objects/" + commitHash)).contains("")) {
+        filesHash = filesHash.drop(1) // first line = commit parent
+      }
+      filesHash = filesHash.drop(1) // second line = commit message
+      filesHash
+    } else List()
   }
 
   /**

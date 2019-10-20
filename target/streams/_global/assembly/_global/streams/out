@@ -13,7 +13,7 @@
 [0m[[0m[0mdebug[0m] [0m[0mMerging 'META-INF/maven/org.apache.commons/commons-lang3/pom.properties' with strategy 'discard'[0m
 [0m[[0m[0mdebug[0m] [0m[0mMerging 'META-INF/maven/org.apache.commons/commons-lang3/pom.xml' with strategy 'discard'[0m
 [0m[[0m[0minfo[0m] [0m[0mStrategy 'discard' was applied to 5 files (Run the task at debug level to see details)[0m
-[0m[[0m[0mdebug[0m] [0m[0mSHA-1: 1eaa2a10f61c54b83f0ef7cbcf15825a51b4462f[0m
+[0m[[0m[0mdebug[0m] [0m[0mSHA-1: 0f5a8a6245994e59d891bbdd15bc78e215236c10[0m
 [0m[[0m[0mdebug[0m] [0m[0mPackaging /Users/audreysamson/Workspace/cloneSamedi/sgit/target/scala-2.13/sgit ...[0m
 [0m[[0m[0mdebug[0m] [0m[0mInput file mappings:[0m
 [0m[[0m[0mdebug[0m] [0m[0m	LICENSE_scala-library-2.13.1[0m
@@ -64,8 +64,8 @@
 [0m[[0m[0mdebug[0m] [0m[0m	  /Users/audreysamson/Workspace/cloneSamedi/sgit/target/streams/_global/assemblyOption/_global/streams/assembly/afd3ac6a5d903e761190876842e56e6f1fd36e46_1418c956704990564fb9dfac5960647ca54b5a91_da39a3ee5e6b4b0d3255bfef95601890afd80709/library.properties[0m
 [0m[[0m[0mdebug[0m] [0m[0m	objects/Blob$.class[0m
 [0m[[0m[0mdebug[0m] [0m[0m	  /Users/audreysamson/Workspace/cloneSamedi/sgit/target/streams/_global/assemblyOption/_global/streams/assembly/8b447351a8cc6d1d2b575f78eda3c9d10e8e67e3_dir/objects/Blob$.class[0m
-[0m[[0m[0mdebug[0m] [0m[0m	objects/Blob$Blob_Class$.class[0m
-[0m[[0m[0mdebug[0m] [0m[0m	  /Users/audreysamson/Workspace/cloneSamedi/sgit/target/streams/_global/assemblyOption/_global/streams/assembly/8b447351a8cc6d1d2b575f78eda3c9d10e8e67e3_dir/objects/Blob$Blob_Class$.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	objects/Blob$blob$.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	  /Users/audreysamson/Workspace/cloneSamedi/sgit/target/streams/_global/assemblyOption/_global/streams/assembly/8b447351a8cc6d1d2b575f78eda3c9d10e8e67e3_dir/objects/Blob$blob$.class[0m
 [0m[[0m[0mdebug[0m] [0m[0m	objects/Blob.class[0m
 [0m[[0m[0mdebug[0m] [0m[0m	  /Users/audreysamson/Workspace/cloneSamedi/sgit/target/streams/_global/assemblyOption/_global/streams/assembly/8b447351a8cc6d1d2b575f78eda3c9d10e8e67e3_dir/objects/Blob.class[0m
 [0m[[0m[0mdebug[0m] [0m[0m	objects/LineDiff$.class[0m

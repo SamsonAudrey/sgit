@@ -175,9 +175,6 @@ class commitTest extends FunSpec with Matchers with GivenWhenThen with BeforeAnd
         commit.commit("message")
         val secondCommitHash = commitTools.lastCommitHash()
 
-        //GET CONTENT COMMIT
-        //println(Source.fromFile(repoTools.currentPath + "sgit/.git/objects/"+secondCommitHash).mkString)
-
         assert(secondCommitHash == fistCommitHash)
       }
     }

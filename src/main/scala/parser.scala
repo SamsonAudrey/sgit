@@ -1,7 +1,7 @@
 import java.io.File
 
 import scopt.OParser
-import tools.repoTools
+import tools.{printerTools, repoTools}
 
 object parser {
 
@@ -69,6 +69,16 @@ object parser {
               .text("Display all the branches.")
           ),
 
+        cmd("checkout")
+          .text("Change working directory to the branch.")
+          .action((_, c) => c.copy(command = "checkout"))
+          .children(
+            arg[String]("name")
+              .required()
+              .action((x, c) => c.copy(branch_tag = x))
+              .text("Name of the branch."),
+          ),
+
         cmd("tag")
           .text("Create a tag.")
           .action((_, c) => c.copy(command = "tag"))
@@ -113,13 +123,16 @@ object parser {
                   }
                   case "branch" => {
                     if (config.av) {
-                      actions.branch.showAllBranches()
+                      printerTools.printMessage(actions.branch.showAllBranches())
                     } else {
                       actions.branch.newBranch(config.branch_tag)
                     }
                   }
                   case "tag" => {
                     actions.tag.newTag(config.branch_tag)
+                  }
+                  case "checkout" => {
+                    actions.branch.checkoutBranch(config.branch_tag)
                   }
                   case "commit" => {
                     actions.commit.commit(config.commitMessage)

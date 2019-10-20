@@ -22,7 +22,6 @@ class tagTest extends FunSpec with Matchers with GivenWhenThen with BeforeAndAft
       commit.commit("message")
       val tagName = "newTag"
       tag.newTag(tagName)
-      println("////////////:"+tag.newTag("master"))
       val fileTag = new File(repoTools.rootPath + "/.git/refs/tags/" + tagName)
       val exist = fileTag.exists()
       val ff = fileTools.firstLine(fileTag).get

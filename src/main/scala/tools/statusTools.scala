@@ -27,21 +27,20 @@ object statusTools {
     * @return
     */
   def isStagedAndUpdatedContent(file : File): Boolean = {
-    val stagedFile = fileTools.getLinkedStagedFile(file)
-    if (stagedFile.nonEmpty) {
-      fileTools.getContentFile(stagedFile.get.getAbsolutePath) != file.getAbsolutePath + "\n" + Source.fromFile(file).mkString
+    if (isStaged(file)) {
+      fileTools.getContentFile(fileTools.getLinkedStagedFile(file).get.getAbsolutePath) != file.getAbsolutePath + "\n" + fileTools.getContentFile(file.getAbsolutePath)
     } else false
   }
 
   def isCommitedAndUpdatedContent(file : File): Boolean = {
     val commitedFile = commitTools.getLastCommitFiles
-    val commitedHash = commitTools.getLastCommitFileHashs
-    val stagedHash = repoTools.getAllStagedFiles
-    val hash = fileTools.getFileHash(file)
-    val linkedStagedFile = fileTools.getLinkedStagedFile(file)
-
     if (commitedFile.nonEmpty) {
+      val commitedHash = commitTools.getLastCommitFileHashs
+      val stagedHash = repoTools.getAllStagedFiles
+      val hash = fileTools.getFileHash(file)
+      val linkedStagedFile = fileTools.getLinkedStagedFile(file)
       var stageUpdate = false
+
       if (linkedStagedFile.nonEmpty) {
         stageUpdate = commitedFile.contains(fileTools.getContentFile(linkedStagedFile.get.getAbsolutePath)) && !commitedHash.contains(linkedStagedFile.get.getName)
       }
@@ -65,9 +64,9 @@ object statusTools {
       else {
         path = file.getAbsolutePath
       }
-      val allCommitedHash = repoTools.getAllFilesFromCommit(commitTools.lastCommitHash())
-        .map(f => f.split(" ").map(_.trim).toList(1)) // get the file's path
-      file.exists() && allCommitedHash.contains(path)
+      val allCommitedFileNames = repoTools.getAllFilesFromCommit(commitTools.lastCommitHash())
+        .map(f => f.split(" ").map(_.trim).toList(1)) // get the// file's path
+      file.exists() && allCommitedFileNames.contains(path)
     }
   }
 

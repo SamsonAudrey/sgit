@@ -3,7 +3,6 @@ package tools
 import java.io.File
 import actions.{branch, commit}
 import tools.statusTools.isCommited
-import scala.io.Source
 
 object commitTools {
 
@@ -12,7 +11,7 @@ object commitTools {
     * @return
     */
   def getFilesChanges: List[List[File]] = {
-    val allUpdatedFiles = repoTools.getAllStagedFiles.filter(f => isUpdatedFromStageToCommit(f)) // Updated don't care if stage but HAS TO BE UPDATEED
+    val allUpdatedFiles = repoTools.getAllStagedFiles.filter(f => isUpdatedFromStageToCommit(f))
     val allAddedFiles = repoTools.getAllStagedFiles.filter(f => !isCommited(f))
     val allRemovedFiles = getLastCommitFiles.filter(f => !f.exists())
 
@@ -50,12 +49,12 @@ object commitTools {
     */
   def lastCommitParentHash() : String = {
     val currentBranch = branch.currentBranch()
-    val pathLastCommit = repoTools.rootPath + "/.git/refs/heads/" + currentBranch
-    val pathParentCommit = repoTools.rootPath + "/.git/objects/"
-    if (commit.isFirstCommit || fileTools.firstLine(new File(pathParentCommit + commitTools.lastCommitHash())).getOrElse("") == "") ""
+    val pathCurrentBranch = repoTools.rootPath + "/.git/refs/heads/" + currentBranch
+    val objectsPath = repoTools.rootPath + "/.git/objects/"
+    if (commit.isFirstCommit || fileTools.firstLine(new File(objectsPath + commitTools.lastCommitHash())).getOrElse("") == "") ""
     else {
-      val lastCommitHash = fileTools.getContentFile(pathLastCommit)
-      val seqHash = fileTools.getContentFile(pathParentCommit + lastCommitHash)
+      val lastCommitHash = fileTools.getContentFile(pathCurrentBranch)
+      val seqHash = fileTools.getContentFile(objectsPath + lastCommitHash)
         .split("\n")
         .toSeq
         .map(_.trim)

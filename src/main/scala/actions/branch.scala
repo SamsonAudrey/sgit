@@ -11,10 +11,9 @@ object branch {
     * @param branchName : String
     */
   def newBranch(branchName : String): Unit= {
-    val pw = new PrintWriter(new File(repoTools.rootPath + "/.git/refs/heads/" + branchName))
+    val file = new File(repoTools.rootPath + "/.git/refs/heads/" + branchName)
     val currentCommit = commitTools.lastCommitHash()
-    pw.write(currentCommit)
-    pw.close()
+    fileTools.updateFileContent(file, currentCommit)
   }
 
   /**
@@ -28,10 +27,17 @@ object branch {
   /**
     * Display all the branches
     */
-  def showAllBranches(): Unit = {
+  def showAllBranches(): String = {
     var toPrint = ""
-    allBranches().map(b => toPrint += b.getName)
-    printerTools.printMessage(toPrint)
+    allBranches().map(b => {
+      toPrint += b.getName
+      if (fileTools.getContentFile(b.getAbsolutePath) != ""){
+        val commitMessage = fileTools.firstLine(new File(repoTools.rootPath + "/.git/objects/" + fileTools.getContentFile(b.getAbsolutePath))).getOrElse("")
+        toPrint += " " + commitMessage + "\n"
+      }
+
+    })
+    toPrint
   }
 
   /**
@@ -42,7 +48,13 @@ object branch {
   def renameCurrentBranch(newName: String): Boolean = {
     val currentB = currentBranch()
     val path = repoTools.rootPath + "/.git/refs/heads/"
-    new File(path + currentB).renameTo(new File(path + newName)) && checkoutBranch(newName)
+    // Rename the file
+    if (new File(path + currentB).renameTo(new File(path + newName)) ) {
+      // Update the ref
+      val pathRef = repoTools.rootPath + "/.git/HEAD/branch"
+      fileTools.updateFileContent(new File(pathRef), newName)
+      true
+    } else false
   }
 
   /**
@@ -59,15 +71,36 @@ object branch {
     * @return
     */
   def checkoutBranch(branchName: String): Boolean = {
-    val allB = allBranches().map(b => b.getName()) //VERIFY if  ID is a  BRANCH
+    val allB = allBranches().map(b => b.getName) //VERIFY if  ID is a  BRANCH
     if (allB.contains(branchName)) {
-      val path = repoTools.rootPath + "/.git/HEAD/branch"
-      val pw = new PrintWriter(new File(path))
-      pw.write(branchName)
-      pw.close()
-      fileTools.firstLine(new File(path)).get == branchName
 
       // change the working directory
+      val fileToRemove = repoTools.getAllWorkingDirectFiles.filter(!statusTools.isFree(_))
+
+      val branchPath = repoTools.rootPath + "/.git/refs/heads/" + branchName
+      val objPath = repoTools.rootPath + "/.git/objects/"
+      val commitHash = fileTools.getContentFile(branchPath)
+      val hashFileToAdd = repoTools.getAllFilesFromCommit(commitHash).map(f => f.split(" ").map(_.trim).toList(0) )
+
+      val fileToAddPath = hashFileToAdd.map(h => {
+        new File(objPath + "/" + h.slice(0,2) + "/" + h.drop(2))
+      })
+
+      fileToRemove.map(f => f.delete())
+
+      fileToAddPath.map(f => {
+        val content = fileTools.getContentFile(f.getAbsolutePath).split("\n")
+          .toList
+          .map(_.trim)
+
+        fileTools.updateFileContent(new File(fileTools.firstLine(f).getOrElse("")), content.drop(1).mkString("\n"))
+      })
+
+
+      val path = repoTools.rootPath + "/.git/HEAD/branch"
+      fileTools.updateFileContent(new File(path), branchName)
+
+      fileTools.firstLine(new File(path)).get == branchName
 
     } else false // verif TAGS and commit hash
   }

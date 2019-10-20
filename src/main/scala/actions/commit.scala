@@ -57,7 +57,7 @@ object commit {
 
   /**
     * Create the commit content, with all file refs
-    * @param changes : List[List[File] ]
+    * @param changes : List[List[File] ] = List(updatedFiles, removedFiles, addedFiles)
     * @return
     */
   def createContentCommitFile(changes : List[List[File]]): String = {
@@ -67,8 +67,8 @@ object commit {
       var files = fileTools.getContentFile(repoTools.rootPath + "/.git/objects/" + lastCommit)
         .mkString.split("\n").map(_.trim).toList.drop(2) // remove parent commit and message (2 first lines)
 
+      // Updated files
       if (changes(0).nonEmpty ) {
-        // UPDATED
         //remove old
         files = files.filter(f =>
           !changes(0).map(file => fileTools.getContentFile(file.getAbsolutePath).split("\n").map(_.trim).toList(0))

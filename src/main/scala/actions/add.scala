@@ -15,7 +15,7 @@ object add {
     * Add all files in the stage area
     */
   def addAll(): Unit = {
-    addMultipleFiles(repoTools.getAllUserFileNames)
+    addMultipleFiles(repoTools.getAllWorkingDirectFileNames)
   }
 
   /**

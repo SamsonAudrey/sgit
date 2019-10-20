@@ -15,12 +15,6 @@ class blobTest extends FunSpec with Matchers with GivenWhenThen with BeforeAndAf
     init.initDirectory(repoTools.currentPath)
   }
 
-  /*describe("Test ultime") {
-    it("it should be true ") {
-      assert(repoTools.currentPath  === "")
-    }
-  }*/
-
   describe("If you create a blob") {
     describe("with empty String params") {
       it("it should create it ") {
