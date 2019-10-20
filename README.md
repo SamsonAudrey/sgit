@@ -1,9 +1,9 @@
 # sgit
 
 ### A Scala-based git-like code source manager
-By Audrey Samson
+>By Audrey Samson, From 5 to 20 October, 2019
 
-Date: From 5 to 20 October, 2019
+*This project is part of the functional programming course. It uses sbt assembly and Scala.*
 
 ### Prerequisites
 You should have :
@@ -23,7 +23,7 @@ export PATH="`pwd`/target/scala-2.13:$PATH"
 
 Now you can call sgit in your terminal.
 
-Becarefull, if you open a new terminal, you will need to write the export command again to use sgit.
+>Becarefull, if you open a new terminal, you will need to write the export command again to use sgit.
 
 
 
