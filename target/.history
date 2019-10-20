@@ -69,3 +69,4 @@ sbt --version
 run
 compile
 assembly
+test

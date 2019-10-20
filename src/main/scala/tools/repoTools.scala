@@ -27,7 +27,7 @@ object repoTools {
     if (directory.isDirectory) {
       if (directory.listFiles().toList.contains(new File(directory.getAbsolutePath + "/.git")) ||
         directory.listFiles().toList.contains(new File(directory.getAbsolutePath + "/sgit")) &&
-        directory.getName == "sgit") {
+        directory.getName == "sgit-master") {
         if (!new File(directory.getAbsolutePath + "/.git/HEAD/branch").exists()) {
           Some(new File(directory.getAbsolutePath + "/sgit"))
         } else Some(directory)

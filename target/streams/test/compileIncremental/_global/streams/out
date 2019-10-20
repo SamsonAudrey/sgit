@@ -13,46 +13,63 @@
 [0m[[0m[0mdebug[0m] [0m[0mGetting classes that directly depend on (external) actions.branch$.[0m
 [0m[[0m[0mdebug[0m] [0m[0mNone of the modified names appears in source file of actionsTest.branchTest. This dependency is not being considered for invalidation.[0m
 [0m[[0m[0mdebug[0m] [0m[0mNone of the modified names appears in source file of actionsTest.tagTest. This dependency is not being considered for invalidation.[0m
+[0m[[0m[0mdebug[0m] [0m[0mThe tools.repoTools$ has the following regular definitions changed:[0m
+[0m[[0m[0mdebug[0m] [0m[0m	UsedName(finalize,[Default]).[0m
+[0m[[0m[0mdebug[0m] [0m[0mAll member reference dependencies will be considered within this context.[0m
+[0m[[0m[0mdebug[0m] [0m[0mFiles invalidated by inheriting from (external) tools.repoTools$: Set(); now invalidating by inheritance (internally).[0m
+[0m[[0m[0mdebug[0m] [0m[0mGetting direct dependencies of all classes transitively invalidated by inheritance.[0m
+[0m[[0m[0mdebug[0m] [0m[0mGetting classes that directly depend on (external) tools.repoTools$.[0m
+[0m[[0m[0mdebug[0m] [0m[0mNone of the modified names appears in source file of toolsTest.diffTest. This dependency is not being considered for invalidation.[0m
+[0m[[0m[0mdebug[0m] [0m[0mNone of the modified names appears in source file of toolsTest.blobTest. This dependency is not being considered for invalidation.[0m
+[0m[[0m[0mdebug[0m] [0m[0mNone of the modified names appears in source file of actionsTest.branchTest. This dependency is not being considered for invalidation.[0m
+[0m[[0m[0mdebug[0m] [0m[0mNone of the modified names appears in source file of toolsTest.repositoryTest. This dependency is not being considered for invalidation.[0m
+[0m[[0m[0mdebug[0m] [0m[0mNone of the modified names appears in source file of actionsTest.addTest. This dependency is not being considered for invalidation.[0m
+[0m[[0m[0mdebug[0m] [0m[0mNone of the modified names appears in source file of toolsTest.statusTest. This dependency is not being considered for invalidation.[0m
+[0m[[0m[0mdebug[0m] [0m[0mNone of the modified names appears in source file of actionsTest.commitTest. This dependency is not being considered for invalidation.[0m
+[0m[[0m[0mdebug[0m] [0m[0mNone of the modified names appears in source file of actionsTest.tagTest. This dependency is not being considered for invalidation.[0m
+[0m[[0m[0mdebug[0m] [0m[0mNone of the modified names appears in source file of toolsTest.fileToolsTest. This dependency is not being considered for invalidation.[0m
+[0m[[0m[0mdebug[0m] [0m[0mNone of the modified names appears in source file of actionsTest.initTest. This dependency is not being considered for invalidation.[0m
+[0m[[0m[0mdebug[0m] [0m[0mThe tools.repoTools has the following regular definitions changed:[0m
+[0m[[0m[0mdebug[0m] [0m[0m	UsedName(finalize,[Default]).[0m
+[0m[[0m[0mdebug[0m] [0m[0mAll member reference dependencies will be considered within this context.[0m
+[0m[[0m[0mdebug[0m] [0m[0mFiles invalidated by inheriting from (external) tools.repoTools: Set(); now invalidating by inheritance (internally).[0m
+[0m[[0m[0mdebug[0m] [0m[0mGetting direct dependencies of all classes transitively invalidated by inheritance.[0m
+[0m[[0m[0mdebug[0m] [0m[0mGetting classes that directly depend on (external) tools.repoTools.[0m
+[0m[[0m[0mdebug[0m] [0m[0mNone of the modified names appears in source file of toolsTest.diffTest. This dependency is not being considered for invalidation.[0m
+[0m[[0m[0mdebug[0m] [0m[0mNone of the modified names appears in source file of toolsTest.blobTest. This dependency is not being considered for invalidation.[0m
+[0m[[0m[0mdebug[0m] [0m[0mNone of the modified names appears in source file of actionsTest.branchTest. This dependency is not being considered for invalidation.[0m
+[0m[[0m[0mdebug[0m] [0m[0mNone of the modified names appears in source file of toolsTest.repositoryTest. This dependency is not being considered for invalidation.[0m
+[0m[[0m[0mdebug[0m] [0m[0mNone of the modified names appears in source file of actionsTest.addTest. This dependency is not being considered for invalidation.[0m
+[0m[[0m[0mdebug[0m] [0m[0mNone of the modified names appears in source file of toolsTest.statusTest. This dependency is not being considered for invalidation.[0m
+[0m[[0m[0mdebug[0m] [0m[0mNone of the modified names appears in source file of actionsTest.commitTest. This dependency is not being considered for invalidation.[0m
+[0m[[0m[0mdebug[0m] [0m[0mNone of the modified names appears in source file of actionsTest.tagTest. This dependency is not being considered for invalidation.[0m
+[0m[[0m[0mdebug[0m] [0m[0mNone of the modified names appears in source file of toolsTest.fileToolsTest. This dependency is not being considered for invalidation.[0m
+[0m[[0m[0mdebug[0m] [0m[0mNone of the modified names appears in source file of actionsTest.initTest. This dependency is not being considered for invalidation.[0m
 [0m[[0m[0mdebug[0m] [0m[0m[0m
 [0m[[0m[0mdebug[0m] [0m[0mInitial source changes: [0m
 [0m[[0m[0mdebug[0m] [0m[0m	removed:Set()[0m
 [0m[[0m[0mdebug[0m] [0m[0m	added: Set()[0m
-[0m[[0m[0mdebug[0m] [0m[0m	modified: Set(/Users/audreysamson/Workspace/cloneSamedi/sgit/src/test/scala/toolsTest/blobTest.scala)[0m
-[0m[[0m[0mdebug[0m] [0m[0mInvalidated products: Set()[0m
-[0m[[0m[0mdebug[0m] [0m[0mExternal API changes: API Changes: Set(NamesChange(actions.branch,ModifiedNames(changes = UsedName(finalize,[Default]))), NamesChange(actions.branch$,ModifiedNames(changes = UsedName(finalize,[Default]))))[0m
+[0m[[0m[0mdebug[0m] [0m[0m	modified: Set()[0m
+[0m[[0m[0mdebug[0m] [0m[0mInvalidated products: Set(/Users/audreysamson/Workspace/cloneSamedi/sgit/target/scala-2.13/test-classes/actionsTest/addTest.class, /Users/audreysamson/Workspace/cloneSamedi/sgit/target/scala-2.13/test-classes/actionsTest/initTest.class, /Users/audreysamson/Workspace/cloneSamedi/sgit/target/scala-2.13/test-classes/actionsTest/commitTest.class, /Users/audreysamson/Workspace/cloneSamedi/sgit/target/scala-2.13/test-classes/toolsTest/fileToolsTest.class, /Users/audreysamson/Workspace/cloneSamedi/sgit/target/scala-2.13/test-classes/toolsTest/diffTest.class, /Users/audreysamson/Workspace/cloneSamedi/sgit/target/scala-2.13/test-classes/toolsTest/blobTest.class, /Users/audreysamson/Workspace/cloneSamedi/sgit/target/scala-2.13/test-classes/actionsTest/branchTest.class, /Users/audreysamson/Workspace/cloneSamedi/sgit/target/scala-2.13/test-classes/actionsTest/tagTest.class, /Users/audreysamson/Workspace/cloneSamedi/sgit/target/scala-2.13/test-classes/toolsTest/statusTest.class, /Users/audreysamson/Workspace/cloneSamedi/sgit/target/scala-2.13/test-classes/toolsTest/repositoryTest.class)[0m
+[0m[[0m[0mdebug[0m] [0m[0mExternal API changes: API Changes: Set(NamesChange(actions.branch,ModifiedNames(changes = UsedName(finalize,[Default]))), NamesChange(actions.branch$,ModifiedNames(changes = UsedName(finalize,[Default]))), NamesChange(tools.repoTools$,ModifiedNames(changes = UsedName(finalize,[Default]))), NamesChange(tools.repoTools,ModifiedNames(changes = UsedName(finalize,[Default]))))[0m
 [0m[[0m[0mdebug[0m] [0m[0mModified binary dependencies: Set()[0m
-[0m[[0m[0mdebug[0m] [0m[0mInitial directly invalidated classes: Set(toolsTest.blobTest)[0m
+[0m[[0m[0mdebug[0m] [0m[0mInitial directly invalidated classes: Set()[0m
 [0m[[0m[0mdebug[0m] [0m[0m[0m
 [0m[[0m[0mdebug[0m] [0m[0mSources indirectly invalidated by:[0m
-[0m[[0m[0mdebug[0m] [0m[0m	product: Set()[0m
+[0m[[0m[0mdebug[0m] [0m[0m	product: Set(/Users/audreysamson/Workspace/cloneSamedi/sgit/src/test/scala/toolsTest/diffTest.scala, /Users/audreysamson/Workspace/cloneSamedi/sgit/src/test/scala/toolsTest/statusTest.scala, /Users/audreysamson/Workspace/cloneSamedi/sgit/src/test/scala/actionsTest/addTest.scala, /Users/audreysamson/Workspace/cloneSamedi/sgit/src/test/scala/toolsTest/fileToolsTest.scala, /Users/audreysamson/Workspace/cloneSamedi/sgit/src/test/scala/actionsTest/commitTest.scala, /Users/audreysamson/Workspace/cloneSamedi/sgit/src/test/scala/actionsTest/tagTest.scala, /Users/audreysamson/Workspace/cloneSamedi/sgit/src/test/scala/toolsTest/repositoryTest.scala, /Users/audreysamson/Workspace/cloneSamedi/sgit/src/test/scala/actionsTest/branchTest.scala, /Users/audreysamson/Workspace/cloneSamedi/sgit/src/test/scala/actionsTest/initTest.scala, /Users/audreysamson/Workspace/cloneSamedi/sgit/src/test/scala/toolsTest/blobTest.scala)[0m
 [0m[[0m[0mdebug[0m] [0m[0m	binary dep: Set()[0m
 [0m[[0m[0mdebug[0m] [0m[0m	external source: Set()[0m
-[0m[[0m[0mdebug[0m] [0m[0mAll initially invalidated classes: Set(toolsTest.blobTest)[0m
-[0m[[0m[0mdebug[0m] [0m[0mAll initially invalidated sources:Set(/Users/audreysamson/Workspace/cloneSamedi/sgit/src/test/scala/toolsTest/blobTest.scala)[0m
-[0m[[0m[0mdebug[0m] [0m[0mInitial set of included nodes: toolsTest.blobTest[0m
-[0m[[0m[0minfo[0m] [0m[0mCompiling 1 Scala source to /Users/audreysamson/Workspace/cloneSamedi/sgit/target/scala-2.13/test-classes ...[0m
+[0m[[0m[0mdebug[0m] [0m[0mAll sources are invalidated.[0m
+[0m[[0m[0mdebug[0m] [0m[0mInitial set of included nodes: [0m
+[0m[[0m[0mdebug[0m] [0m[0mRecompiling all sources: number of invalidated sources > 50.0% of all sources[0m
+[0m[[0m[0minfo[0m] [0m[0mCompiling 10 Scala sources to /Users/audreysamson/Workspace/cloneSamedi/sgit/target/scala-2.13/test-classes ...[0m
 [0m[[0m[0mdebug[0m] [0m[0mGetting org.scala-sbt:compiler-bridge_2.13:1.3.0:compile for Scala 2.13.1[0m
 [0m[[0m[0mdebug[0m] [0m[0mGetting org.scala-sbt:compiler-bridge_2.13:1.3.0:compile for Scala 2.13.1[0m
-[0m[[0m[0mdebug[0m] [0m[0m[zinc] Running cached compiler 1147a434 for Scala compiler version 2.13.1[0m
+[0m[[0m[0mdebug[0m] [0m[0m[zinc] Running cached compiler 4b9f70b5 for Scala compiler version 2.13.1[0m
 [0m[[0m[0mdebug[0m] [0m[0m[zinc] The Scala compiler is invoked with:[0m
 [0m[[0m[0mdebug[0m] [0m[0m	-bootclasspath[0m
 [0m[[0m[0mdebug[0m] [0m[0m	/Users/audreysamson/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/org/scala-lang/scala-library/2.13.1/scala-library-2.13.1.jar[0m
 [0m[[0m[0mdebug[0m] [0m[0m	-classpath[0m
 [0m[[0m[0mdebug[0m] [0m[0m	/Users/audreysamson/Workspace/cloneSamedi/sgit/target/scala-2.13/test-classes:/Users/audreysamson/Workspace/cloneSamedi/sgit/target/scala-2.13/classes:/Users/audreysamson/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/org/scala-lang/modules/scala-xml_2.13/1.2.0/scala-xml_2.13-1.2.0.jar:/Users/audreysamson/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/org/scala-lang/scala-reflect/2.13.1/scala-reflect-2.13.1.jar:/Users/audreysamson/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/org/scalactic/scalactic_2.13/3.0.8/scalactic_2.13-3.0.8.jar:/Users/audreysamson/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/commons-io/commons-io/2.5/commons-io-2.5.jar:/Users/audreysamson/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/com/github/scopt/scopt_2.13/4.0.0-RC2/scopt_2.13-4.0.0-RC2.jar:/Users/audreysamson/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/org/scalatest/scalatest_2.13/3.0.8/scalatest_2.13-3.0.8.jar:/Users/audreysamson/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/org/apache/commons/commons-lang3/3.9/commons-lang3-3.9.jar[0m
-[0m[[0m[0mdebug[0m] [0m[0mScala compilation took 0.951165089 s[0m
+[0m[[0m[0mdebug[0m] [0m[0mScala compilation took 2.832481608 s[0m
 [0m[[0m[0mdebug[0m] [0m[0mDone compiling.[0m
-[0m[[0m[0mdebug[0m] [0m[0mInvalidating (transitively) by inheritance from toolsTest.blobTest...[0m
-[0m[[0m[0mdebug[0m] [0m[0mInitial set of included nodes: toolsTest.blobTest[0m
-[0m[[0m[0mdebug[0m] [0m[0mInvalidated by transitive inheritance dependency: Set(toolsTest.blobTest)[0m
-[0m[[0m[0mdebug[0m] [0m[0mChange NamesChange(toolsTest.blobTest,ModifiedNames(changes = UsedName(finalize,[Default]), UsedName(notifyAll,[Default]))) invalidates 1 classes due to The toolsTest.blobTest has the following regular definitions changed:[0m
-[0m[[0m[0mdebug[0m] [0m[0m	UsedName(finalize,[Default]), UsedName(notifyAll,[Default]).[0m
-[0m[[0m[0mdebug[0m] [0m[0m	> by transitive inheritance: Set(toolsTest.blobTest)[0m
-[0m[[0m[0mdebug[0m] [0m[0m	> [0m
-[0m[[0m[0mdebug[0m] [0m[0m	> [0m
-[0m[[0m[0mdebug[0m] [0m[0m        [0m
-[0m[[0m[0mdebug[0m] [0m[0mNew invalidations:[0m
-[0m[[0m[0mdebug[0m] [0m[0m	Set()[0m
-[0m[[0m[0mdebug[0m] [0m[0mInitial set of included nodes: [0m
-[0m[[0m[0mdebug[0m] [0m[0mPreviously invalidated, but (transitively) depend on new invalidations:[0m
-[0m[[0m[0mdebug[0m] [0m[0m	Set()[0m
-[0m[[0m[0mdebug[0m] [0m[0mNo classes were invalidated.[0m
