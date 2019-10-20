@@ -1,7 +1,6 @@
 package actionsTest
 
 import java.io.{File, FileWriter, PrintWriter}
-
 import actions.{add, commit, init}
 import org.apache.commons.io.FileUtils
 import org.scalatest.{BeforeAndAfter, FunSpec, GivenWhenThen, Matchers}
@@ -12,7 +11,7 @@ import scala.io.Source
 class commitTest extends FunSpec with Matchers with GivenWhenThen with BeforeAndAfter{
 
   before{
-    new File(repoTools.currentPath + "/sgit").mkdir()
+    new File(repoTools.currentPath + "/sgit").mkdir() //TestRepo
     FileUtils.cleanDirectory(new File(repoTools.currentPath + "sgit"))
     init.initDirectory(repoTools.currentPath)
   }
@@ -66,6 +65,7 @@ class commitTest extends FunSpec with Matchers with GivenWhenThen with BeforeAnd
 
         val commitHash =  commitTools.lastCommitHash()
         val firstLineContent = fileTools.firstLine(new File(repoTools.rootPath + "/.git/objects/" + commitHash)).get
+
         assert(firstLineContent == lastCommitHash)
       }
     }
@@ -116,8 +116,8 @@ class commitTest extends FunSpec with Matchers with GivenWhenThen with BeforeAnd
   }
 
 
-  describe("You add one file and then commit") {
-    describe("If your delete it from your working directory") {
+  describe("If you delete a file which was commited ") {
+    describe("and then commit this change") {
       it("it should not appear in the commit content") {
         val file = new File(repoTools.rootPath + "/testCommit6.txt")
         new PrintWriter(file)
@@ -157,21 +157,22 @@ class commitTest extends FunSpec with Matchers with GivenWhenThen with BeforeAnd
         val content = repoTools.getAllFilesFromCommit(commitTools.lastCommitHash())
 
         assert(content.length == 1)
-
       }
     }
   }
 
 
-  describe("If the STAGE is empty") {
+  describe("If the stage area is empty") {
     describe("and you commit") {
       it("the commit should not be done") {
         val file = new File(repoTools.rootPath + "/testCommit8.txt")
         new PrintWriter(file)
         add.addAFile("testCommit8.txt")
         commit.commit("message")
+
         val fistCommitHash = commitTools.lastCommitHash()
         commit.commit("message")
+
         val secondCommitHash = commitTools.lastCommitHash()
 
         assert(secondCommitHash == fistCommitHash)

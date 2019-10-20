@@ -1,16 +1,15 @@
 package toolsTest
 
 import java.io.File
-
 import actions.init
 import org.apache.commons.io.FileUtils
 import org.scalatest.{BeforeAndAfter, FunSpec, GivenWhenThen, Matchers}
-import tools.{repoTools}
+import tools.repoTools
 
 class blobTest extends FunSpec with Matchers with GivenWhenThen with BeforeAndAfter{
 
   before{
-    new File(repoTools.currentPath + "/sgit").mkdir()
+    new File(repoTools.currentPath + "/sgit").mkdir() //TestRepo
     FileUtils.cleanDirectory(new File(repoTools.currentPath + "sgit"))
     init.initDirectory(repoTools.currentPath)
   }

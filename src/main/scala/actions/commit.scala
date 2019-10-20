@@ -2,10 +2,8 @@ package actions
 
 import java.io.{File, PrintWriter}
 import java.util.Date
-
 import org.apache.commons.io.FileUtils
 import tools.{commitTools, fileTools, printerTools, repoTools}
-
 
 object commit {
 

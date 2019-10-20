@@ -46,13 +46,13 @@ object status {
     */
   def generalStatus(): List[List[File]] = {
     val allFiles = repoTools.getAllWorkingDirectFiles
-    // FREE FILES
+    // FREE FILES:
     val allFreeFiles = allFiles.filter(f => isFree(f))
-    // DIFF BETWEEN WORKING DIRECTORY AND STAGE
+    // DIFF BETWEEN WORKING DIRECTORY AND STAGE:
     val allUpdatedStagedFiles = allFiles.filter(f => isStagedAndUpdatedContent(f))
-    // DIFF BETWEEN COMMIT AND WORKING AREA
+    // DIFF BETWEEN COMMIT AND WORKING AREA:
     val allUpdatedCommitedFiles = allFiles.filter(f => statusTools.isCommited(f) && statusTools.isCommitedButUpdated(f) )
-    // STAGE BUT NOT COMMIT
+    // STAGE BUT NOT COMMIT:
     val allStagedUnCommitedFiles = allFiles.filter(f => (statusTools.isCommitedButUpdated(f) || !statusTools.isCommited(f)) && statusTools.isStaged(f) && !isStagedAndUpdatedContent(f))
 
     List(allFreeFiles, allUpdatedStagedFiles, allUpdatedCommitedFiles, allStagedUnCommitedFiles)

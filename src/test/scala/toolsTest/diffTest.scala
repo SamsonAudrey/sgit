@@ -1,7 +1,6 @@
 package toolsTest
 
-import java.io.{File, FileWriter, PrintWriter}
-
+import java.io.File
 import actions.{add, commit, diff, init}
 import objects.LineDiff
 import org.apache.commons.io.FileUtils
@@ -11,18 +10,19 @@ import tools.{diffTools, fileTools, repoTools}
 class diffTest extends FunSpec with Matchers with GivenWhenThen with BeforeAndAfter{
 
   before{
-    new File(repoTools.currentPath + "/sgit").mkdir()
+    new File(repoTools.currentPath + "/sgit").mkdir() //TestRepo
     FileUtils.cleanDirectory(new File(repoTools.currentPath + "sgit"))
     init.initDirectory(repoTools.currentPath)
   }
-
 
   describe("If you compare two files") {
     describe("and they have the same content") {
       it("it should return an empty list of differences") {
         val oldText = Seq("a", "b", "c", "d")
         val newText = Seq("a", "b", "c", "d")
+
         val res1:List[LineDiff] = diffTools.diffBetweenTexts(oldText, newText)
+
         assert(res1 === List())
       }
     }
@@ -31,7 +31,9 @@ class diffTest extends FunSpec with Matchers with GivenWhenThen with BeforeAndAf
       it("it should return an empty list") {
         val oldText2 = Seq()
         val newText3 = Seq()
+
         val res2:List[LineDiff] = diffTools.diffBetweenTexts(oldText2, newText3)
+
         assert(res2 === List())
       }
     }
@@ -40,7 +42,9 @@ class diffTest extends FunSpec with Matchers with GivenWhenThen with BeforeAndAf
       it("it should return the list of differences") {
         val oldText2 = Seq("a", "b", "c")
         val newText3 = Seq("a", "b", "c", "d")
+
         val res2:List[LineDiff] = diffTools.diffBetweenTexts(oldText2, newText3)
+
         assert(res2 === List(LineDiff("ADD",3,"d")))
       }
     }
@@ -49,7 +53,9 @@ class diffTest extends FunSpec with Matchers with GivenWhenThen with BeforeAndAf
       it("it should return the list of differences") {
         val oldText2 = Seq("a", "b", "c", "e", "f")
         val newText3 = Seq("a", "b", "c", "d")
+
         val res2:List[LineDiff] = diffTools.diffBetweenTexts(oldText2, newText3)
+
         assert(res2 === List(LineDiff("ADD",3,"d"),LineDiff("REMOVE",4,"e"),LineDiff("REMOVE",5,"f")))
       }
     }
@@ -67,6 +73,7 @@ class diffTest extends FunSpec with Matchers with GivenWhenThen with BeforeAndAf
       val file = new File(repoTools.rootPath + "/TestGenDiff.txt")
       fileTools.updateFileContent(file, "first content")
       add.addAFile(file.getName)
+
       // Update content (free file)
       fileTools.updateFileContent(file, "new content")
 
@@ -81,11 +88,8 @@ class diffTest extends FunSpec with Matchers with GivenWhenThen with BeforeAndAf
       add.addAFile(file3.getName)
       fileTools.addLineIntoFile("\nline 2 \nline 3\n     \n", file3)
 
-
-
-
       diff.diff()
-      assert(true)
+      assert(true) // Visual test
     }
   }
 }

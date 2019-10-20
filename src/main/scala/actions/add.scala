@@ -5,7 +5,6 @@ import objects.Blob
 import java.io._
 
 import scala.annotation.tailrec
-import scala.io.Source
 
 object add {
 
@@ -57,6 +56,12 @@ object add {
         // no files to add
       }
       case Some(file) => {
+
+        if (statusTools.isStaged(file) && statusTools.isStagedAndUpdatedContent(file)){
+          val linkedStageFile = fileTools.getLinkedStagedFile(file)
+          val stagePath = repoTools.rootPath + "/.git/STAGE/" + linkedStageFile.get.getName // remove hold file from STAGE
+          new File(stagePath).delete()
+        }
         val path = file.getAbsolutePath
         val contentFile = fileTools.getContentFile(path)
         val fileHash = fileTools.hash(path + contentFile)

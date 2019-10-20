@@ -13,7 +13,7 @@ import scala.io.Source
 class fileToolsTest extends FunSpec with Matchers with GivenWhenThen with BeforeAndAfter{
 
   before{
-    new File(repoTools.currentPath + "/sgit").mkdir()
+    new File(repoTools.currentPath + "/sgit").mkdir() //TestRepo
     FileUtils.cleanDirectory(new File(repoTools.currentPath + "sgit"))
     init.initDirectory(repoTools.currentPath)
   }
@@ -23,6 +23,7 @@ class fileToolsTest extends FunSpec with Matchers with GivenWhenThen with Before
     it("it should return a specific hash") {
       val myString = "test"
       val myStringHash = fileTools.encryptThisString(myString)
+
       assert(myStringHash === fileTools.encryptThisString("test"))
     }
   }
@@ -32,14 +33,14 @@ class fileToolsTest extends FunSpec with Matchers with GivenWhenThen with Before
       new PrintWriter(new File(repoTools.rootPath + "/realFile.txt"))
       val res1 = fileTools.exist("realFile.txt")
       val res2 = fileTools.exist("noExistFile.txt")
+
       assert(res1 && !res2)
     }
   }
 
 
   describe("If you stage a file") {
-    describe("and you want to get if from the basic file ") {
-      it("it should be found") {
+      it("it should have the first line equals to the path") {
         val file = new File(repoTools.rootPath + "/testLinkedStage.txt")
         val pw = new PrintWriter(file) // create the file containing the blob's content
         pw.write("blablabla")
@@ -47,8 +48,8 @@ class fileToolsTest extends FunSpec with Matchers with GivenWhenThen with Before
         add.addAFile(file.getName)
 
         val firstLine = fileTools.firstLine(fileTools.getLinkedStagedFile(file).get)
+
         assert(firstLine.get == file.getAbsolutePath)
-      }
     }
   }
 
@@ -61,15 +62,14 @@ class fileToolsTest extends FunSpec with Matchers with GivenWhenThen with Before
         pw.close
         add.addAFile(file.getName)
 
-        val pw2 = new PrintWriter(file)
-        pw2.write("new content")
-        pw2.close
+        fileTools.updateFileContent(file,"new content")
+        add.updateStagedFile(file.getName)
 
-        /*add.updateStagedFile(file.getName)
-        val newStagedContent = Source.fromFile(fileTools.getLinkedStagedFile(file).get).mkString
+        val newStagedContent = fileTools.getContentFile(fileTools.getLinkedStagedFile(file).get.getAbsolutePath)
 
-        assert(newStagedContent == file.getAbsolutePath + "\n" + "new content" && !statusTools.isStagedAndUpdatedContent(file))
-      */
+        val sameContent = newStagedContent == file.getAbsolutePath + "\n" + "new content"
+        assert( sameContent&& !statusTools.isStagedAndUpdatedContent(file))
+
       }
     }
   }

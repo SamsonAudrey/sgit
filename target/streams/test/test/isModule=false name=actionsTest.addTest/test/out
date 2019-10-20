@@ -1,13 +1,13 @@
 [0m[[0m[0minfo[0m] [0m[0m[32maddTest:[0m[0m
 [0m[[0m[0minfo[0m] [0m[0m[32mIf you add a file[0m[0m
-[0m[[0m[0minfo[0m] [0m[0m[32m  but the file doesn't exist [0m[0m
-[0m[[0m[0minfo[0m] [0m[0m[32m  - it should not do anything[0m[0m
-[0m[[0m[0minfo[0m] [0m[0m[32m  and the file exists [0m[0m
-[0m[[0m[0minfo[0m] [0m[0m[32m  - it should add it on .git/STAGE directory[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32m  but this file doesn't exist [0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32m  - it should not do anything.[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32m  and the file exists[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32m  - it should add it on the stage area[0m[0m
 [0m[[0m[0minfo[0m] [0m[0m[32mIf you add the two files [0m[0m
-[0m[[0m[0minfo[0m] [0m[0m[32m- it should add all the two files[0m[0m
-[0m[[0m[0minfo[0m] [0m[0m[32mIf you create different files [0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32m- it should add all of them to the stage area[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32mIf you create different files and add all[0m[0m
 [0m[[0m[0minfo[0m] [0m[0m[32m- it should add all the files[0m[0m
-[0m[[0m[0minfo[0m] [0m[0m[32mIf you add a file (STAGE)[0m[0m
-[0m[[0m[0minfo[0m] [0m[0m[32m  and then you modify his content and add it[0m[0m
-[0m[[0m[0minfo[0m] [0m[0m[32m  - it should delete the hold Staged File and add the new one[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32mIf you add a file on the stage area[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32m  and then you modify his content and re-add it[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32m  - it should delete the hold staged file and add the new one[0m[0m

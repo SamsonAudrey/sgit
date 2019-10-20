@@ -1,7 +1,6 @@
 package actionsTest
 
 import java.io.{File, PrintWriter}
-
 import actions._
 import org.apache.commons.io.FileUtils
 import org.scalatest.{BeforeAndAfter, FunSpec, GivenWhenThen, Matchers}
@@ -10,7 +9,7 @@ import tools.{commitTools, fileTools, repoTools}
 class tagTest extends FunSpec with Matchers with GivenWhenThen with BeforeAndAfter{
 
   before{
-    new File(repoTools.currentPath + "/sgit").mkdir()
+    new File(repoTools.currentPath + "/sgit").mkdir() //TestRepo
     FileUtils.cleanDirectory(new File(repoTools.currentPath + "sgit"))
     init.initDirectory(repoTools.currentPath)
   }
@@ -20,16 +19,20 @@ class tagTest extends FunSpec with Matchers with GivenWhenThen with BeforeAndAft
       new PrintWriter(new File(repoTools.rootPath + "/testFreeFile1.txt"))
       add.addAll()
       commit.commit("message")
+
       val tagName = "newTag"
       tag.newTag(tagName)
+
       val fileTag = new File(repoTools.rootPath + "/.git/refs/tags/" + tagName)
+
       val exist = fileTag.exists()
-      val ff = fileTools.firstLine(fileTag).get
-      assert(exist && ff == commitTools.lastCommitHash())
+      val firstLine = fileTools.firstLine(fileTag).get
+
+      assert(exist && firstLine == commitTools.lastCommitHash())
     }
   }
 
-  describe("If you add a tag with the same nam of a branch") {
+  describe("If you add a tag with the same name of a branch") {
     it("it should not do anything ") {
       new PrintWriter(new File(repoTools.rootPath + "/file.txt"))
       add.addAll()

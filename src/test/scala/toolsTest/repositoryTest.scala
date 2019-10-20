@@ -1,28 +1,27 @@
 package toolsTest
 
 import java.io.{File, PrintWriter}
-
 import actions.init
 import org.apache.commons.io.FileUtils
 import tools.{fileTools, repoTools}
 import org.scalatest._
-
 import scala.reflect.io.{File => ScalaFile}
 
 class repositoryTest extends FunSpec with Matchers with GivenWhenThen with BeforeAndAfter {
 
   before{
-    new File(repoTools.currentPath + "/sgit").mkdir()
+    new File(repoTools.currentPath + "/sgit").mkdir() //TestRepo
     FileUtils.cleanDirectory(new File(repoTools.currentPath + "sgit"))
     init.initDirectory(repoTools.currentPath)
   }
 
   describe("If you want to get folders in a directory") {
-    describe("and there is no folders ") {
+    describe("but there is no folders ") {
       it("it should return an empty list") {
         val path = repoTools.rootPath
         new File(path+"/sgitRepo/testRepo1").mkdir()
         val listFolders1 = repoTools.recursiveListFolders(new File(path+"/testRepo1"))
+
         assert(listFolders1.isEmpty)
       }
     }
@@ -31,11 +30,12 @@ class repositoryTest extends FunSpec with Matchers with GivenWhenThen with Befor
       it("it should return a list with this four folders ") {
         val path = repoTools.rootPath
         new File(path + "/testRepo2").mkdir()
-        new File(path + "/testRepo2/folder1").mkdir() //1
-        new File(path + "/testRepo2/folder2").mkdir() //2
-        new File(path + "/testRepo2/testRepo2BIS").mkdir() //3
-        new File(path + "/testRepo2/testRepo2BIS/folder3").mkdir() //4
+        new File(path + "/testRepo2/folder1").mkdir() // folder 1
+        new File(path + "/testRepo2/folder2").mkdir() // folder 2
+        new File(path + "/testRepo2/testRepo2BIS").mkdir() // folders 3
+        new File(path + "/testRepo2/testRepo2BIS/folder3").mkdir() // folders 4
         val listFolders2 = repoTools.recursiveListFolders(new File(path+"/testRepo2"))
+
         assert(listFolders2.length === 4)
       }
     }
@@ -47,6 +47,7 @@ class repositoryTest extends FunSpec with Matchers with GivenWhenThen with Befor
         val path = repoTools.rootPath
         new File(path+"/sgitRepo/testRepoEmpty").mkdir()
         val listFoldersEmpty = repoTools.getListOfFiles(new File(path + "/testRepoEmpty"))
+
         assert(listFoldersEmpty === List())
       }
     }
@@ -61,9 +62,10 @@ class repositoryTest extends FunSpec with Matchers with GivenWhenThen with Befor
         new PrintWriter(new File(path + "/testRepo3/folder2" ))
         new PrintWriter(new File(path + "/testRepo3/folder3" ))
         val listFolders3 = repoTools.getListOfFiles(new File(path + "/testRepo3"))
+
         assert(
           listFolders3 ===
-            List(new File(path + "/testRepo3/folder2" ),
+            List(new File(path + "/testRepo3/folder2"),
               new File(path + "/testRepo3/folder3" ),
               new File(path + "/testRepo3/folder1" )))
       }
@@ -71,13 +73,14 @@ class repositoryTest extends FunSpec with Matchers with GivenWhenThen with Befor
   }
 
   describe("If you want to delete a directory") {
-    describe("and it exist and contains a sub-folder ") {
+    describe("and it exists and contains a sub-folder ") {
       it("it should delete the sub-folder") {
         val path = repoTools.rootPath
         new File(path + "/testRepo4").mkdir()
         new File(path + "/testRepo4/testRepoToDelete").mkdir()
         new PrintWriter(new File(path + "/testRepo4/testRepoToDelete/subFolder1"))
         repoTools.deleteDirectory("testRepoToDelete")
+
         assert(!fileTools.exist("subFolder1.txt"))
       }
     }
@@ -87,6 +90,7 @@ class repositoryTest extends FunSpec with Matchers with GivenWhenThen with Befor
         new File("/testRepo1BIS").mkdir()
         new File("/testRepo1BIS/subFolder1").mkdir()
         repoTools.deleteDirectory("/testRepo1BIS")
+
         assert(ScalaFile("/testRepo1BIS").exists === false)
       }
     }
@@ -95,6 +99,7 @@ class repositoryTest extends FunSpec with Matchers with GivenWhenThen with Befor
       it("it should return false") {
         new File("/testRepo2").mkdir()
         repoTools.deleteDirectory("/testRepo2")
+
         assert(ScalaFile("/testRepo2").exists === false)
       }
     }

@@ -1,6 +1,6 @@
 [0m[[0m[0minfo[0m] [0m[0m[32mrepositoryTest:[0m[0m
 [0m[[0m[0minfo[0m] [0m[0m[32mIf you want to get folders in a directory[0m[0m
-[0m[[0m[0minfo[0m] [0m[0m[32m  and there is no folders [0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32m  but there is no folders [0m[0m
 [0m[[0m[0minfo[0m] [0m[0m[32m  - it should return an empty list[0m[0m
 [0m[[0m[0minfo[0m] [0m[0m[32m  and there is 3 direct sub-folders and one sub-sub-folder[0m[0m
 [0m[[0m[0minfo[0m] [0m[0m[32m  - it should return a list with this four folders [0m[0m
@@ -10,7 +10,7 @@
 [0m[[0m[0minfo[0m] [0m[0m[32m  and there is three direct files [0m[0m
 [0m[[0m[0minfo[0m] [0m[0m[32m  - it should return a list with these three files [0m[0m
 [0m[[0m[0minfo[0m] [0m[0m[32mIf you want to delete a directory[0m[0m
-[0m[[0m[0minfo[0m] [0m[0m[32m  and it exist and contains a sub-folder [0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32m  and it exists and contains a sub-folder [0m[0m
 [0m[[0m[0minfo[0m] [0m[0m[32m  - it should delete the sub-folder[0m[0m
 [0m[[0m[0minfo[0m] [0m[0m[32m  and it exist and contains a sub-folder [0m[0m
 [0m[[0m[0minfo[0m] [0m[0m[32m  - it should delete the main folder[0m[0m

@@ -1,7 +1,6 @@
 package actions
 
-import java.io.{File, PrintWriter}
-
+import java.io.File
 import tools._
 
 object branch {
@@ -20,8 +19,8 @@ object branch {
     * Get list of all branches
     * @return
     */
-  def allBranches(): List[File] = {
-    repoTools.getListOfFiles(new File(repoTools.rootPath + "/.git/refs/heads/"))
+  def allBranchesTags(): List[File] = {
+    repoTools.getListOfFiles(new File(repoTools.rootPath + "/.git/refs/heads/")) ::: repoTools.getListOfFiles(new File(repoTools.rootPath + "/.git/refs/tags/"))
   }
 
   /**
@@ -29,7 +28,7 @@ object branch {
     */
   def showAllBranches(): String = {
     var toPrint = ""
-    allBranches().map(b => {
+    allBranchesTags().map(b => {
       if (branch.currentBranch() == b.getName) {
         toPrint += "-> "
       }
@@ -74,16 +73,16 @@ object branch {
     * @return
     */
   def checkoutBranch(branchName: String): Boolean = {
-    val allB = allBranches().map(b => b.getName) //VERIFY if  ID is a  BRANCH
+    val allB = repoTools.getListOfFiles(new File(repoTools.rootPath + "/.git/refs/heads/")).map(b => b.getName)
     if (allB.contains(branchName)) {
 
       // change the working directory
-      val fileToRemove = repoTools.getAllWorkingDirectFiles.filter(!statusTools.isFree(_))
-
       val branchPath = repoTools.rootPath + "/.git/refs/heads/" + branchName
       val objPath = repoTools.rootPath + "/.git/objects/"
       val commitHash = fileTools.getContentFile(branchPath)
       val hashFileToAdd = repoTools.getAllFilesFromCommit(commitHash).map(f => f.split(" ").map(_.trim).toList(0) )
+
+      val fileToRemove = repoTools.getAllWorkingDirectFiles.filter(!statusTools.isFree(_))
 
       val fileToAddPath = hashFileToAdd.map(h => {
         new File(objPath + "/" + h.slice(0,2) + "/" + h.drop(2))
@@ -105,7 +104,7 @@ object branch {
 
       fileTools.firstLine(new File(path)).get == branchName
 
-    } else false // verif TAGS and commit hash
+    } else false
   }
 
 

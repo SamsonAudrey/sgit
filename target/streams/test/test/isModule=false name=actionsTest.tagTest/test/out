@@ -1,5 +1,5 @@
 [0m[[0m[0minfo[0m] [0m[0m[32mtagTest:[0m[0m
 [0m[[0m[0minfo[0m] [0m[0m[32mIf you add a tag[0m[0m
 [0m[[0m[0minfo[0m] [0m[0m[32m- it should create a file and point to the last commit of the current branch[0m[0m
-[0m[[0m[0minfo[0m] [0m[0m[32mIf you add a tag with the same nam of a branch[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32mIf you add a tag with the same name of a branch[0m[0m
 [0m[[0m[0minfo[0m] [0m[0m[32m- it should not do anything [0m[0m
