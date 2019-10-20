@@ -15,7 +15,7 @@ You should have :
 First step : clone this repository
 
 Second step : you have to export the path to the executable sgit, to do that :
-* open a terminal and go to the clone directory, in the sgit folder
+* open a terminal and go to the root of the clone directory
 * add the path : 
 ```
 export PATH="`pwd`/target/scala-2.13:$PATH"
