@@ -23,7 +23,7 @@ export PATH="`pwd`/target/scala-2.13:$PATH"
 
 Now you can call sgit in your terminal.
 
->Becarefull, if you open a new terminal, you will need to write the export command again to use sgit.
+>Be careful, if you open a new terminal, you will need to write the export command again to use sgit.
 
 
 
