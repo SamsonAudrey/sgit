@@ -21,11 +21,16 @@ Second step : you have to export the path to the executable sgit, to do that :
 export PATH="`pwd`/target/scala-2.13:$PATH"
 ```
 
-Now you can call sgit in your terminal.
+Now you can run the projet by calling ```sgit [command]``` in your terminal, wherever you want.
 
->Be careful, if you open a new terminal, you will need to write the export command again to use sgit.
+>Be careful, if you open a new terminal, you will need to write the export command again to use sgit. If you want to export it permanently, you can edit your .bashrc file and add the path.
 
+### Available sbt commands:
 
+* ```sbt assembly``` : to create a fat JAR of your project with all of its dependencies. It can be executed as a standalone application.
+* ```sbt test```: to run the tests.
+* ```sbt run```: to run the projects.
+* ```sbt compile```: to compile the main source code.
 
 ### Commands
 #### Create:
