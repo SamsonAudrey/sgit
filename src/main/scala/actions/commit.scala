@@ -1,11 +1,11 @@
 package actions
 
 import java.io.{File, PrintWriter}
+import java.util.Date
 
 import org.apache.commons.io.FileUtils
-import tools.{commitTools, fileTools, repoTools}
+import tools.{commitTools, fileTools, printerTools, repoTools}
 
-import scala.io.Source
 
 object commit {
 
@@ -91,10 +91,55 @@ object commit {
     if (changes(2).nonEmpty) {
       changes(2).map(f => content += f.getName // HASH
         + " "
-        + Source.fromFile(f.getAbsolutePath).mkString.split("\n").map(_.trim).toList(0)// PATH
+        + fileTools.getContentFile(f.getAbsolutePath).split("\n").map(_.trim).toList(0)// PATH
         + "\n"
       )
     }
     content
   }
+
+  /**
+    * Display all commits started with newest
+    */
+  def log(): Unit = {
+    if (!isFirstCommit) {
+      val allCommit = recCommitAndMessage(commitTools.lastCommitHash())
+      printerTools.printMessage(formatLog(allCommit))
+    }
+  }
+
+  /**
+    * Get all commits hash + commit date + commit message
+    * @param commitHash : String
+    * @return
+    */
+  def recCommitAndMessage(commitHash: String): List[String] = {
+    if (new File(repoTools.rootPath + "/.git/objects/" + commitHash).exists()) {
+      val file = new File(repoTools.rootPath + "/.git/objects/" + commitHash)
+      val content = fileTools.getContentFile(file.getAbsolutePath)
+        .split("\n")
+        .toList
+        .map(_.trim)(1) // message line
+      val firstLine = fileTools.firstLine(file)
+      if (firstLine.get != "") {
+        List(commitHash + "-" + new Date(file.lastModified()) + "-" + content.mkString("")) ::: recCommitAndMessage(firstLine.get)
+      } else  List(commitHash + "-" + new Date(file.lastModified()) + "-" + content.mkString("") )
+    } else List()
+  }
+
+  /**
+    * Apply the good format
+    * @param log : List[String]
+    * @return
+    */
+  def formatLog(log : List[String]): String = {
+    var content = ""
+    log.map( l => {
+      content += "commit: " +l.split("-").toList(0) + "\n" +
+        "date: " + l.split("-").toList(1) + "\n" +
+        "message: " + l.split("-").toList(2) + "\n\n"
+    })
+    content
+  }
+
 }

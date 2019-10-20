@@ -37,8 +37,6 @@ class branchTest extends FunSpec with Matchers with GivenWhenThen with BeforeAnd
       commit.commit("message")
       branch.newBranch(branchName3)
       val allBranches = branch.allBranches()
-      println("///////////////////")
-      println(branch.showAllBranches())
       assert(allBranches.length == 4) // 3 new branches + the master
     }
   }

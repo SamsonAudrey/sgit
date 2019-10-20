@@ -11,7 +11,7 @@ object parser {
                        command: String = "",
                        files: List[String] = List(),
                        branch_tag: String = "",
-                       commitMessage: String = "",
+                       commitMessage: List[String] = List(),
                        av: Boolean = false )
 
     val builder = OParser.builder[Config]
@@ -32,8 +32,12 @@ object parser {
           .action((_, c) => c.copy(command = "status")),
 
         cmd("diff")
-          .text("Changes between working directory and stage area, working directory and commit, etc.")
+          .text("Changes between working directory and stage area, working directory and commit.")
           .action((_, c) => c.copy(command = "diff")),
+
+        cmd("log")
+          .text("Show all commits started with newest.")
+          .action((_, c) => c.copy(command = "log")),
 
         cmd("add")
           .text("Add files to the stage area.")
@@ -50,10 +54,14 @@ object parser {
           .text("Commit changes to the repository.")
           .action((_, c) => c.copy(command = "commit"))
           .children(
-            arg[String]("message")
-              .required()
-              .action((x, c) => c.copy(commitMessage = x))
-              .text("Commit message.")
+            opt[String]("m")
+              .required
+              .action((x, c) => c.copy(commitMessage = c.commitMessage :+ x)),
+            arg[String]("<message>")
+              .unbounded
+              .required
+              .action((x, c) => c.copy(commitMessage = c.commitMessage :+ x))
+              .text("Message to commit.")
           ),
 
         cmd("branch")
@@ -135,22 +143,26 @@ object parser {
                     actions.branch.checkoutBranch(config.branch_tag)
                   }
                   case "commit" => {
-                    actions.commit.commit(config.commitMessage)
+                    println(config.commitMessage)
+                    actions.commit.commit(config.commitMessage.mkString(" "))
                   }
                   case "diff" => {
                     actions.diff.diff()
                   }
+                  case "log" => {
+                    actions.commit.log()
+                  }
                   case _ => {
-                    println(
-                      tools.printerTools.printColorMessage(
-                        Console.RED,
-                        "No repository found. Please, initialize one."
-                      )
-                    )
+                    // arguments are bad
                   }
                 }
               }
               case _ => {
+                  tools.printerTools.printColorMessage(
+                    Console.RED,
+                    "No repository found. Please, initialize one."
+
+                )
                 // arguments are bad, error message is displayed
               }
             }
@@ -158,7 +170,7 @@ object parser {
         }
       }
       case _ => {
-        // arguments are bad, error message is displayed
+        // arguments are bad
       }
     }
   }

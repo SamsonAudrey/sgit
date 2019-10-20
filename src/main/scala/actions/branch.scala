@@ -30,11 +30,14 @@ object branch {
   def showAllBranches(): String = {
     var toPrint = ""
     allBranches().map(b => {
-      toPrint += b.getName
-      if (fileTools.getContentFile(b.getAbsolutePath) != ""){
-        val commitMessage = fileTools.firstLine(new File(repoTools.rootPath + "/.git/objects/" + fileTools.getContentFile(b.getAbsolutePath))).getOrElse("")
-        toPrint += " " + commitMessage + "\n"
+      if (branch.currentBranch() == b.getName) {
+        toPrint += "-> "
       }
+      if (fileTools.getContentFile(b.getAbsolutePath) != ""){
+        val commitMessage = fileTools.getContentFile(repoTools.rootPath + "/.git/objects/" + fileTools.getContentFile(b.getAbsolutePath))
+        toPrint += b.getName + ", last commit message : " + commitMessage.split("\n").toList.map(_.trim)(1) + "\n"
+      } else toPrint += b.getName + "\n"
+
 
     })
     toPrint

@@ -66,7 +66,6 @@ class commitTest extends FunSpec with Matchers with GivenWhenThen with BeforeAnd
 
         val commitHash =  commitTools.lastCommitHash()
         val firstLineContent = fileTools.firstLine(new File(repoTools.rootPath + "/.git/objects/" + commitHash)).get
-
         assert(firstLineContent == lastCommitHash)
       }
     }

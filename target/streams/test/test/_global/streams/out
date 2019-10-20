@@ -1,14 +1,14 @@
-[0m[[0m[0mdebug[0m] [0m[0mRunning TaskDef(toolsTest.diffTest, org.scalatest.tools.Framework$$anon$1@69e815cb, false, [SuiteSelector])[0m
-[0m[[0m[0mdebug[0m] [0m[0mRunning TaskDef(toolsTest.blobTest, org.scalatest.tools.Framework$$anon$1@69e815cb, false, [SuiteSelector])[0m
-[0m[[0m[0mdebug[0m] [0m[0mRunning TaskDef(actionsTest.branchTest, org.scalatest.tools.Framework$$anon$1@69e815cb, false, [SuiteSelector])[0m
-[0m[[0m[0mdebug[0m] [0m[0mRunning TaskDef(toolsTest.repositoryTest, org.scalatest.tools.Framework$$anon$1@69e815cb, false, [SuiteSelector])[0m
-[0m[[0m[0mdebug[0m] [0m[0mRunning TaskDef(actionsTest.addTest, org.scalatest.tools.Framework$$anon$1@69e815cb, false, [SuiteSelector])[0m
-[0m[[0m[0mdebug[0m] [0m[0mRunning TaskDef(toolsTest.statusTest, org.scalatest.tools.Framework$$anon$1@69e815cb, false, [SuiteSelector])[0m
-[0m[[0m[0mdebug[0m] [0m[0mRunning TaskDef(actionsTest.commitTest, org.scalatest.tools.Framework$$anon$1@69e815cb, false, [SuiteSelector])[0m
-[0m[[0m[0mdebug[0m] [0m[0mRunning TaskDef(actionsTest.tagTest, org.scalatest.tools.Framework$$anon$1@69e815cb, false, [SuiteSelector])[0m
-[0m[[0m[0mdebug[0m] [0m[0mRunning TaskDef(toolsTest.fileToolsTest, org.scalatest.tools.Framework$$anon$1@69e815cb, false, [SuiteSelector])[0m
-[0m[[0m[0mdebug[0m] [0m[0mRunning TaskDef(actionsTest.initTest, org.scalatest.tools.Framework$$anon$1@69e815cb, false, [SuiteSelector])[0m
-[0m[[0m[0minfo[0m] [0m[0m[36mRun completed in 658 milliseconds.[0m[0m
+[0m[[0m[0mdebug[0m] [0m[0mRunning TaskDef(toolsTest.diffTest, org.scalatest.tools.Framework$$anon$1@633a2046, false, [SuiteSelector])[0m
+[0m[[0m[0mdebug[0m] [0m[0mRunning TaskDef(toolsTest.blobTest, org.scalatest.tools.Framework$$anon$1@633a2046, false, [SuiteSelector])[0m
+[0m[[0m[0mdebug[0m] [0m[0mRunning TaskDef(actionsTest.branchTest, org.scalatest.tools.Framework$$anon$1@633a2046, false, [SuiteSelector])[0m
+[0m[[0m[0mdebug[0m] [0m[0mRunning TaskDef(toolsTest.repositoryTest, org.scalatest.tools.Framework$$anon$1@633a2046, false, [SuiteSelector])[0m
+[0m[[0m[0mdebug[0m] [0m[0mRunning TaskDef(actionsTest.addTest, org.scalatest.tools.Framework$$anon$1@633a2046, false, [SuiteSelector])[0m
+[0m[[0m[0mdebug[0m] [0m[0mRunning TaskDef(toolsTest.statusTest, org.scalatest.tools.Framework$$anon$1@633a2046, false, [SuiteSelector])[0m
+[0m[[0m[0mdebug[0m] [0m[0mRunning TaskDef(actionsTest.commitTest, org.scalatest.tools.Framework$$anon$1@633a2046, false, [SuiteSelector])[0m
+[0m[[0m[0mdebug[0m] [0m[0mRunning TaskDef(actionsTest.tagTest, org.scalatest.tools.Framework$$anon$1@633a2046, false, [SuiteSelector])[0m
+[0m[[0m[0mdebug[0m] [0m[0mRunning TaskDef(toolsTest.fileToolsTest, org.scalatest.tools.Framework$$anon$1@633a2046, false, [SuiteSelector])[0m
+[0m[[0m[0mdebug[0m] [0m[0mRunning TaskDef(actionsTest.initTest, org.scalatest.tools.Framework$$anon$1@633a2046, false, [SuiteSelector])[0m
+[0m[[0m[0minfo[0m] [0m[0m[36mRun completed in 727 milliseconds.[0m[0m
 [0m[[0m[0minfo[0m] [0m[0m[36mTotal number of tests run: 46[0m[0m
 [0m[[0m[0minfo[0m] [0m[0m[36mSuites: completed 10, aborted 0[0m[0m
 [0m[[0m[0minfo[0m] [0m[0m[36mTests: succeeded 46, failed 0, canceled 0, ignored 0, pending 0[0m[0m
