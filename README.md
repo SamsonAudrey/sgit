@@ -12,18 +12,9 @@ You should have :
 * java version >= 1.8 
 
 ### Installation
-First step : clone this repository
-
-Second step : you have to export the path to the executable sgit, to do that :
-* open a terminal and go to the root of the clone directory
-* add the path : 
-```
-export PATH="`pwd`/target/scala-2.13:$PATH"
-```
-
-Now you can run the projet by calling ```sgit [command]``` in your terminal, wherever you want.
-
->Be careful, if you open a new terminal, you will need to write the export command again to use sgit. If you want to export it permanently, you can edit your .bashrc file and add the path.
+* clone this repository
+* cd sgit
+* source install.sh
 
 ### Available sbt commands:
 
