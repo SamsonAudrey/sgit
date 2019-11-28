@@ -78,8 +78,10 @@ object diffTools {
   /**
     * Print all the differences of all Files
     */
-  def showGeneralDiff(): String = {
+  def showGeneralDiff(): List[String] = {
+    var head = ""
     var content = ""
+    var lines = ""
 
     // list = List(allFreeFiles, allUpdatedStagedFiles, allUpdatedCommitedFiles, allStagedUnCommitedFiles)
     val list = status.generalStatus()
@@ -88,7 +90,7 @@ object diffTools {
     // No diff for uncommited files in list(3)
 
     // Diff between stage area and working directory
-    if (list(1).nonEmpty) {
+    /*if (list(1).nonEmpty) {
 
       list(1).filter(!list(2).contains(_)).map(f => {
 
@@ -102,26 +104,27 @@ object diffTools {
 
         content += "@@ " + (allDiff(0).index + 1) + "," + allDiff.length + " @@ \n"
         allDiff.map(d => content += formatDiffLine(d) + "\n") } )
-    }
+    }*/
 
-    // Diff between last commit and working directory
-    if (list(2).nonEmpty) {
+    // Diff between last commit and working directory [NOT WITH STAGE AREA]
+    val l = list(2).filter(f => !list(1).contains(f) && !list(3).contains(f) )
+    if (l.nonEmpty) {
 
-      list(2).map(f => {
+      l.map(f => {
 
         val name = f.getName
         val commitedFile = fileTools.getLinkedCommitFile(f)
 
-        content += s"diff --git a/$name b/$name \n"+
+        head += s"diff --git a/$name b/$name \n"+
           "--- a/$name\n" +
-          "+++ b/$name\n"
+          "+++ b/$name"
 
         val allDiff = diff(f,commitedFile.get)
 
-        content += "@@ " + (allDiff(0).index + 1) + "," + allDiff.length + " @@ \n"
-        allDiff.map(d => content += formatDiffLine(d) + "\n") } )
+        content += "@@ " + (allDiff(0).index + 1) + "," + allDiff.length + " @@ "
+        allDiff.map(d => lines += formatDiffLine(d) + "\n") } )
     }
-    content
+    List(head,content,lines)
   }
 
   /**

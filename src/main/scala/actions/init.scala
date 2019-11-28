@@ -1,6 +1,6 @@
 package actions
 
-import tools.{fileTools, repoTools}
+import tools.{fileTools, printerTools, repoTools}
 import java.io.{File, PrintWriter}
 
 object init {
@@ -22,6 +22,7 @@ object init {
     repoTools.createDirectory(gitPath + "/refs/heads")
     new PrintWriter(new File(gitPath + "/refs/heads/master"))
     fileTools.updateFileContent(new File(gitPath + "/HEAD/branch"), "master")
+    printerTools.printMessage("Dépôt Sgit vide initialisé dans " + repoTools.currentPath+".sgit")
   }
 
 }

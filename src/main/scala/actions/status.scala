@@ -32,7 +32,7 @@ object status {
     val list3 = list(3).filter(f => !list(1).contains(f))
     if (list(3).nonEmpty) {
       printerTools.printMessage(">> Changes to be committed:")
-      list3.map(f => printerTools.printColorMessage(Console.GREEN, f.getName))
+      list3.map(f => printerTools.printColorMessage(Console.GREEN, "new file: "+f.getName))
     }
 
     if(list(0).isEmpty && list(1).isEmpty && list(2).isEmpty && list(3).isEmpty) {
@@ -59,16 +59,13 @@ object status {
 
     List(allFreeFiles, allUpdatedStagedFiles, allUpdatedCommitedFiles, allStagedUnCommitedFiles)*/
 
-    println("GENERAL STATUS")
 
     val f = new File(repoTools.currentPath)
 
     val workingDirect = f.listFiles.filter(f => f.getName != ".sgit").toList
 
-    println(repoTools.containsOnlyFiles(f))
-
     if (repoTools.containsOnlyFiles(f)) { // ONLY FILES
-      val allFiles = repoTools.getAllWorkingDirectFiles
+      val allFiles = workingDirect
 
       if (allFiles.nonEmpty) {
         // FREE FILES:
@@ -87,9 +84,7 @@ object status {
       }
 
     } else { // AT LEAST 1 FOLDER
-      println(workingDirect.filter(f => f.isFile))
       val allFiles = workingDirect.filter(f => f.isFile)
-      println(allFiles)
       val freeFolders = workingDirect.filter(f => f.isDirectory && repoTools.isFreeFolder(f))
       // TODO unfree folders
       if (allFiles.nonEmpty) {

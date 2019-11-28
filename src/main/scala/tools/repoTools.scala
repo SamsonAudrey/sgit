@@ -18,10 +18,7 @@ object repoTools {
     * Get root path
     * @return
     */
-  def rootPath: String = getRoot(new File(currentPath)).getOrElse({
-    init.initDirectory(currentPath)
-    new File(currentPath)
-  }).getAbsolutePath
+  def rootPath: String = getRoot(new File(currentPath)).getOrElse(new File(".")).getAbsolutePath
 
   /**
     * Get root file

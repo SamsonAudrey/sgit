@@ -37,6 +37,8 @@ object commit {
       updateRefCommit(newCommitHash)
       // Clean STAGE
       FileUtils.cleanDirectory(new File(repoTools.rootPath + "/.sgit/STAGE"))
+      printerTools.printMessage("[" + branch.currentBranch + " "+ newCommitHash.slice(0,7) + "] "+message)
+      printerTools.printMessage(changes(2).length + " file changed, 0 insertions(+), 0 deletions(-)")
     }
   }
 
@@ -102,7 +104,8 @@ object commit {
   def log(): Unit = {
     if (!isFirstCommit) {
       val allCommit = recCommitAndMessage(commitTools.lastCommitHash())
-      printerTools.printMessage(formatLog(allCommit))
+      printerTools.printColorMessage(Console.BOLD,formatLog(allCommit)(0))
+      printerTools.printMessage(formatLog(allCommit)(1))
     }
   }
 
@@ -130,14 +133,14 @@ object commit {
     * @param log : List[String]
     * @return
     */
-  def formatLog(log : List[String]): String = {
+  def formatLog(log : List[String]): List[String] = {
     var content = ""
+    var commit = ""
     log.map( l => {
-      content += "commit: " +l.split("-").toList(0) + "\n" +
-        "date: " + l.split("-").toList(1) + "\n" +
-        "message: " + l.split("-").toList(2) + "\n\n"
+      commit += "commit: " +l.split("-").toList(0)
+      content += "date: " + l.split("-").toList(1) + "\n" + "message: " + l.split("-").toList(2) + "\n\n"
     })
-    content
+    List(commit,content)
   }
 
 }
