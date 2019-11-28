@@ -19,13 +19,6 @@ You should have :
 You can now use sgit commands
 
 
-### Available sbt commands:
-
-* ```sbt assembly``` : to create a fat JAR of your project with all of its dependencies. It can be executed as a standalone application.
-* ```sbt test```: to run the tests.
-* ```sbt run```: to run the projects.
-* ```sbt compile```: to compile the main source code.
-
 ### Commands
 #### Create:
 * sgit init
