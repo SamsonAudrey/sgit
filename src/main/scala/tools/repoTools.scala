@@ -73,7 +73,7 @@ object repoTools {
 
   /**
     * Get all folders and sub-folders of f
-    * @param f : f is a folder
+    * @param f : File
     * @return
     */
   def recursiveListFolders(f: File): Array[File] = {
@@ -93,13 +93,13 @@ object repoTools {
     if (!f.isDirectory || f.getName == ".sgit") Array()
     else {
       val these = f.listFiles
-      these ++ these.filter(_.isDirectory && !(f.getName.charAt(0).toString == ".")).flatMap(recursiveListUserFolders(_))
+      these ++ these.filter(_.isDirectory).flatMap(recursiveListUserFolders(_))
     }
   }
 
   /**
     * Get list of files into directory dir
-    * @param dir : directory
+    * @param dir : File
     * @return
     */
   def getListOfFiles(dir: File): List[File] = {
@@ -108,6 +108,35 @@ object repoTools {
       d.listFiles.filter(_.isFile).toList
     } else {
       List[File]()
+    }
+  }
+
+  /**
+    *
+    * @param dir
+    * @return
+    */
+  def containsOnlyFiles(dir: File): Boolean = {
+    if (!dir.isDirectory) true
+    else {
+      val allFiles = dir.listFiles.filter(f => f.getName != ".sgit")
+      val res = allFiles.filter(f => f.isDirectory)
+      res.isEmpty
+    }
+  }
+
+  // check if the folder contains (at first step) only freefiles
+  /**
+    *
+    * @param dir
+    * @return
+    */
+  def isFreeFolder(dir: File): Boolean = {
+    if (!dir.isDirectory) false
+    else {
+      val allFiles = dir.listFiles.filter(f => f.isFile || f.getName != ".sgit")
+      val res = allFiles.filter(f => !statusTools.isFree(f))
+      res.isEmpty
     }
   }
 

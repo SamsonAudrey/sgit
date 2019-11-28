@@ -31,7 +31,7 @@ class statusTest extends FunSpec with Matchers with GivenWhenThen with BeforeAnd
       fileTools.updateFileContent(file,content)
       add.addAFile("testStatusFile.txt")
 
-      status.generalStatus()
+      println(status.generalStatus())
 
       assert(statusTools.isStaged(new File(path)))
     }

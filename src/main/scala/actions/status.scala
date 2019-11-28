@@ -1,6 +1,7 @@
 package actions
 
 import java.io.File
+import java.nio.file.Files
 
 import tools.{fileTools, printerTools, repoTools, statusTools}
 import tools.statusTools.{isFree, isStagedAndUpdatedContent}
@@ -58,16 +59,54 @@ object status {
 
     List(allFreeFiles, allUpdatedStagedFiles, allUpdatedCommitedFiles, allStagedUnCommitedFiles)*/
 
+    println("GENERAL STATUS")
+
     val f = new File(repoTools.currentPath)
-    val workingDirect = f.listFiles.filter(f => f.getName != ".sgit")
-    add.addAFile("README.md")
 
-    // val t = repoTools.recursiveListFolders(f).toList
-    println( fileTools.findFile("jar").getOrElse("rr"))
-    /*workingDirect.map(f => {
-      println(f.getAbsolutePath + "  : " + isFree(f))
-    })*/
+    val workingDirect = f.listFiles.filter(f => f.getName != ".sgit").toList
 
-    List()
+    println(repoTools.containsOnlyFiles(f))
+
+    if (repoTools.containsOnlyFiles(f)) { // ONLY FILES
+      val allFiles = repoTools.getAllWorkingDirectFiles
+
+      if (allFiles.nonEmpty) {
+        // FREE FILES:
+        val allFreeFiles = allFiles.filter(f => isFree(f))
+        // DIFF BETWEEN WORKING DIRECTORY AND STAGE:
+        val allUpdatedStagedFiles = allFiles.filter(f => isStagedAndUpdatedContent(f))
+        // DIFF BETWEEN COMMIT AND WORKING AREA:
+        val allUpdatedCommitedFiles = allFiles.filter(f => statusTools.isCommited(f) && statusTools.isCommitedButUpdated(f) )
+        // STAGE BUT NOT COMMIT:
+        val allStagedUnCommitedFiles = allFiles.filter(f => (statusTools.isCommitedButUpdated(f) || !statusTools.isCommited(f)) && statusTools.isStaged(f) && !isStagedAndUpdatedContent(f))
+
+        List(allFreeFiles, allUpdatedStagedFiles, allUpdatedCommitedFiles, allStagedUnCommitedFiles)
+
+      } else {
+        List()
+      }
+
+    } else { // AT LEAST 1 FOLDER
+      println(workingDirect.filter(f => f.isFile))
+      val allFiles = workingDirect.filter(f => f.isFile)
+      println(allFiles)
+      val freeFolders = workingDirect.filter(f => f.isDirectory && repoTools.isFreeFolder(f))
+      // TODO unfree folders
+      if (allFiles.nonEmpty) {
+        // FREE FILES:
+        val allFreeFiles = allFiles.filter(f => isFree(f)) ++ freeFolders
+        // DIFF BETWEEN WORKING DIRECTORY AND STAGE:
+        val allUpdatedStagedFiles = allFiles.filter(f => isStagedAndUpdatedContent(f))
+        // DIFF BETWEEN COMMIT AND WORKING AREA:
+        val allUpdatedCommitedFiles = allFiles.filter(f => statusTools.isCommited(f) && statusTools.isCommitedButUpdated(f) )
+        // STAGE BUT NOT COMMIT:
+        val allStagedUnCommitedFiles = allFiles.filter(f => (statusTools.isCommitedButUpdated(f) || !statusTools.isCommited(f)) && statusTools.isStaged(f) && !isStagedAndUpdatedContent(f))
+
+        List(allFreeFiles, allUpdatedStagedFiles, allUpdatedCommitedFiles, allStagedUnCommitedFiles)
+
+      } else {
+        List()
+      }
+    }
   }
 }

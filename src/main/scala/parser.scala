@@ -54,12 +54,8 @@ object parser {
           .text("Save changes to the repository.")
           .action((_, c) => c.copy(command = "commit"))
           .children(
-            opt[String]("m")
+            opt[String]('m', "message")
               .required
-              .action((x, c) => c.copy(commitMessage = c.commitMessage :+ x)),
-            arg[String]("<message>")
-              .optional()
-              .unbounded
               .action((x, c) => c.copy(commitMessage = c.commitMessage :+ x))
               .text("Message to commit.")
           ),
