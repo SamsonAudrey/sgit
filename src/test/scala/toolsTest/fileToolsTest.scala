@@ -11,13 +11,19 @@ import scala.io.Source
 
 
 class fileToolsTest extends FunSpec with Matchers with GivenWhenThen with BeforeAndAfter{
+  val pathTest = repoTools.currentPath + "sgit"
+  val currentPath = repoTools.currentPath
 
   before{
-    new File(repoTools.currentPath + "/sgit").mkdir() //TestRepo
-    FileUtils.cleanDirectory(new File(repoTools.currentPath + "sgit"))
-    init.initDirectory(repoTools.currentPath)
+    new File(pathTest).mkdir() //TestReop
+    FileUtils.cleanDirectory(new File(pathTest))
+    init.initDirectory(currentPath)
   }
 
+  after {
+    FileUtils.cleanDirectory(new File(currentPath + ".sgit"))
+    new File(currentPath + ".sgit").delete()
+  }
 
   describe("If you hash a specific string") {
     it("it should return a specific hash") {
@@ -30,7 +36,7 @@ class fileToolsTest extends FunSpec with Matchers with GivenWhenThen with Before
 
   describe("If you create a file") {
     it("it should exist") {
-      new PrintWriter(new File(repoTools.rootPath + "/realFile.txt"))
+      new PrintWriter(new File(pathTest + "/realFile.txt"))
       val res1 = fileTools.exist("realFile.txt")
       val res2 = fileTools.exist("noExistFile.txt")
 
@@ -41,7 +47,7 @@ class fileToolsTest extends FunSpec with Matchers with GivenWhenThen with Before
 
   describe("If you stage a file") {
       it("it should have the first line equals to the path") {
-        val file = new File(repoTools.rootPath + "/testLinkedStage.txt")
+        val file = new File(pathTest + "/testLinkedStage.txt")
         val pw = new PrintWriter(file) // create the file containing the blob's content
         pw.write("blablabla")
         pw.close
@@ -56,7 +62,7 @@ class fileToolsTest extends FunSpec with Matchers with GivenWhenThen with Before
   describe("If you want to re-add a file") {
     describe("with a new content") {
       it("it should updated the staged file ") {
-        val file = new File(repoTools.rootPath + "/updateStagedFile.txt")
+        val file = new File(pathTest + "/updateStagedFile.txt")
         val pw = new PrintWriter(file) // create the file containing the blob's content
         pw.write("blablabla")
         pw.close

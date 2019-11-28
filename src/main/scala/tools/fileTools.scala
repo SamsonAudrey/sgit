@@ -15,7 +15,7 @@ object fileTools {
     * @return
     */
   def exist(fileName: String): Boolean = {
-    val allUserFiles = repoTools.getAllWorkingDirectFiles.map(f => f.getName).filter(f => f != ".DS_Store")
+    val allUserFiles = repoTools.getAllWorkingDirectFiles.map(f => f.getName)
     allUserFiles.contains(fileName)
   }
 
@@ -116,7 +116,7 @@ object fileTools {
       if(lastCommitedFiles.map(f => f.getAbsolutePath).contains(file.getAbsolutePath)) {
         val index = getIndex(lastCommitedFiles.map(f => f.getAbsolutePath), 0, file.getAbsolutePath)
         val hash = commitTools.getLastCommitFileHashs(index.get).getName
-        Some(new File(repoTools.rootPath + "/.git/objects/"+hash.slice(0,2) + "/" + hash.drop(2)))
+        Some(new File(repoTools.rootPath + "/.sgit/objects/"+hash.slice(0,2) + "/" + hash.drop(2)))
       }
       else None
     } else None

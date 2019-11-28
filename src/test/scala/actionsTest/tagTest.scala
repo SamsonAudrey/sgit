@@ -7,26 +7,33 @@ import org.scalatest.{BeforeAndAfter, FunSpec, GivenWhenThen, Matchers}
 import tools.{commitTools, fileTools, repoTools}
 
 class tagTest extends FunSpec with Matchers with GivenWhenThen with BeforeAndAfter{
+  val pathTest = repoTools.currentPath + "sgit"
+  val currentPath = repoTools.currentPath
 
   before{
-    new File(repoTools.currentPath + "/sgit").mkdir() //TestRepo
-    FileUtils.cleanDirectory(new File(repoTools.currentPath + "sgit"))
-    init.initDirectory(repoTools.currentPath)
+    new File(pathTest).mkdir() //TestReop
+    FileUtils.cleanDirectory(new File(pathTest))
+    init.initDirectory(currentPath)
+  }
+
+  after {
+    FileUtils.cleanDirectory(new File(currentPath + ".sgit"))
+    new File(currentPath + ".sgit").delete()
   }
 
   describe("If you add a tag") {
     it("it should create a file and point to the last commit of the current branch") {
-      new PrintWriter(new File(repoTools.rootPath + "/testFreeFile1.txt"))
-      add.addAll()
+      new PrintWriter(new File(pathTest + "/testFreeFile1.txt"))
+      add.addAFile("testFreeFile1.txt")
       commit.commit("message")
 
       val tagName = "newTag"
       tag.newTag(tagName)
 
-      val fileTag = new File(repoTools.rootPath + "/.git/refs/tags/" + tagName)
+      val fileTag = new File(currentPath + "/.sgit/refs/tags/" + tagName)
 
       val exist = fileTag.exists()
-      val firstLine = fileTools.firstLine(fileTag).get
+      val firstLine = fileTools.firstLine(fileTag).getOrElse("")
 
       assert(exist && firstLine == commitTools.lastCommitHash())
     }
@@ -34,13 +41,13 @@ class tagTest extends FunSpec with Matchers with GivenWhenThen with BeforeAndAft
 
   describe("If you add a tag with the same name of a branch") {
     it("it should not do anything ") {
-      new PrintWriter(new File(repoTools.rootPath + "/file.txt"))
-      add.addAll()
+      new PrintWriter(new File(pathTest + "/file.txt"))
+      add.addAFile("testFreeFile1.txt")
       commit.commit("message")
 
       branch.newBranch("sameName")
       val res = tag.newTag("sameName") // should be false
-      val fileTag = new File(repoTools.rootPath + "/.git/refs/tags/" + "sameName")
+      val fileTag = new File(currentPath + "/.sgit/refs/tags/" + "sameName")
       val exist = fileTag.exists()
 
       assert(!exist && !res)

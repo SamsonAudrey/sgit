@@ -16,7 +16,7 @@ object tag {
     if (allB.contains(tagName)) { false } // Cannot add a tags with same name of a branch
     else {
       val currentCommit = commitTools.lastCommitHash()
-      fileTools.updateFileContent(new File(repoTools.rootPath + "/.git/refs/tags/" + tagName),currentCommit)
+      fileTools.updateFileContent(new File(repoTools.rootPath + "/.sgit/refs/tags/" + tagName),currentCommit)
       true
     }
   }

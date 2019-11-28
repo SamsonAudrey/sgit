@@ -12,7 +12,7 @@ object commit {
     * @return
     */
   def isFirstCommit: Boolean = {
-    fileTools.getContentFile(repoTools.rootPath + "/.git/refs/heads/master") == ""
+    fileTools.getContentFile(repoTools.rootPath + "/.sgit/refs/heads/master") == ""
   }
 
   /**
@@ -24,7 +24,7 @@ object commit {
     if (!isFirstCommit) {
       parent = commitTools.lastCommitHash()
     }
-    val path = repoTools.rootPath + "/.git/objects"
+    val path = repoTools.rootPath + "/.sgit/objects"
     val changes: List[List[File]] = commitTools.getFilesChanges // val changes : List(updatedFiles, removedFiles, addedFiles)
 
     if (changes(0).nonEmpty || changes(1).nonEmpty || changes(2).nonEmpty) {
@@ -36,7 +36,7 @@ object commit {
       // Update ref
       updateRefCommit(newCommitHash)
       // Clean STAGE
-      FileUtils.cleanDirectory(new File(repoTools.rootPath + "/.git/STAGE"))
+      FileUtils.cleanDirectory(new File(repoTools.rootPath + "/.sgit/STAGE"))
     }
   }
 
@@ -46,8 +46,8 @@ object commit {
     * @param lastCommitHash : String
     */
   def updateRefCommit(lastCommitHash: String): Unit = {
-    val branch = fileTools.firstLine(new File(repoTools.rootPath + "/.git/HEAD/branch"))
-    val path = repoTools.rootPath + "/.git/refs/heads/" + branch.get
+    val branch = fileTools.firstLine(new File(repoTools.rootPath + "/.sgit/HEAD/branch"))
+    val path = repoTools.rootPath + "/.sgit/refs/heads/" + branch.get
     val pw = new PrintWriter(new File(path))
     pw.write(lastCommitHash)
     pw.close()
@@ -62,7 +62,7 @@ object commit {
     var content = ""
     val lastCommit = commitTools.lastCommitHash()
     if (!isFirstCommit) {
-      var files = fileTools.getContentFile(repoTools.rootPath + "/.git/objects/" + lastCommit)
+      var files = fileTools.getContentFile(repoTools.rootPath + "/.sgit/objects/" + lastCommit)
         .mkString.split("\n").map(_.trim).toList.drop(2) // remove parent commit and message (2 first lines)
 
       // Updated files
@@ -112,8 +112,8 @@ object commit {
     * @return
     */
   def recCommitAndMessage(commitHash: String): List[String] = {
-    if (new File(repoTools.rootPath + "/.git/objects/" + commitHash).exists()) {
-      val file = new File(repoTools.rootPath + "/.git/objects/" + commitHash)
+    if (new File(repoTools.rootPath + "/.sgit/objects/" + commitHash).exists()) {
+      val file = new File(repoTools.rootPath + "/.sgit/objects/" + commitHash)
       val content = fileTools.getContentFile(file.getAbsolutePath)
         .split("\n")
         .toList

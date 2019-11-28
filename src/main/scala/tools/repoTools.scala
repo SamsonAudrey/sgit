@@ -1,7 +1,9 @@
 package tools
 
 import java.io.{File, PrintWriter}
-import scala.io.Source
+
+import actions.init
+
 import scala.reflect.io.{File => ScalaFile}
 
 object repoTools {
@@ -16,7 +18,10 @@ object repoTools {
     * Get root path
     * @return
     */
-  def rootPath: String = getRoot(new File(currentPath)).getOrElse(new File("")).getAbsolutePath //"/Users/audreysamson/Workspace/cloneSamedi/sgit/RepoTest/sgit"//getRoot(new File(currentPath + "sgit")).getOrElse(new File(currentPath + "sgit")).getAbsolutePath
+  def rootPath: String = getRoot(new File(currentPath)).getOrElse({
+    init.initDirectory(currentPath)
+    new File(currentPath)
+  }).getAbsolutePath
 
   /**
     * Get root file
@@ -25,11 +30,9 @@ object repoTools {
     */
   def getRoot(directory: File): Option[File] = {
     if (directory.isDirectory) {
-      if (directory.listFiles().toList.contains(new File(directory.getAbsolutePath + "/.git")) ||
-        directory.listFiles().toList.contains(new File(directory.getAbsolutePath + "/sgit")) &&
-        directory.getName == "sgit-master") {
-        if (!new File(directory.getAbsolutePath + "/.git/HEAD/branch").exists()) {
-          Some(new File(directory.getAbsolutePath + "/sgit"))
+      if (directory.listFiles().toList.contains(new File(directory.getAbsolutePath + "/.sgit"))) {
+        if (!new File(directory.getAbsolutePath + "/.sgit/HEAD/branch").exists()) {
+          Some(new File(directory.getAbsolutePath + "/.sgit"))
         } else Some(directory)
       } else {
         if (directory.getParentFile == null) {
@@ -76,18 +79,18 @@ object repoTools {
   def recursiveListFolders(f: File): Array[File] = {
     if (!f.isDirectory) Array()
     else {
-      val these = f.listFiles
+      val these = f.listFiles.filter(_.isDirectory)
       these ++ these.filter(_.isDirectory).flatMap(recursiveListFolders(_))
     }
   }
 
   /**
-    * Get all folders and sub-folders of f (except .git folder and .DS_STORE folder)
+    * Get all folders and sub-folders of f (except .sgit folder)
     * @param f : File
     * @return
     */
   def recursiveListUserFolders(f: File): Array[File] = {
-    if (!f.isDirectory || f.getName == ".git" || f.getName == ".DS_Store") Array()
+    if (!f.isDirectory || f.getName == ".sgit") Array()
     else {
       val these = f.listFiles
       these ++ these.filter(_.isDirectory && !(f.getName.charAt(0).toString == ".")).flatMap(recursiveListUserFolders(_))
@@ -115,13 +118,20 @@ object repoTools {
   def getAllWorkingDirectFiles: List[File] = {
     val allFolders = recursiveListUserFolders(new File(repoTools.rootPath))
     allFolders.map(f => repoTools.getListOfFiles(f))
-    allFolders.toList.filter(f => f.isFile && f.getName != ".DS_Store")
+    allFolders.toList.filter(f => f.isFile)
+  }
+
+  def getAllWorkingDirectFolders: List[File] = {
+    val allFolders = recursiveListUserFolders(new File(repoTools.rootPath))
+    allFolders.map(f => repoTools.getListOfFiles(f))
+    allFolders.toList.filter(f => f.isDirectory)
+    //allFolders.toList.filter(f => f.isFile && f.getName != ".DS_Store")
   }
 
   /**
     * Return all the working directory file names
     */
-  def getAllWorkingDirectFileNames: List[String] = getAllWorkingDirectFiles.map(f => f.getName).filter(f => f != ".DS_Store")
+  def getAllWorkingDirectFileNames: List[String] = getAllWorkingDirectFiles.map(f => f.getName)
 
 
   /**
@@ -129,7 +139,7 @@ object repoTools {
     * @return
     */
   def getAllStagedFiles: List[File] = {
-    repoTools.getListOfFiles(new File(repoTools.rootPath + "/.git/STAGE"))
+    repoTools.getListOfFiles(new File(repoTools.rootPath + "/.sgit/STAGE"))
   }
 
   /**
@@ -139,12 +149,12 @@ object repoTools {
     */
   def getAllFilesFromCommit(commitHash: String) : List[String] = {
     if (commitHash != "") {
-      var filesHash = fileTools.getContentFile(repoTools.rootPath + "/.git/objects/" + commitHash)
+      var filesHash = fileTools.getContentFile(repoTools.rootPath + "/.sgit/objects/" + commitHash)
         .split("\n")
         .map(_.trim)
         .filter(x => x != "")
         .toList
-      if (!fileTools.firstLine(new File(repoTools.rootPath + "/.git/objects/" + commitHash)).contains("")) {
+      if (!fileTools.firstLine(new File(repoTools.rootPath + "/.sgit/objects/" + commitHash)).contains("")) {
         filesHash = filesHash.drop(1) // first line = commit parent
       }
       filesHash = filesHash.drop(1) // second line = commit message

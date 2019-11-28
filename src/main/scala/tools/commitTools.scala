@@ -38,8 +38,8 @@ object commitTools {
     * @return
     */
   def lastCommitHash(): String = {
-    val branch = fileTools.firstLine(new File(repoTools.rootPath + "/.git/HEAD/branch"))
-    val path = repoTools.rootPath + "/.git/refs/heads/" + branch.get
+    val branch = fileTools.firstLine(new File(repoTools.rootPath + "/.sgit/HEAD/branch"))
+    val path = repoTools.rootPath + "/.sgit/refs/heads/" + branch.get
     fileTools.getContentFile(path)
   }
 
@@ -49,8 +49,8 @@ object commitTools {
     */
   def lastCommitParentHash() : String = {
     val currentBranch = branch.currentBranch()
-    val pathCurrentBranch = repoTools.rootPath + "/.git/refs/heads/" + currentBranch
-    val objectsPath = repoTools.rootPath + "/.git/objects/"
+    val pathCurrentBranch = repoTools.rootPath + "/.sgit/refs/heads/" + currentBranch
+    val objectsPath = repoTools.rootPath + "/.sgit/objects/"
     if (commit.isFirstCommit || fileTools.firstLine(new File(objectsPath + commitTools.lastCommitHash())).getOrElse("") == "") ""
     else {
       val lastCommitHash = fileTools.getContentFile(pathCurrentBranch)

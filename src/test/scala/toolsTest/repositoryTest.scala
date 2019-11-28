@@ -8,19 +8,25 @@ import org.scalatest._
 import scala.reflect.io.{File => ScalaFile}
 
 class repositoryTest extends FunSpec with Matchers with GivenWhenThen with BeforeAndAfter {
+  val pathTest = repoTools.currentPath + "sgit"
+  val currentPath = repoTools.currentPath
 
   before{
-    new File(repoTools.currentPath + "/sgit").mkdir() //TestRepo
-    FileUtils.cleanDirectory(new File(repoTools.currentPath + "sgit"))
-    init.initDirectory(repoTools.currentPath)
+    new File(pathTest).mkdir() //TestReop
+    FileUtils.cleanDirectory(new File(pathTest))
+    init.initDirectory(currentPath)
+  }
+
+  after {
+    FileUtils.cleanDirectory(new File(currentPath + ".sgit"))
+    new File(currentPath + ".sgit").delete()
   }
 
   describe("If you want to get folders in a directory") {
     describe("but there is no folders ") {
       it("it should return an empty list") {
-        val path = repoTools.rootPath
-        new File(path+"/sgitRepo/testRepo1").mkdir()
-        val listFolders1 = repoTools.recursiveListFolders(new File(path+"/testRepo1"))
+        new File(pathTest + "/testRepo1").mkdir()
+        val listFolders1 = repoTools.recursiveListFolders(new File(pathTest + "/testRepo1"))
 
         assert(listFolders1.isEmpty)
       }
@@ -28,13 +34,12 @@ class repositoryTest extends FunSpec with Matchers with GivenWhenThen with Befor
 
     describe("and there is 3 direct sub-folders and one sub-sub-folder") {
       it("it should return a list with this four folders ") {
-        val path = repoTools.rootPath
-        new File(path + "/testRepo2").mkdir()
-        new File(path + "/testRepo2/folder1").mkdir() // folder 1
-        new File(path + "/testRepo2/folder2").mkdir() // folder 2
-        new File(path + "/testRepo2/testRepo2BIS").mkdir() // folders 3
-        new File(path + "/testRepo2/testRepo2BIS/folder3").mkdir() // folders 4
-        val listFolders2 = repoTools.recursiveListFolders(new File(path+"/testRepo2"))
+        new File(pathTest + "/testRepo2").mkdir()
+        new File(pathTest + "/testRepo2/folder1").mkdir() // folder 1
+        new File(pathTest + "/testRepo2/folder2").mkdir() // folder 2
+        new File(pathTest + "/testRepo2/testRepo2BIS").mkdir() // folders 3
+        new File(pathTest + "/testRepo2/testRepo2BIS/folder3").mkdir() // folders 4
+        val listFolders2 = repoTools.recursiveListFolders(new File(pathTest + "/testRepo2"))
 
         assert(listFolders2.length === 4)
       }
@@ -44,9 +49,8 @@ class repositoryTest extends FunSpec with Matchers with GivenWhenThen with Befor
   describe("If you want to get files in a directory") {
     describe("and there is no files ") {
       it("it should return an empty list") {
-        val path = repoTools.rootPath
-        new File(path+"/sgitRepo/testRepoEmpty").mkdir()
-        val listFoldersEmpty = repoTools.getListOfFiles(new File(path + "/testRepoEmpty"))
+        new File(pathTest + "/testRepoEmpty").mkdir()
+        val listFoldersEmpty = repoTools.getListOfFiles(new File(pathTest + "/testRepoEmpty"))
 
         assert(listFoldersEmpty === List())
       }
@@ -54,20 +58,19 @@ class repositoryTest extends FunSpec with Matchers with GivenWhenThen with Befor
 
     describe("and there is three direct files ") {
       it("it should return a list with these three files ") {
-        val path = repoTools.rootPath
-        new File(path + "/testRepo3").mkdir()
-        new File(path + "/testRepo3/testRepo4").mkdir()
-        new PrintWriter(new File(path + "/testRepo3/testRepo4/folder1" ))
-        new PrintWriter(new File(path + "/testRepo3/folder1" ))
-        new PrintWriter(new File(path + "/testRepo3/folder2" ))
-        new PrintWriter(new File(path + "/testRepo3/folder3" ))
-        val listFolders3 = repoTools.getListOfFiles(new File(path + "/testRepo3"))
+        new File(pathTest + "/testRepo3").mkdir()
+        new File(pathTest + "/testRepo3/testRepo4").mkdir()
+        new PrintWriter(new File(pathTest + "/testRepo3/testRepo4/folder1" ))
+        new PrintWriter(new File(pathTest + "/testRepo3/folder1" ))
+        new PrintWriter(new File(pathTest + "/testRepo3/folder2" ))
+        new PrintWriter(new File(pathTest + "/testRepo3/folder3" ))
+        val listFolders3 = repoTools.getListOfFiles(new File(pathTest + "/testRepo3"))
 
         assert(
           listFolders3 ===
-            List(new File(path + "/testRepo3/folder2"),
-              new File(path + "/testRepo3/folder3" ),
-              new File(path + "/testRepo3/folder1" )))
+            List(new File(pathTest + "/testRepo3/folder2"),
+              new File(pathTest + "/testRepo3/folder3" ),
+              new File(pathTest + "/testRepo3/folder1" )))
       }
     }
   }
@@ -75,10 +78,9 @@ class repositoryTest extends FunSpec with Matchers with GivenWhenThen with Befor
   describe("If you want to delete a directory") {
     describe("and it exists and contains a sub-folder ") {
       it("it should delete the sub-folder") {
-        val path = repoTools.rootPath
-        new File(path + "/testRepo4").mkdir()
-        new File(path + "/testRepo4/testRepoToDelete").mkdir()
-        new PrintWriter(new File(path + "/testRepo4/testRepoToDelete/subFolder1"))
+        new File(pathTest + "/testRepo4").mkdir()
+        new File(pathTest + "/testRepo4/testRepoToDelete").mkdir()
+        new PrintWriter(new File(pathTest + "/testRepo4/testRepoToDelete/subFolder1"))
         repoTools.deleteDirectory("testRepoToDelete")
 
         assert(!fileTools.exist("subFolder1.txt"))
@@ -91,7 +93,7 @@ class repositoryTest extends FunSpec with Matchers with GivenWhenThen with Befor
         new File("/testRepo1BIS/subFolder1").mkdir()
         repoTools.deleteDirectory("/testRepo1BIS")
 
-        assert(ScalaFile("/testRepo1BIS").exists === false)
+        assert(!ScalaFile("/testRepo1BIS").exists)
       }
     }
 
@@ -100,10 +102,9 @@ class repositoryTest extends FunSpec with Matchers with GivenWhenThen with Befor
         new File("/testRepo2").mkdir()
         repoTools.deleteDirectory("/testRepo2")
 
-        assert(ScalaFile("/testRepo2").exists === false)
+        assert(!ScalaFile("/testRepo2").exists)
       }
     }
 
   }
-
 }

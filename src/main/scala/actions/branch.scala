@@ -10,7 +10,7 @@ object branch {
     * @param branchName : String
     */
   def newBranch(branchName : String): Unit= {
-    val file = new File(repoTools.rootPath + "/.git/refs/heads/" + branchName)
+    val file = new File(repoTools.rootPath + "/.sgit/refs/heads/" + branchName)
     val currentCommit = commitTools.lastCommitHash()
     fileTools.updateFileContent(file, currentCommit)
   }
@@ -20,7 +20,7 @@ object branch {
     * @return
     */
   def allBranchesTags(): List[File] = {
-    repoTools.getListOfFiles(new File(repoTools.rootPath + "/.git/refs/heads/")) ::: repoTools.getListOfFiles(new File(repoTools.rootPath + "/.git/refs/tags/"))
+    repoTools.getListOfFiles(new File(repoTools.rootPath + "/.sgit/refs/heads/")) ::: repoTools.getListOfFiles(new File(repoTools.rootPath + "/.sgit/refs/tags/"))
   }
 
   /**
@@ -33,7 +33,7 @@ object branch {
         toPrint += "-> "
       }
       if (fileTools.getContentFile(b.getAbsolutePath) != ""){
-        val commitMessage = fileTools.getContentFile(repoTools.rootPath + "/.git/objects/" + fileTools.getContentFile(b.getAbsolutePath))
+        val commitMessage = fileTools.getContentFile(repoTools.rootPath + "/.sgit/objects/" + fileTools.getContentFile(b.getAbsolutePath))
         toPrint += b.getName + ", last commit message : " + commitMessage.split("\n").toList.map(_.trim)(1) + "\n"
       } else toPrint += b.getName + "\n"
 
@@ -49,11 +49,11 @@ object branch {
     */
   def renameCurrentBranch(newName: String): Boolean = {
     val currentB = currentBranch()
-    val path = repoTools.rootPath + "/.git/refs/heads/"
+    val path = repoTools.rootPath + "/.sgit/refs/heads/"
     // Rename the file
     if (new File(path + currentB).renameTo(new File(path + newName)) ) {
       // Update the ref
-      val pathRef = repoTools.rootPath + "/.git/HEAD/branch"
+      val pathRef = repoTools.rootPath + "/.sgit/HEAD/branch"
       fileTools.updateFileContent(new File(pathRef), newName)
       true
     } else false
@@ -64,7 +64,7 @@ object branch {
     * @return
     */
   def currentBranch(): String = {
-    fileTools.firstLine(new File(repoTools.rootPath + "/.git/HEAD/branch")).get
+    fileTools.firstLine(new File(repoTools.rootPath + "/.sgit/HEAD/branch")).get
   }
 
   /**
@@ -73,12 +73,12 @@ object branch {
     * @return
     */
   def checkoutBranch(branchName: String): Boolean = {
-    val allB = repoTools.getListOfFiles(new File(repoTools.rootPath + "/.git/refs/heads/")).map(b => b.getName)
+    val allB = repoTools.getListOfFiles(new File(repoTools.rootPath + "/.sgit/refs/heads/")).map(b => b.getName)
     if (allB.contains(branchName)) {
 
       // change the working directory
-      val branchPath = repoTools.rootPath + "/.git/refs/heads/" + branchName
-      val objPath = repoTools.rootPath + "/.git/objects/"
+      val branchPath = repoTools.rootPath + "/.sgit/refs/heads/" + branchName
+      val objPath = repoTools.rootPath + "/.sgit/objects/"
       val commitHash = fileTools.getContentFile(branchPath)
       val hashFileToAdd = repoTools.getAllFilesFromCommit(commitHash).map(f => f.split(" ").map(_.trim).toList(0) )
 
@@ -99,7 +99,7 @@ object branch {
       })
 
 
-      val path = repoTools.rootPath + "/.git/HEAD/branch"
+      val path = repoTools.rootPath + "/.sgit/HEAD/branch"
       fileTools.updateFileContent(new File(path), branchName)
 
       fileTools.firstLine(new File(path)).get == branchName

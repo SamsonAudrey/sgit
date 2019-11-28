@@ -8,21 +8,27 @@ import org.apache.commons.io.FileUtils
 
 
 class initTest  extends FunSpec with Matchers with GivenWhenThen with BeforeAndAfter {
+  val pathTest = repoTools.currentPath + "sgit"
 
   before{
-    new File(repoTools.currentPath + "/sgit").mkdir() //TestReop
-    FileUtils.cleanDirectory(new File(repoTools.currentPath + "sgit"))
+    new File(pathTest).mkdir() //TestReop
+    FileUtils.cleanDirectory(new File(pathTest))
+  }
+
+  after {
+    FileUtils.cleanDirectory(new File(pathTest + "/.sgit"))
+    new File(pathTest + "/.sgit").delete()
   }
 
   describe("If you run init") {
-    describe("and there is not yet a sgit repository ") {
+    describe("and there is not yet a .sgit repository ") {
       it("it should return true and create a directory sgitRepo.") {
-        init.initDirectory(repoTools.currentPath)
+        init.initDirectory(pathTest)
 
-        val existHEAD = new File(repoTools.currentPath + "/sgit/.git/HEAD/branch").exists()
-        val existSTAGE = new File(repoTools.currentPath + "/sgit/.git/STAGE").exists()
-        val existObjects = new File(repoTools.currentPath + "/sgit/.git/objects").exists()
-        val existRef = new File(repoTools.currentPath + "/sgit/.git/refs").exists()
+        val existHEAD = new File(pathTest + "/.sgit/HEAD/branch").exists()
+        val existSTAGE = new File(pathTest + "/.sgit/STAGE").exists()
+        val existObjects = new File(pathTest + "/.sgit/objects").exists()
+        val existRef = new File(pathTest + "/.sgit/refs").exists()
 
         val allExist = existHEAD && existSTAGE && existObjects && existRef
 

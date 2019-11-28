@@ -2,7 +2,7 @@ package actions
 
 import java.io.File
 
-import tools.{printerTools, repoTools, statusTools}
+import tools.{fileTools, printerTools, repoTools, statusTools}
 import tools.statusTools.{isFree, isStagedAndUpdatedContent}
 
 object status {
@@ -45,7 +45,8 @@ object status {
     * @return
     */
   def generalStatus(): List[List[File]] = {
-    val allFiles = repoTools.getAllWorkingDirectFiles
+
+    /*val allFiles = repoTools.getAllWorkingDirectFiles
     // FREE FILES:
     val allFreeFiles = allFiles.filter(f => isFree(f))
     // DIFF BETWEEN WORKING DIRECTORY AND STAGE:
@@ -55,6 +56,18 @@ object status {
     // STAGE BUT NOT COMMIT:
     val allStagedUnCommitedFiles = allFiles.filter(f => (statusTools.isCommitedButUpdated(f) || !statusTools.isCommited(f)) && statusTools.isStaged(f) && !isStagedAndUpdatedContent(f))
 
-    List(allFreeFiles, allUpdatedStagedFiles, allUpdatedCommitedFiles, allStagedUnCommitedFiles)
+    List(allFreeFiles, allUpdatedStagedFiles, allUpdatedCommitedFiles, allStagedUnCommitedFiles)*/
+
+    val f = new File(repoTools.currentPath)
+    val workingDirect = f.listFiles.filter(f => f.getName != ".sgit")
+    add.addAFile("README.md")
+
+    // val t = repoTools.recursiveListFolders(f).toList
+    println( fileTools.findFile("jar").getOrElse("rr"))
+    /*workingDirect.map(f => {
+      println(f.getAbsolutePath + "  : " + isFree(f))
+    })*/
+
+    List()
   }
 }

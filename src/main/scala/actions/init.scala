@@ -11,12 +11,9 @@ object init {
     * @return
     */
   def initDirectory(path: String) : Unit = {
-    //create new repo sgit
-    val sgitPath = path + "/sgit"
-    new File(sgitPath).mkdir()
 
-    //create .git folder and sub-folders
-    val gitPath = sgitPath+ "/.git"
+    //create .sgit folder and sub-folders
+    val gitPath = path+ "/.sgit"
     repoTools.createDirectory(gitPath)
 
     List("HEAD", "STAGE", "refs", "objects") //, "config", "description")
