@@ -12,6 +12,7 @@ object parser {
                        files: List[String] = List(),
                        branch_tag: String = "",
                        commitMessage: List[String] = List(),
+                       pLog: Boolean = false,
                        av: Boolean = false )
 
     val builder = OParser.builder[Config]
@@ -37,7 +38,13 @@ object parser {
 
         cmd("log")
           .text("Show all commits started with newest.")
-          .action((_, c) => c.copy(command = "log")),
+          .action((_, c) => c.copy(command = "log"))
+          .children(
+            opt[Unit]('p', "patchLog")
+              .optional()
+              .action((_, c) => c.copy(pLog = true))
+              .text("Show changes overtime.")
+          ),
 
         cmd("add")
           .text("Add files to the stage area.")
@@ -145,7 +152,11 @@ object parser {
                     actions.diff.diff()
                   }
                   case "log" => {
-                    actions.commit.log()
+                    if (config.pLog) {
+                      actions.log.logP()
+                    } else {
+                      actions.log.log()
+                    }
                   }
                   case _ => {
                     // arguments are bad

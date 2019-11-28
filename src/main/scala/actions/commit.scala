@@ -98,15 +98,7 @@ object commit {
     content
   }
 
-  /**
-    * Display all commits started with newest
-    */
-  def log(): Unit = {
-    if (!isFirstCommit) {
-      val allCommit = recCommitAndMessage(commitTools.lastCommitHash())
-      printerTools.printMessage(formatLog(allCommit))
-    }
-  }
+
 
   /**
     * Get all commits hash + commit date + commit message
@@ -127,19 +119,6 @@ object commit {
     } else List()
   }
 
-  /**
-    * Apply the good format
-    * @param log : List[String]
-    * @return
-    */
-  def formatLog(log : List[String]): String = {
-    var content = ""
-    log.map( l => {
-      content += "commit: " +l.split("-").toList(0) + "\n" +
-        "date: " + l.split("-").toList(1) + "\n" +
-        "message: " + l.split("-").toList(2) + "\n\n"
-    })
-    content
-  }
+
 
 }

@@ -46,25 +46,9 @@ object status {
     * @return
     */
   def generalStatus(): List[List[File]] = {
+    val workingDirect = new File(repoTools.currentPath).listFiles.filter(f => f.getName != ".sgit").toList
 
-    /*val allFiles = repoTools.getAllWorkingDirectFiles
-    // FREE FILES:
-    val allFreeFiles = allFiles.filter(f => isFree(f))
-    // DIFF BETWEEN WORKING DIRECTORY AND STAGE:
-    val allUpdatedStagedFiles = allFiles.filter(f => isStagedAndUpdatedContent(f))
-    // DIFF BETWEEN COMMIT AND WORKING AREA:
-    val allUpdatedCommitedFiles = allFiles.filter(f => statusTools.isCommited(f) && statusTools.isCommitedButUpdated(f) )
-    // STAGE BUT NOT COMMIT:
-    val allStagedUnCommitedFiles = allFiles.filter(f => (statusTools.isCommitedButUpdated(f) || !statusTools.isCommited(f)) && statusTools.isStaged(f) && !isStagedAndUpdatedContent(f))
-
-    List(allFreeFiles, allUpdatedStagedFiles, allUpdatedCommitedFiles, allStagedUnCommitedFiles)*/
-
-
-    val f = new File(repoTools.currentPath)
-
-    val workingDirect = f.listFiles.filter(f => f.getName != ".sgit").toList
-
-    if (repoTools.containsOnlyFiles(f)) { // ONLY FILES
+    if (repoTools.containsOnlyFiles(new File(repoTools.currentPath))) { // ONLY FILES
       val allFiles = workingDirect
 
       if (allFiles.nonEmpty) {
@@ -85,8 +69,9 @@ object status {
 
     } else { // AT LEAST 1 FOLDER
       val allFiles = workingDirect.filter(f => f.isFile)
+
       val freeFolders = workingDirect.filter(f => f.isDirectory && repoTools.isFreeFolder(f))
-      // TODO unfree folders
+
       if (allFiles.nonEmpty) {
         // FREE FILES:
         val allFreeFiles = allFiles.filter(f => isFree(f)) ++ freeFolders

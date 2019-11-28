@@ -2,7 +2,7 @@ package actionsTest
 
 import java.io.{File, FileWriter, PrintWriter}
 
-import actions.{add, commit, init}
+import actions.{add, commit, init, log}
 import org.apache.commons.io.FileUtils
 import org.scalatest.{BeforeAndAfter, FunSpec, GivenWhenThen, Matchers}
 import tools.{commitTools, fileTools, repoTools, statusTools}
@@ -158,7 +158,10 @@ class commitTest extends FunSpec with Matchers with GivenWhenThen with BeforeAnd
         pwUpdate.close
 
         add.addAFile("testCommit7.txt")
-        commit.commit("message")
+        commit.commit("message2")
+
+        println("/////////")
+        log.logP()
 
         val content = repoTools.getAllFilesFromCommit(commitTools.lastCommitHash())
 
@@ -180,6 +183,8 @@ class commitTest extends FunSpec with Matchers with GivenWhenThen with BeforeAnd
         commit.commit("message")
 
         val secondCommitHash = commitTools.lastCommitHash()
+
+
 
         assert(secondCommitHash == fistCommitHash)
       }

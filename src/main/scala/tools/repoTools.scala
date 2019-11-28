@@ -131,9 +131,8 @@ object repoTools {
   def isFreeFolder(dir: File): Boolean = {
     if (!dir.isDirectory) false
     else {
-      val allFiles = dir.listFiles.filter(f => f.isFile || f.getName != ".sgit")
-      val res = allFiles.filter(f => !statusTools.isFree(f))
-      res.isEmpty
+      val allFiles = dir.listFiles.filter(f => f.isFile && f.getName != ".sgit" && !statusTools.isFree(f))
+      allFiles.isEmpty
     }
   }
 

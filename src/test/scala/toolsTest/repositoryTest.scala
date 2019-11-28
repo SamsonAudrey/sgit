@@ -66,12 +66,10 @@ class repositoryTest extends FunSpec with Matchers with GivenWhenThen with Befor
         new PrintWriter(new File(pathTest + "/testRepo3/folder3" ))
         val listFolders3 = repoTools.getListOfFiles(new File(pathTest + "/testRepo3"))
 
-        assert(
-          listFolders3 ===
-            List(new File(pathTest + "/testRepo3/folder2"),
-              new File(pathTest + "/testRepo3/folder3" ),
-              new File(pathTest + "/testRepo3/folder1" )))
-      }
+        assert(listFolders3.contains(new File(pathTest + "/testRepo3/folder2")) &&
+          listFolders3.contains(new File(pathTest + "/testRepo3/folder1")) &&
+          listFolders3.contains(new File(pathTest + "/testRepo3/folder3")))
+        }
     }
   }
 
