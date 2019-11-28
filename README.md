@@ -13,8 +13,11 @@ You should have :
 
 ### Installation
 * clone this repository
-* cd sgit
-* source install.sh
+* move to the project directory (```cd sgit```)
+* run ```source install.sh```
+
+You can now use sgit commands
+
 
 ### Available sbt commands:
 
