@@ -104,8 +104,7 @@ object commit {
   def log(): Unit = {
     if (!isFirstCommit) {
       val allCommit = recCommitAndMessage(commitTools.lastCommitHash())
-      printerTools.printColorMessage(Console.BOLD,formatLog(allCommit)(0))
-      printerTools.printMessage(formatLog(allCommit)(1))
+      printerTools.printMessage(formatLog(allCommit))
     }
   }
 
@@ -133,14 +132,14 @@ object commit {
     * @param log : List[String]
     * @return
     */
-  def formatLog(log : List[String]): List[String] = {
+  def formatLog(log : List[String]): String = {
     var content = ""
-    var commit = ""
     log.map( l => {
-      commit += "commit: " +l.split("-").toList(0)
-      content += "date: " + l.split("-").toList(1) + "\n" + "message: " + l.split("-").toList(2) + "\n\n"
+      content += "commit: " +l.split("-").toList(0) + "\n" +
+        "date: " + l.split("-").toList(1) + "\n" +
+        "message: " + l.split("-").toList(2) + "\n\n"
     })
-    List(commit,content)
+    content
   }
 
 }
