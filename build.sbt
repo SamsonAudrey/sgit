@@ -5,6 +5,9 @@ version := "0.1"
 scalaVersion := "2.13.1"
 
 
+target in assembly := file("./jar")
+assemblyJarName in assembly := "sgit.jar"
+
 lazy val root = (project in file("."))
   .settings(
     name := "sgit",
@@ -19,6 +22,7 @@ lazy val root = (project in file("."))
 import sbtassembly.AssemblyPlugin.defaultUniversalScript
 
 assemblyOption in assembly := (assemblyOption in assembly).value.copy(prependShellScript = Some(defaultUniversalScript(shebang = false)))
-assemblyJarName in assembly := s"${name.value}"
+
+
 
 
