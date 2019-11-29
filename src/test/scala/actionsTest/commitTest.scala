@@ -154,14 +154,11 @@ class commitTest extends FunSpec with Matchers with GivenWhenThen with BeforeAnd
         commit.commit("message")
 
         val pwUpdate = new FileWriter(file, true)
-        pwUpdate.write("\n Update")
+        pwUpdate.write("\nUpdate")
         pwUpdate.close
 
         add.addAFile("testCommit7.txt")
         commit.commit("message2")
-
-        println("/////////")
-        log.logP()
 
         val content = repoTools.getAllFilesFromCommit(commitTools.lastCommitHash())
 

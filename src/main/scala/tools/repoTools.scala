@@ -187,6 +187,21 @@ object repoTools {
     } else List()
   }
 
+  def getParentHashCommit(commitHash: String): String = {
+    if (commitHash != "") {
+      val filesHash = fileTools.getContentFile(repoTools.rootPath + "/.sgit/objects/" + commitHash)
+        .split("\n")
+        .map(_.trim)
+        .filter(x => x != "")
+        .toList
+      if (!fileTools.firstLine(new File(repoTools.rootPath + "/.sgit/objects/" + commitHash)).contains("")) {
+        filesHash(0) // first line = commit parent
+      } else {
+        ""
+      }
+    } else ""
+  }
+
   /**
     * Delete a directory (and sub-folders/files) if it exists
     * @param directory

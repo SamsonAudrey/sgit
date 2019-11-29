@@ -64,7 +64,7 @@ object status {
         List(allFreeFiles, allUpdatedStagedFiles, allUpdatedCommitedFiles, allStagedUnCommitedFiles)
 
       } else {
-        List()
+        List(List(),List(),List(),List())
       }
 
     } else { // AT LEAST 1 FOLDER
@@ -85,7 +85,7 @@ object status {
         List(allFreeFiles, allUpdatedStagedFiles, allUpdatedCommitedFiles, allStagedUnCommitedFiles)
 
       } else {
-        List()
+        List(List(),List(),List(),List())
       }
     }
   }

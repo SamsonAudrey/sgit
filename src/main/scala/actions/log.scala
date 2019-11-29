@@ -1,7 +1,10 @@
 package actions
 
+import java.io.File
 import actions.commit.{isFirstCommit, recCommitAndMessage}
-import tools.{commitTools, printerTools}
+import tools.diffTools.formatDiffLine
+import tools._
+import scala.Console.RESET
 
 object log {
 
@@ -10,8 +13,8 @@ object log {
     */
   def log(): Unit = {
     if (!isFirstCommit) {
-      val allCommit = recCommitAndMessage(commitTools.lastCommitHash())
-      printerTools.printMessage(formatLog(allCommit))
+      val allCommits = recCommitAndMessage(commitTools.lastCommitHash())
+      printerTools.printMessage("\n" + formatLog(allCommits))
     }
   }
 
@@ -20,9 +23,71 @@ object log {
     */
   def logP(): Unit = {
     if (!isFirstCommit) {
-      val allCommit = recCommitAndMessage(commitTools.lastCommitHash())
-      println(allCommit)
-      printerTools.printMessage(formatLog(allCommit))
+      val allCommits = recCommitAndMessage(commitTools.lastCommitHash())
+      // NO DIFF FOR THE FIRST COMMIT
+      if (allCommits.length == 1) {
+        printerTools.printMessage("\n" + formatLog(allCommits))
+      } else {
+        // IF THERE IS MORE THAN 1 COMMIT
+        allCommits.map(c => {
+          val index = fileTools.getIndex(allCommits, 0 ,c)
+          // NO DIFF FOR THE FIRST COMMIT, THE LAST ONE ON THE LIST
+          if (index.getOrElse(allCommits.length -1) == allCommits.length -1) {
+            printerTools.printMessage("\n" + formatLog(List(allCommits(index.get))))
+          }
+          else {
+            // FOR OTHER COMMITS
+
+            // PRINT NORMAL LOG
+            printerTools.printMessage("\n" + formatLog(List(allCommits(index.get))))
+
+
+            // PROCESS TO PRINT DIFF
+            var head = ""
+            var content = ""
+            var lines = ""
+
+            val commitHash = c.split("-").toList(0)
+            // GET ALL FILES OF THE COMMIT
+            val allFiles = repoTools.getAllFilesFromCommit(commitHash)
+            // FOREACH FILE, PRINT ITS DIFF
+            allFiles.map(f => {
+              val fileHash = f.split(" ").toList(0)
+              val commitedFile = new File(repoTools.rootPath + "/.sgit/objects/"+fileHash.slice(0,2) + "/" + fileHash.drop(2))
+
+              if (commitedFile.exists()) {
+                val path = f.split(" ").toList(1).split("/")
+                val name = path.toList(path.length - 1)
+                val parentCommitHash = repoTools.getParentHashCommit(commitHash)
+                if (parentCommitHash != "") {
+                  val previousCommitedFiles = repoTools.getAllFilesFromCommit(parentCommitHash)
+                  val previousFile = previousCommitedFiles.filter(f => {
+                    val fl = f.split(" ").toList(1).split("/")
+                    val fileName = fl.toList(path.length - 1)
+                    fileName == name
+                  })
+                  if (previousFile.nonEmpty) {
+                    val hash = previousFile(0).split(" ").toList(0)
+                    val previousCommitedFile = new File(repoTools.rootPath + "/.sgit/objects/"+hash.slice(0,2) + "/" + hash.drop(2))
+                    val allDiff = diffTools.diff(commitedFile, previousCommitedFile)
+                    head += s"diff --git a/$name b/$name \n"+
+                      "--- a/$name\n" +
+                      "+++ b/$name"
+                    content += "@@ " + (allDiff(0).index + 1) + "," + allDiff.length + " @@ "
+                    allDiff.map(d => lines += formatDiffLine(d) + "\n")
+                    // PRINT DIFF
+                    printerTools.printMessage(head)
+                    printerTools.printColorMessage(Console.CYAN,content)
+                    printerTools.printColorMessage(Console.GREEN,lines)
+                  }
+                }
+              }
+            })
+
+            // END PROCESS
+          }
+        })
+      }
     }
   }
 
@@ -34,7 +99,7 @@ object log {
   def formatLog(log : List[String]): String = {
     var content = ""
     log.map( l => {
-      content += "commit: " +l.split("-").toList(0) + "\n" +
+      content += s"${RESET}${Console.YELLOW}" + "commit: " +l.split("-").toList(0) + s"${RESET}" + "\n" +
         "date: " + l.split("-").toList(1) + "\n" +
         "message: " + l.split("-").toList(2) + "\n\n"
     })

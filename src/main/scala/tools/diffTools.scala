@@ -1,11 +1,9 @@
 package tools
 
 import java.io.File
-
 import actions.status
 import objects.{LineDiff, operation}
-
-import scala.io.Source
+import scala.Console.RESET
 
 object diffTools {
 
@@ -135,7 +133,7 @@ object diffTools {
   def formatDiffLine(lineDiff: LineDiff): String = {
     lineDiff.ope match {
       case "ADD" => "Line " + (lineDiff.index +1) + ": + " + lineDiff.content
-      case "REMOVE" => "Line " + (lineDiff.index +1) +  ": - " + lineDiff.content
+      case "REMOVE" => s"${RESET}${Console.RED}" + "Line " + (lineDiff.index +1) +  ": - " + lineDiff.content + s"${RESET}"
     }
   }
 }
