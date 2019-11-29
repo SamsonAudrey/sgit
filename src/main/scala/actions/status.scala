@@ -1,9 +1,8 @@
 package actions
 
 import java.io.File
-import java.nio.file.Files
-
-import tools.{fileTools, printerTools, repoTools, statusTools}
+import actions.commit.isFirstCommit
+import tools.{ printerTools, repoTools, statusTools}
 import tools.statusTools.{isFree, isStagedAndUpdatedContent}
 
 object status {
@@ -12,6 +11,9 @@ object status {
     * Print all the files status
     */
   def showGeneralStatus(): Unit = {
+    printerTools.printMessage("On " + branch.currentBranch + " branch")
+    if (isFirstCommit) printerTools.printMessage("No commit yet")
+
     val list = generalStatus()
 
     if (list(0).nonEmpty){

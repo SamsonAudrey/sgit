@@ -1,9 +1,6 @@
 package tools
 
 import java.io.{File, PrintWriter}
-
-import actions.init
-
 import scala.reflect.io.{File => ScalaFile}
 
 object repoTools {
