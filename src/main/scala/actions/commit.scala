@@ -38,7 +38,8 @@ object commit {
       // Clean STAGE
       FileUtils.cleanDirectory(new File(repoTools.rootPath + "/.sgit/STAGE"))
       printerTools.printMessage("[" + branch.currentBranch + " "+ newCommitHash.slice(0,7) + "] "+message)
-      printerTools.printMessage((changes(2).length+changes(0).length) + " file changed, 0 insertions(+), 0 deletions(-)")
+      printerTools.printMessage(changes(2).length + " file(s) added, " + changes(0).length + " file(s) changed, " +
+        changes(1).length + " file(s) removed")
     }
   }
 

@@ -76,10 +76,11 @@ object diffTools {
   /**
     * Print all the differences of all Files
     */
-  def showGeneralDiff(): List[String] = {
+  def showGeneralDiff(): List[List[String]] = {
     var head = ""
     var content = ""
     var lines = ""
+    var res = List[List[String]]()
 
     // list = List(allFreeFiles, allUpdatedStagedFiles, allUpdatedCommitedFiles, allStagedUnCommitedFiles)
     val list = status.generalStatus()
@@ -88,41 +89,52 @@ object diffTools {
     // No diff for uncommited files in list(3)
 
     // Diff between stage area and working directory
-    /*if (list(1).nonEmpty) {
-
-      list(1).filter(!list(2).contains(_)).map(f => {
+    if (list(1).nonEmpty) {
+      list(1).map(f => {
+        head = ""
+        content = ""
+        lines = ""
 
         val name = f.getName
         val stageFile = fileTools.getLinkedStagedFile(f)
-        content += s"diff --git a/$name b/$name \n"+
-          "--- a/$name\n" +
-          "+++ b/$name\n"
 
-        val allDiff = diff(f,stageFile.get)
+        head += s"diff --git a/$name b/$name \n"+
+          s"--- a/$name\n" +
+          s"+++ b/$name"
 
-        content += "@@ " + (allDiff(0).index + 1) + "," + allDiff.length + " @@ \n"
-        allDiff.map(d => content += formatDiffLine(d) + "\n") } )
-    }*/
+        val allDiff = diff(f, stageFile.get)
+
+        content += "@@ " + (allDiff(0).index + 1) + "," + allDiff.length + " @@ "
+        allDiff.map(d => lines += formatDiffLine(d) + "\n")
+
+        res = res ++ List(List(head,content,lines))
+      })
+    }
 
     // Diff between last commit and working directory [NOT WITH STAGE AREA]
     val l = list(2).filter(f => !list(1).contains(f) && !list(3).contains(f) )
     if (l.nonEmpty) {
-
       l.map(f => {
-
+        head = ""
+        content = ""
+        lines = ""
         val name = f.getName
         val commitedFile = fileTools.getLinkedCommitFile(f)
 
         head += s"diff --git a/$name b/$name \n"+
-          "--- a/$name\n" +
-          "+++ b/$name"
+          s"--- a/$name \n" +
+          s"+++ b/$name"
 
-        val allDiff = diff(f,commitedFile.get)
+        val allDiff = diff(f, commitedFile.get)
 
         content += "@@ " + (allDiff(0).index + 1) + "," + allDiff.length + " @@ "
-        allDiff.map(d => lines += formatDiffLine(d) + "\n") } )
+        allDiff.map(d => lines += formatDiffLine(d) + "\n")
+
+        res = res ++ List(List(head,content,lines))
+      })
     }
-    List(head,content,lines)
+
+    res
   }
 
   /**
