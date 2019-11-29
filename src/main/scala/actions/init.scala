@@ -22,7 +22,7 @@ object init {
     repoTools.createDirectory(gitPath + "/refs/heads")
     new PrintWriter(new File(gitPath + "/refs/heads/master"))
     fileTools.updateFileContent(new File(gitPath + "/HEAD/branch"), "master")
-    printerTools.printMessage("Dépôt Sgit vide initialisé dans " + repoTools.currentPath+".sgit")
+    printerTools.printMessage("Empty Sgit repository initialized in " + repoTools.currentPath+".sgit")
   }
 
 }
