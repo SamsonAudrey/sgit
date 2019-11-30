@@ -1,6 +1,9 @@
 package tools
 
 import java.io.{File, PrintWriter}
+
+import org.apache.commons.io.FileUtils
+
 import scala.reflect.io.{File => ScalaFile}
 
 object repoTools {
@@ -26,7 +29,9 @@ object repoTools {
     if (directory.isDirectory) {
       if (directory.listFiles().toList.contains(new File(directory.getAbsolutePath + "/.sgit"))) {
         if (!new File(directory.getAbsolutePath + "/.sgit/HEAD/branch").exists()) {
-          Some(new File(directory.getAbsolutePath + "/.sgit"))
+          FileUtils.cleanDirectory(new File(directory.getAbsolutePath + "/.sgit"))
+          new File(directory.getAbsolutePath + "/.sgit").delete()
+          None
         } else Some(directory)
       } else {
         if (directory.getParentFile == null) {

@@ -14,6 +14,7 @@ object status {
     printerTools.printMessage("On " + branch.currentBranch + " branch")
     if (isFirstCommit) printerTools.printMessage("No commit yet")
 
+    // list = List(allFreeFiles, allUpdatedStagedFiles, allUpdatedCommitedFiles, allStagedUnCommitedFiles)
     val list = generalStatus()
 
     if (list(0).nonEmpty){
@@ -34,7 +35,7 @@ object status {
     val list3 = list(3).filter(f => !list(1).contains(f))
     if (list(3).nonEmpty) {
       printerTools.printMessage("\n>> Changes to be committed:")
-      list3.map(f => printerTools.printColorMessage(Console.GREEN, " new file: "+f.getName))
+      list3.map(f => printerTools.printColorMessage(Console.GREEN, ""+f.getName))
     }
 
     if(list(0).isEmpty && list(1).isEmpty && list(2).isEmpty && list(3).isEmpty) {
