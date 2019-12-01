@@ -27,7 +27,7 @@ You can now use sgit commands
 * sgit status
 * sgit diff
 * sgit add <filename/filenames or .>
-* sgit commit
+* sgit commit -m "<message>"
 
 #### Commit History:
 * sgit log : Show all commits started with newest
